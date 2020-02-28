@@ -27,7 +27,7 @@ constantfactor = np.zeros(11)
 result = np.arange(0,1001) 
 
 #reading the data file
-kn,dkn = np.loadtxt("../../Pow_spec_test_code/power_spectrum/CAMB_linear.txt", unpack=True)
+kn,dkn = np.loadtxt("../../../Pow_spec_test_code/power_spectrum/CAMB_linear.txt", unpack=True)
 
 plt.subplots()
 for redshift in range(1,11):
