@@ -55,8 +55,8 @@ for redshift in range(2,3):
 
         dC_L[i] = np.sqrt(2/((2*i + 1)*delta_l* f_sky)) *((constantfactor[redshift]*result[i]) + N_L[i]) 
 
-    #plt.errorbar(l[l_plot_ll:l_plot_ul],constantfactor[redshift]*result[l_plot_ll:l_plot_ul], yerr=dC_L[l_plot_ll:l_plot_ul], label='Mohit z = {}'.format(redshift)) 
-    plt.plot(l[l_plot_ll:l_plot_ul],constantfactor[redshift]*result[l_plot_ll:l_plot_ul], label='Mohit z = {}'.format(redshift)) 
+    plt.errorbar(l[l_plot_ll:l_plot_ul],constantfactor[redshift]*result[l_plot_ll:l_plot_ul], yerr=dC_L[l_plot_ll:l_plot_ul],color='blue', ecolor= 'red', elinewidth=1, capsize=2, label='Mohit z = {}'.format(redshift)) 
+ #   plt.plot(l[l_plot_ll:l_plot_ul],constantfactor[redshift]*result[l_plot_ll:l_plot_ul], label='Mohit z = {}'.format(redshift)) 
 
 
 x_2 = np.zeros(50)
@@ -65,7 +65,7 @@ dxl_2 = np.zeros(50)
 dxh_2 = np.zeros(50)
 dyl_2 = np.zeros(50)
 dyh_2 = np.zeros(50)
-x_2, y_2, dxl_2, dxh_2, dyl_2, dyh_2 = np.loadtxt("../Data_files/pourtsidou_xyscan_z_2_no_errors.txt", unpack=True)
+x_2, y_2, dxl_2, dxh_2, dyl_2, dyh_2 = np.loadtxt("../Data_files/pourtsidou_xyscan_curve_z_2.txt", unpack=True)
 """
 xn_2 = np.zeros(50)
 yn_2 = np.zeros(50)
@@ -81,8 +81,8 @@ tck_2 = interpolate.splrep(x_2,y_2, s=0)
 tckerr_2 = interpolate.splrep(x_2,dyh_2,s=0)
 yploterr_2 = interpolate.splev(xplot_2, tckerr_2, der=0)
 yplot_2 = interpolate.splev(xplot_2, tck_2, der=0)
-#plt.errorbar(xplot_2,yplot_2, yerr=yploterr_2,color='black', ecolor='yellow', label='Pourtsidou (z=2)')
-plt.plot(xplot_2,yplot_2,color='black', label='Pourtsidou z=2')
+plt.errorbar(xplot_2,yplot_2, yerr=yploterr_2,color='black', ecolor='yellow', label='Pourtsidou (z=2)')
+#plt.plot(xplot_2,yplot_2,color='black', label='Pourtsidou z=2')
 
 
 
