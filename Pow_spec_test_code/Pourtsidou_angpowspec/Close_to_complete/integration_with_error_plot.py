@@ -37,13 +37,17 @@ f_sky = 0.2
 l_upper_limit = 20000
 l_plot_ll = 10
 l_plot_ul = 700
+err_stepsize = 200
+n_err_points = 1 + int((l_plot_ul - l_plot_ll)/err_stepsize)
 k_ll = 1
-k_ul = 40
+k_ul = 10 
 
 #array definitions
 xs = np.zeros(11)
 fgrow = np.zeros(11)
 l = np.arange(0,l_upper_limit)
+x_junk = np.zeros(l_upper_limit)
+y_junk = np.zeros(l_upper_limit)
 constantfactor = np.zeros(11)
 result = np.arange(0,l_upper_limit) 
 N_L = np.zeros(l_upper_limit)
@@ -51,7 +55,7 @@ dC_L = np.zeros(l_upper_limit)
 resultk = np.zeros((l_upper_limit, k_ul))
 
 #reading the data file
-kn,dkn = np.loadtxt("../Data_files/CAMB_linear.txt", unpack=True)
+kn,dkn = np.loadtxt("../../Data_files/CAMB_linear.txt", unpack=True)
 
 fileout = open("integration_with_error_plot.txt", "a")
 
@@ -66,7 +70,7 @@ for redshift in range(2,3):
         for k in range(k_ll, k_ul):
             resultk[i,k] = integrationk(i,k,redshift)
 
-    for i in range(20,600,50):
+    for i in range(20,700,50):
         integ = 0
         integ_sum = 0
         print("-------------------------------i "+str(i))
@@ -75,10 +79,12 @@ for redshift in range(2,3):
             integ_sum = integ_sum + integ
         N_L[i] = 2* (i**2) * (2*np.pi)**2 / integ_sum
         dC_L[i] = np.sqrt(2/((2*i + 1)*delta_l* f_sky)) *((constantfactor[redshift]*result[i]) + N_L[i]) 
+        plt.errorbar(l[i], constantfactor[redshift]*result[i], yerr=dC_L[i],elinewidth=1, capsize=3, ecolor='blue')
         fileout.write("{}   {}\n".format(i,dC_L[i]))
         print("This is dC_L {}\n".format(dC_L[i]))
 
-    plt.errorbar(l[l_plot_ll:l_plot_ul],constantfactor[redshift]*result[l_plot_ll:l_plot_ul], yerr=dC_L[l_plot_ll:l_plot_ul], label='Mohit z = {}'.format(redshift))
+    
+plt.plot(l[l_plot_ll:l_plot_ul], constantfactor[redshift]*result[l_plot_ll:l_plot_ul], color='blue', label='This work (z = {})'.format(redshift))
 
 fileout.close()
 
@@ -88,15 +94,14 @@ dxl_2 = np.zeros(50)
 dxh_2 = np.zeros(50)
 dyl_2 = np.zeros(50)
 dyh_2 = np.zeros(50)
-x_2, y_2, dxl_2, dxh_2, dyl_2, dyh_2 = np.loadtxt("../Data_files/pourtsidou_xyscan_z_2_no_errors.txt", unpack=True)
+x_2, y_2, dxl_2, dxh_2, dyl_2, dyh_2 = np.loadtxt("../../Data_files/pourtsidou_xyscan_curve_z_2.txt", unpack=True)
 
 xplot_2 = np.arange(10, x_2[int(np.size(x_2))-1], x_2[int(np.size(x_2))-1]/2000)
 tck_2 = interpolate.splrep(x_2,y_2, s=0)
 tckerr_2 = interpolate.splrep(x_2,dyh_2,s=0)
 yploterr_2 = interpolate.splev(xplot_2, tckerr_2, der=0)
 yplot_2 = interpolate.splev(xplot_2, tck_2, der=0)
-#plt.errorbar(xplot_2,yplot_2, yerr=yploterr_2,color='black', ecolor='yellow', label='Pourtsidou (z=2)')
-plt.plot(xplot_2,yplot_2,color='black', label='Pourtsidou z=2')
+plt.errorbar(xplot_2,yplot_2, yerr=yploterr_2,color='black', ecolor='yellow', label='Pourtsidou et al. 2014 (z=2)')
 
 plt.xlabel('l')
 plt.ylabel(r'$C_{l} L(L+1)/2\pi$')
