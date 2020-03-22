@@ -100,8 +100,8 @@ plt.plot(l[l_plot_ll:l_plot_ul], constantfactor[redshift]*result[l_plot_ll:l_plo
 
 fileout.close()
 
-plt.xlabel('l')
-plt.ylabel(r'$C_{l} L(L+1)/2\pi$')
+plt.xlabel('L')
+plt.ylabel(r'$C_{L} L(L+1)/2\pi$')
 plt.suptitle(r"Angular Power Spectrum (Using Linear Matter Pow. Spec)")
 plt.legend()
 plt.xscale("log")
