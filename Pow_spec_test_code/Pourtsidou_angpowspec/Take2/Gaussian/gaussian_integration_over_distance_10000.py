@@ -59,7 +59,6 @@ cosmo = {'omega_M_0': 0.308, 'omega_lambda_0': 0.692, 'omega_k_0': 0.0, 'h': 0.6
 C_l = 1.724 * 10**(-16)
 delta_l = 36
 f_sky = 0.2
-#l_upper_limit = 20000
 l_plot_low_limit = 10
 l_plot_upp_limit = 700
 err_stepsize = 300
@@ -69,7 +68,7 @@ mass_moment_2 = 0.21
 mass_moment_3 = 0.357
 mass_moment_4 = 46.64
 j_low_limit = 1
-j_upp_limit = 126
+j_upp_limit = 10
 j_max = 126
 two_pi_squared = 2 * 3.14 * 2 * 3.14
 redshift = 2
@@ -126,7 +125,7 @@ for current_l_max in l_max_array:
         print("y_upp_limit {}".format(y_upp_limit))
         plt.ylim(y_low_limit , y_upp_limit)
         plt.scatter(L_array, N_L[j, : ,l_max_counter], label = '({},{})'.format(j, current_l_max), s = 5)
-        #plt.legend()
+        plt.legend()
         plt.savefig("./J_plots/gaussian_integration_over_distance_j_upp_limit_{}_lmax_{}.pdf".format(j,current_l_max))
         fileout.close()
     previous_l_max = current_l_max
@@ -134,39 +133,4 @@ for current_l_max in l_max_array:
 
 plt.show()
 
-
-
-"""
-for current_l_max in l_max_array:
-    chi_s[redshift] = cd.comoving_distance(redshift, **cosmo)
-    for L in tqdm(range(0, int(current_l_max * 2**0.5))):
-        angpowspec_without_j[L] = constantfactor(redshift) * angpowspec_integration_without_j(L, redshift)
-
-    for j in range(j_low_limit, j_upp_limit):
-        print('-------------j = {}----------------'.format(j))
-        fileout = open("./J_files/gaussian_integration_over_distance_j_upp_limit_{}_lmax_{}.txt".format(j,l_max), "w")
-
-        for L in tqdm(range(0, int(current_l_max * 2**0.5))):
-            angpowspec_with_j[L, j] = constantfactor(redshift) * angpowspec_integration_with_j(L, j, redshift)
-
-        counter = 0
-        for L in range(l_plot_low_limit + 10, l_plot_upp_limit, err_stepsize):
-            print('*************L = {}******************'.format(L))
-            noise_denominator[j, counter] = noise_denominator_integration(L,j, redshift)
-            noise_denominator_sum[counter] = noise_denominator_sum[counter] + noise_denominator[j, counter]
-            L_array[counter] = L
-            N_L[j, counter] = (L**2  * two_pi_squared * 2 ) / noise_denominator_sum[counter]
-            fileout.write("{}   {}\n".format(L_array[counter], N_L[j, counter]))
-            print("L = {}, N_L = {}\n".format(L, N_L[j, counter]))
-            counter = counter + 1
-
-        y_low_limit = N_L[j_low_limit, 0] / 10
-        y_upp_limit = N_L[j, counter-1] * 10
-        plt.ylim(y_low_limit , y_upp_limit)
-        plt.scatter(L_array, N_L[j,], label = 'j_limit = {}'.format(j), s = 5)
-        plt.legend()
-        plt.savefig("./J_plots/gaussain_integration_over_distance_j_upp_limit_{}_lmax_{}.pdf".format(j,current_l_max))
-        fileout.close()
-    previous_l_max = current_l_max
-"""
 
