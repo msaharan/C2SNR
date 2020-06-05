@@ -1,0 +1,9 @@
+Main function (Plot from this work):
+    
+    Find the comoving distance at redshift = 2
+    
+    Find the angular power spectrum without j:
+        Constant factor check: Same as P14. 
+        
+    
+    

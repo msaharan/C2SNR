@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+%\usepackage[margin=0.5in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage{multirow}
+\usepackage{subcaption}
+\graphicspath{ {./images/} }
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{bm}
+\usepackage{mdframed}
+
+\usepackage{cite}
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\urlstyle{same}
+
+\numberwithin{equation}{section}
+\begin{document}
+\section{Power spectrum}
+	\begin{itemize}
+		\item Make sure that the power spectrum is correct.
+		\item Do we need to multiply it with $ \sigma_8^2 $
+	\end{itemize}
+\section{Chi\_s(redshift)}
+	\begin{itemize}
+		\item comoving distance and proper distance
+		\item use cosmological paramaters from P14 (table 2)
+			\begin{itemize}
+				\item omegam0 = 0.315
+				\item omega\_lambda = 0.685
+				\item omega\_k\_0 = 0
+				\item h = 0.673
+				\item sigma\_8 = 0.829
+			\end{itemize}
+	\end{itemize}
+\section{angpowspec\_without\_j array}
+	\begin{itemize}
+		\item At L = 0, N0  = zero
+		\item Run the For loops from L = 0 to $\ell_{max}$
+		\item Problem when $ l - L $ in $ C_{||} $ becomes 0.
+	\end{itemize}
+	\subsection{constantfactor}
+		\subsubsection{fgrowth}
+			\begin{itemize}
+				\item unnormed = False
+				\item Check with unnormed = True
+			\end{itemize}
+		\subsection{angpowspec\_without\_j integration function}
+			\begin{itemize}
+				\item remove lambda \checkmark
+				\item Result unchanged
+			\end{itemize}
+\section{angpowspec\_with\_j array}
+	\subsection{angpowspec\_with\_j integration function}
+			\begin{itemize}
+				\item remove lambda \checkmark
+				\item Result unchanged
+			\end{itemize}
+\section{noise\_denominator\_sum array}
+	\subsection{noise\_denominator\_integration array}
+		\subsubsection{integrand function}
+			\begin{itemize}
+				\item Removed lambda. Result unchanged
+				\item Cshot
+					\begin{itemize}
+						\item depends on T(z), mass moments and eta\_D2\_L. 
+						\item T(z) only depends on the cosmological parameters
+						\item \textbf{Check} if mass moments are correct
+						\item plot variation of Cshot with eta\_D2\_L
+					\end{itemize}
+			\end{itemize}
+		\subsection{N2()}
+			\begin{itemize}
+				\item \textbf{Improve} this function.
+			\end{itemize}
+			
+			
+\end{document}
+
