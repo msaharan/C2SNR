@@ -47,7 +47,7 @@ def hubble_ratio(var):
 ###############################################################################
 ## Integration over distance
 ###############################################################################
-def d_angpowspec_integrand_without_j(dist, ell, dist_s, constf):
+def d_angpowspec_integrand(dist, ell, dist_s, constf):
     # find z corresponding to dist
     z = np.interp(dist, dist_red, red)
     # Assume D is angular diameter distance and Chi is comoving distance
@@ -55,23 +55,23 @@ def d_angpowspec_integrand_without_j(dist, ell, dist_s, constf):
     # dist is comoving distance
     return constf * (1 - dist/dist_s)**2 * h**3 * PK.P(z, ell * (1 + z)/dist)
 
-def d_angpowspec_integration_without_j(ell, redshift):
+def d_angpowspec_integration(ell, redshift):
     constf = d_constantfactor(redshift)
     dist_s = c_distance(redshift)
-    return integrate.quad(d_angpowspec_integrand_without_j, 0.00001, dist_s, args = (ell, dist_s, constf))[0]
+    return integrate.quad(d_angpowspec_integrand, 0.00001, dist_s, args = (ell, dist_s, constf))[0]
 #------------------------------------------------------------------------------
 
 ###############################################################################
 ## Integration over redshift
 ###############################################################################
-def z_angpowspec_integrand_without_j(z, ell, dist_s, constf):
+def z_angpowspec_integrand(z, ell, dist_s, constf):
     dist = a_distance(z)
     return constf * (1 - dist/dist_s)**2 * h**3 * PK.P(z, ell/dist)/ hubble_ratio(z)
 
-def z_angpowspec_integration_without_j(ell, redshift):
+def z_angpowspec_integration(ell, redshift):
     constf = z_constantfactor(redshift)
     dist_s = a_distance(redshift)
-    return integrate.quad(z_angpowspec_integrand_without_j, 0.00001, redshift, args = (ell, dist_s, constf))[0]
+    return integrate.quad(z_angpowspec_integrand, 0.00001, redshift, args = (ell, dist_s, constf))[0]
 #------------------------------------------------------------------------------
 
 ###############################################################################
@@ -99,7 +99,7 @@ PK = get_matter_power_interpolator(pars, nonlinear=True, kmax = 2)
 #------------------------------------------------------------------------------
 
 ###############################################################################
-# Distance vs redshift file (See d_angpowspec_integrand_without_j())
+# Distance vs redshift file (See d_angpowspec_integrand())
 # comoving distance
 ###############################################################################
 red, dist_red = np.loadtxt("/home/dyskun/Documents/Utility/Academics/Cosmology_project/C2SNR/Pow_spec_test_code/Data_files/Distances/comov_dist_vs_z.txt", unpack = True)
@@ -132,8 +132,8 @@ z_file = open("./Text_files/angpowspec_integration_over_redshift.txt", 'w')
 # Plot from this work
 ###############################################################################
 for L in tqdm(range(10, int(l_plot_upp_limit))):
-    d_file.write('{}    {}\n'.format(L, d_angpowspec_integration_without_j(L, redshift)/ (2 * 3.14)))
-    z_file.write('{}    {}\n'.format(L, z_angpowspec_integration_without_j(L, redshift)/ (2 * 3.14)))
+    d_file.write('{}    {}\n'.format(L, d_angpowspec_integration(L, redshift)/ (2 * 3.14)))
+    z_file.write('{}    {}\n'.format(L, z_angpowspec_integration(L, redshift)/ (2 * 3.14)))
 
 d_file.close()
 z_file.close()
@@ -155,5 +155,4 @@ plt.ylim(1E-10,1E-7)
 plt.savefig("./Plots/angpowspec_integration_over_distancs_vs_redshift.pdf")
 plt.show()
 #------------------------------------------------------------------------------
-
 
