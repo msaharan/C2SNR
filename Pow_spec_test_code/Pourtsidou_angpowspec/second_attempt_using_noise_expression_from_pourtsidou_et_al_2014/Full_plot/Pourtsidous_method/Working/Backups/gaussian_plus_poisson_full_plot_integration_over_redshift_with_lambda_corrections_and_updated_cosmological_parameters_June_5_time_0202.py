@@ -8,46 +8,56 @@ from cosmolopy.perturbation import fgrowth
 from scipy import interpolate
 from tqdm.auto import tqdm
 
-#############################################################
-## Constant factor in the expression of angular power spectrum
-############################################################
+###############################################################################
+# Constant factor in the expression of angular power spectrum
+###############################################################################
 def constantfactor(redshift):
-    return 9 * (H0/c)**4 * omegam0**2 *(fgrowth(redshift, omegam0, unnormed=False) * (1 + redshift))**2
-#----------------------------------------------------------
+    return 9 * (H0/c)**3 * omegam0**2 * (fgrowth(redshift, omegam0, unnormed=False) * (1 + redshift))**2
+#------------------------------------------------------------------------------
 
-####################################################
-## Comoving distance between z = 0 to some redshift
-##################################################
+"""
+###############################################################################
+## Comoving distance between z = 0 and some redshift
+###############################################################################
 def distance(redshift):
     return cd.comoving_distance(redshift, **cosmo)
-#------------------------------------------------
+#------------------------------------------------------------------------------
+"""
+#########################################################
+## Hubble ratio H(z)/H0
+#######################################################
+def hubble_ratio(variable):
+    return (omegam0 * (1 + variable)**3 + omegal)**0.5
+#----------------------------------------------------------
 
-##############################################################
+###############################################################################
 ## To calculate the angular power spectrum using the linear matter power spectrum
-############################################################
+###############################################################################
+
+## By iterpolating the comoving distance at any redshift while integrating
+
 # This function assumes that the K_parallel mode is << K_perpendicular mode. 
 # K_parallel mode is entirely neglected.
-
-def angpowspec_integrand_without_j(x, ell):
-    return ((chi_s[redshift] - x)/chi_s[redshift])**2 * np.interp(ell/x, PS,dPS)
+def angpowspec_integrand_without_j(z, ell):
+    distance_at_redshift = np.interp(z, redshift_from_file, distance_from_file)
+    return ((chi_s[redshift] - distance_at_redshift)/chi_s[redshift])**2 * np.interp(ell/distance_at_redshift, PS,dPS) / hubble_ratio(z)
 
 def angpowspec_integration_without_j(ell):
-    return integrate.quad(angpowspec_integrand_without_j, 0, chi_s[redshift], args = (ell,))[0]
-
+    return integrate.quad(angpowspec_integrand_without_j, 0, redshift, args = (ell, ))[0]
 
 # This function accounts for K_parallel also. 
 # It uses the discretized version of K_parallel (its jth mode) (2Pi/box_length)*j.
-
-def angpowspec_integrand_with_j(x, ell, j): 
-    return ((chi_s[redshift] - x)/chi_s[redshift])**2 * np.interp((2 * ( (ell/x)**2 + (2 * 3.14 * j / chi_s[redshift])**2 ))**0.5, PS, dPS)
+def angpowspec_integrand_with_j(z, ell, j): 
+    distance_at_redshift = np.interp(z, redshift_from_file, distance_from_file) 
+    return ((chi_s[redshift] - distance_at_redshift)/chi_s[redshift])**2 * np.interp((2 * ( (ell/distance_at_redshift)**2 + (2 * 3.14 * j / chi_s[redshift])**2 ))**0.5, PS, dPS) / hubble_ratio(z)
 
 def angpowspec_integration_with_j(ell, j): 
-    return integrate.quad(angpowspec_integrand_with_j, 0, chi_s[redshift], args = (ell, j))[0]
-#----------------------------------------------------------
+    return integrate.quad(angpowspec_integrand_with_j, 0, redshift, args = (ell, j))[0]
+#------------------------------------------------------------------------------
 
-#############################################################
+###############################################################################
 ## To calculate the noise moments (equation 14 in Pourtsidou et al. 2014)
-############################################################
+###############################################################################
 def N4_integrand(l1, l2, ell):
     small_l = int(np.sqrt(l1**2 + l2**2))
     return 2*(angpowspec_without_j[ell] + (C_l)) * (angpowspec_without_j[abs(ell-small_l)] + (C_l)) / two_pi_squared
@@ -72,11 +82,11 @@ def N1(ell, j, N3_for_this_L_j):
 
 def N0(ell):
     return Tz(redshift)**4 * j_max**2 * mass_moment_4 * (integrate.dblquad(lambda l1,l2: 1 , 0, l_max, lambda l2: 0, lambda l2: l_max)[0] / two_pi_squared)**2 / (eta_D2_L**3 * mass_moment_1**4)
-#-------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
-###############################################################
-## To calculate the denominator of the lensing recosntruction noise term (eq 14 in Pourtsidou et al. 2014)
-##############################################################
+###############################################################################
+# To calculate the denominator of the lensing recosntruction noise term (eq 14 in Pourtsidou et al. 2014)
+###############################################################################
 def noise_denominator_integrand(l1, l2, ell,j):
     small_l = int(np.sqrt(l1**2 + l2**2))
     return angpowspec_with_j[ell, j]*ell*small_l + angpowspec_with_j[abs(ell-small_l), j] * ell * (ell - small_l) + ell**2 * Cshot(redshift)
@@ -89,16 +99,18 @@ def Tz(redshift):
 
 def Cshot(redshift):
     return Tz(redshift)**2 *(1/eta_D2_L) * mass_moment_2 / mass_moment_1**2
-#-----------------------------------------------------------------------
 
-#########################################################################
+#------------------------------------------------------------------------------
+
+###############################################################################
 # Constants
-#########################################################################
+###############################################################################
+
 omegam0 = 0.315
 omegal = 0.685
-c = 3 * 10**8                                                                                
-H0 = 67.3 * 1000                                                                      
-cosmo = {'omega_M_0': omegam0, 'omega_lambda_0': omegal, 'omega_k_0': 0.0, 'h': 0.673} 
+c = 3 * 10**8
+H0 = 67.3 * 1000
+cosmo = {'omega_M_0': omegam0, 'omega_lambda_0': omegal, 'omega_k_0': 0.0, 'h': 0.673}
 C_l = 1.6*10**(-16)
 delta_l = 36
 f_sky = 0.2
@@ -114,16 +126,18 @@ j_low_limit = 1
 j_upp_limit = 2
 j_max = 126
 two_pi_squared = 2 * 3.14 * 2 * 3.14
-eta_D2_L = 5.94 * 10**12
+eta = 0
+eta_D2_L = 5.94 * 10**12 / 10**eta
 redshift = 2
-l_max = 550
-#---------------------------------------------------------------------------
+l_max = 600
+#------------------------------------------------------------------------------
 
 ###############################################################################
 # Arrays
 ###############################################################################
 chi_s = np.zeros(11)
 fgrow = np.zeros(11)
+angpowspec_without_j_error_bar = np.zeros(n_err_points)
 L_array = np.arange(0, l_plot_upp_limit)
 
 eta_array = [0]
@@ -146,22 +160,37 @@ delta_C_L = np.zeros(n_err_points)
 
 ###############################################################################
 # CAMB linear power spectrum
-##############################################################################
+###############################################################################
 PS,dPS = np.loadtxt("/home/dyskun/Documents/Utility/Academics/Cosmology_project/C2SNR/Pow_spec_test_code/Data_files/CAMB_linear.txt", unpack=True)
 #----------------------------------------------------------------------------
 
+###############################################################################
+# Reading file - comoving distance vs redshift
+###############################################################################
+redshift_from_file, distance_from_file = np.loadtxt("/home/dyskun/Documents/Utility/Academics/Cosmology_project/C2SNR/Pow_spec_test_code/Data_files/comoving_distance_between_redshift_0_and_2.txt", unpack = True)
+
+"""
+# Plot: comoving distance vs redshift
+for ii in range(0, (len(distance_from_file))):
+    print('{}   {}'.format(redshift_from_file[ii], distance_from_file[ii]))
+
+plt.plot(redshift_from_file, distance_from_file)
+plt.show()
+"""
+#--------------------------------------------------------------------------
+
 plt.subplots()
 
-#############################################################################
+###############################################################################
 # Plot from Pourtsidou et al. 2014 (with error bars)
-#############################################################################
+###############################################################################
 x_2 = np.zeros(50)
 y_2 = np.zeros(50)
 dxl_2 = np.zeros(50)
 dxh_2 = np.zeros(50)
 dyl_2 = np.zeros(50)
 dyh_2 = np.zeros(50)
-x_2, y_2, dxl_2, dxh_2, dyl_2, dyh_2 = np.loadtxt("../../../../../../Data_files/pourtsidou_xyscan_curve_z_2.txt", unpack=True)
+x_2, y_2, dxl_2, dxh_2, dyl_2, dyh_2 = np.loadtxt("/home/dyskun/Documents/Utility/Academics/Cosmology_project/C2SNR/Pow_spec_test_code/Data_files/pourtsidou_xyscan_curve_z_2.txt", unpack=True)
 
 xplot_2 = np.arange(10, x_2[int(np.size(x_2))-1], x_2[int(np.size(x_2))-1]/2000)
 tck_2 = interpolate.splrep(x_2,y_2, s=0)
@@ -169,12 +198,11 @@ tckerr_2 = interpolate.splrep(x_2,dyh_2,s=0)
 yploterr_2 = interpolate.splev(xplot_2, tckerr_2, der=0)
 yplot_2 = interpolate.splev(xplot_2, tck_2, der=0)
 plt.errorbar(xplot_2,yplot_2, yerr=yploterr_2,color='black', ecolor='yellow', label='Pourtsidou et al. 2014 (z=2)')
-#----------------------------------------------------------------------------
+#------------------------------------------------------------------------------
 
-############################################################################
+###############################################################################
 # Plot from this work
-###########################################################################
-
+###############################################################################
 # Comoving distance between z = 0 and z = source redshift
 chi_s[redshift] = cd.comoving_distance(redshift, **cosmo)
 
@@ -188,7 +216,7 @@ for L in tqdm(range(1, l_plot_upp_limit)):
 
 # Creating a text file to store the L, C_L(L), and N_L(L) values. This file
 # can be later used to see the value of error bars
-fileout = open("./J_text_files/gaussian_plus_poisson_error_bar_integration_over_distance_j_upp_limit_{}_lmax_{}_girish.txt".format(j_upp_limit-1, l_max), "w")
+fileout = open("./J_text_files/gaussian_plus_poisson_error_bar_integration_over_redshift_j_upp_limit_{}_lmax_{}_eta_{}_trial_after_lambda_corrections.txt".format(j_upp_limit-1, l_max, eta), "w")
 
 # This j-loop is required to calculate the lensing reconstruction noise
 for L in tqdm(range(1, int(l_max * 2**0.5))):
@@ -197,6 +225,7 @@ for L in tqdm(range(1, int(l_max * 2**0.5))):
 
 L_counter = 0
 for L in range(l_plot_low_limit + 8, l_plot_upp_limit, err_stepsize):
+
     for j in tqdm(range(j_low_limit, j_upp_limit)):
         noise_denominator_sum[L_counter] = noise_denominator_sum[L_counter] + noise_denominator_integration(L, j)
 
@@ -205,8 +234,10 @@ for L in range(l_plot_low_limit + 8, l_plot_upp_limit, err_stepsize):
         N2_sum[L_counter] = N2_sum[L_counter] + N2(L, j, N3_for_this_L_j)
         N3_sum[L_counter] = N3_sum[L_counter] + N3_for_this_L_j
 
+    # lensing reconstruction noise N_L(L); equation 14 in Pourtsidou et al. 2014
     N_L[L_counter] = (L**2 * (N0(L) + N1_sum[L_counter] + N2_sum[L_counter] + N3_sum[L_counter] + N4(L)) ) / (noise_denominator_sum[L_counter]**2)
-
+    
+    # error bars: delta_C_L(L); equation 21 in Pourtsidou et al. 2014
     delta_C_L[L_counter] = (L * (L + 1) / (2 * 3.14)) * ( 2 / ((2*L + 1) * delta_l * f_sky))**0.5 * (angpowspec_without_j[L] + N_L[L_counter]) 
 
     plt.errorbar(L_array[L], angpowspec_without_j_signal_in_final_plot[L], yerr = delta_C_L[L_counter], capsize=3, ecolor='blue')
@@ -227,7 +258,6 @@ plt.yscale("log")
 plt.xlim(l_plot_low_limit, l_plot_upp_limit)
 plt.legend()
 plt.ylim(1E-9,1E-7)
-plt.savefig("./J_plots/gaussian_plus_poisson_full_plot_integration_over_distance_j_upp_limit_{}_lmax_{}_girish.pdf".format(j_upp_limit - 1, l_max))
+plt.savefig("./J_plots/gaussian_plus_poisson_full_plot_integration_over_redshift__j_upp_limit_{}_lmax_{}_eta_{}_trial_after_lambda_corrections.pdf".format(j_upp_limit - 1, l_max, eta))
 plt.show()
-#-----------------------------------------------------------------------------------------
-
+#------------------------------------------------------------------------------
