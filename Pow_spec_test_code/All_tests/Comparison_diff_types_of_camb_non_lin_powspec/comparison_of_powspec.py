@@ -36,14 +36,17 @@ l_array = np.zeros(l_max - l_min)
 ###############################################################################
 # CAMB
 ###############################################################################
-# This doesn't work
-#pars1 = model.CAMBparams(NonLinear = 1, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2= 0.02205, YHe = 0.24770, Do21cm = True, transfer_21cm_cl = True)
+# This works
+# pars1 = model.CAMBparams(NonLinear = 1, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2= 0.02205, YHe = 0.24770, Do21cm = True, transfer_21cm_cl = True)
 
-# This also doesn't work
+# This also works
 # pars1 = model.CAMBparams(NonLinear = 1, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2= 0.02205, YHe = 0.24770, Do21cm = True)
 
-# This works
+# This also works
 pars1 = model.CAMBparams(NonLinear = 1, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2= 0.02205, YHe = 0.24770)
+
+# All the three options (of pars1) give the same result. 
+# See: C2SNR/Pow_spec_test_code/All_tests/Camb_21cm_true_vs_false
 
 pars1.DarkEnergy.set_params(w=-1.13)
 pars1.set_for_lmax(lmax=2500)
@@ -69,7 +72,7 @@ k = 10**np.linspace(-6,1,1000)
 PK2 = get_matter_power_interpolator(pars2, nonlinear=True, kmax = 2)
 
 # This doesn't work
-# pars3 = model.CAMBparams(NonLinear = 3, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2= 0.02205, YHe = 0.24770, Do21cm = True, transfer_21cm_cl = True)
+#pars3 = model.CAMBparams(NonLinear = 3, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2= 0.02205, YHe = 0.24770, Do21cm = True, transfer_21cm_cl = True)
 
 # This also doesn't work
 # pars3 = model.CAMBparams(NonLinear = 3, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2= 0.02205, YHe = 0.24770, Do21cm = True)
