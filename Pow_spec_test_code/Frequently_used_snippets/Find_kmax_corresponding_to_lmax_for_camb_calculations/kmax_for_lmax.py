@@ -20,7 +20,6 @@ def c_distance(var):
 omegam0 = 0.315
 omegal = 0.685
 omegak0 = 0.0
-H0 = 67.3 * 1000
 h = 0.673
 cosmo = {'omega_M_0': omegam0, 'omega_lambda_0': omegal, 'omega_k_0': omegak0, 'h': h}
 #------------------------------------------------------------------------------
