@@ -1,7 +1,4 @@
-import numpy as np                                                 
 import cosmolopy.distance as cd
-import camb
-from camb import model, initialpower, get_matter_power_interpolator
 
 ###############################################################################
 # Ang dia distance between z = 0 and some redshift
@@ -22,10 +19,10 @@ def c_distance(var):
 ###############################################################################
 omegam0 = 0.315
 omegal = 0.685
-c = 3 * 10**8
+omegak0 = 0.0
 H0 = 67.3 * 1000
 h = 0.673
-cosmo = {'omega_M_0': omegam0, 'omega_lambda_0': omegal, 'omega_k_0': 0.0, 'h': 0.673}
+cosmo = {'omega_M_0': omegam0, 'omega_lambda_0': omegal, 'omega_k_0': omegak0, 'h': h}
 #------------------------------------------------------------------------------
 
 ###############################################################################
