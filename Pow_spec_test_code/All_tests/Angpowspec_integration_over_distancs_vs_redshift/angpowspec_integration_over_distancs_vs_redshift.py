@@ -94,7 +94,7 @@ pars.DarkEnergy.set_params(w=-1.13)
 pars.set_for_lmax(lmax=2500)
 pars.InitPower.set_params(ns=0.9603, As = 2.196e-09)
 results = camb.get_background(pars)
-k=np.exp(np.log(10)*np.linspace(-6,1,1000))
+k = 10**np.linspace(-6,1,1000)
 PK = get_matter_power_interpolator(pars, nonlinear=True, kmax = 2)
 #------------------------------------------------------------------------------
 
