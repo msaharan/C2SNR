@@ -4,18 +4,10 @@ import cosmolopy.distance as cd
 import cosmolopy.perturbation as cp
 import scipy.integrate as integrate
 import matplotlib.pyplot as plt
-from cosmolopy.perturbation import fgrowth  
 from scipy import interpolate
 from tqdm.auto import tqdm
 import camb
 from camb import model, initialpower, get_matter_power_interpolator
-
-###############################################################################
-# Constant factor; integration over distance
-###############################################################################
-def d_constantfactor(redshift):
-    return 9 * (H0/c)**4 * omegam0**2 
-#------------------------------------------------------------------------------
 
 ###############################################################################
 # Constant factor; Integration over redshift
@@ -32,13 +24,6 @@ def a_distance(var):
 #------------------------------------------------------------------------------
 
 ###############################################################################
-## Comoving distance between z = 0 and some redshift
-###############################################################################
-def c_distance(var):
-    return cd.comoving_distance(var, **cosmo)
-#------------------------------------------------------------------------------
-
-###############################################################################
 ## Hubble ratio H(z)/H0
 ###############################################################################
 def hubble_ratio(var):
@@ -46,29 +31,16 @@ def hubble_ratio(var):
 #------------------------------------------------------------------------------
 
 ###############################################################################
-## Integration over distance
-###############################################################################
-def d_angpowspec_integrand_without_j(z, ell, dist_s, constf):
-    dist = c_distance(z)
-    return constf * (1 - dist/dist_s)**2 * h**3 * PK.P(z, ell * (1 + z)/dist)
-
-def d_angpowspec_integration_without_j(ell, redshift):
-    constf = d_constantfactor(redshift)
-    dist_s = c_distance(redshift)
-    return integrate.quad(d_angpowspec_integrand_without_j, 0.0001, dist_s, args = (ell, dist_s, constf))[0]
-#------------------------------------------------------------------------------
-
-###############################################################################
 ## Integration over redshift
 ###############################################################################
-def z_angpowspec_integrand_without_j(z, ell, dist_s, constf):
+def z_angpowspec_integrand(z, ell, dist_s, constf):
     dist = a_distance(z)
     return constf * (1 - dist/dist_s)**2 * h**3 * PK.P(z, ell/dist)/ hubble_ratio(z)
 
-def z_angpowspec_integration_without_j(ell, redshift):
+def z_angpowspec_integration(ell, redshift):
     constf = z_constantfactor(redshift)
     dist_s = a_distance(redshift)
-    return integrate.quad(z_angpowspec_integrand_without_j, 0.0001, redshift, args = (ell, dist_s, constf))[0]
+    return integrate.quad(z_angpowspec_integrand, 0.00001, redshift, args = (ell, dist_s, constf))[0]
 #------------------------------------------------------------------------------
 
 ###############################################################################
@@ -81,37 +53,31 @@ c = 3 * 10**8
 H0 = 67.3 * 1000
 h = 0.673
 cosmo = {'omega_M_0': omegam0, 'omega_lambda_0': omegal, 'omega_k_0': 0.0, 'h': 0.673}
+l_max = 2500
 l_plot_low_limit = 10
-l_plot_upp_limit = 550
-two_pi_squared = 2 * 3.14 * 2 * 3.14
-eta = 0
-eta_D2_L = 5.94 * 10**12 / 10**eta
+l_plot_upp_limit = lmax
 redshift = 2
-l_max = l_plot_upp_limit
 
-nz = 1000
 pars = model.CAMBparams(NonLinear = 1, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2=0.02205, YHe = 0.24770, Do21cm = True, transfer_21cm_cl = True)
 pars.DarkEnergy.set_params(w=-1.13)
 pars.set_for_lmax(lmax=2500)
 pars.InitPower.set_params(ns=0.9603, As = 2.196e-09)
 results = camb.get_background(pars)
-k=np.exp(np.log(10)*np.linspace(-6,1,1000))
+k = 10**np.linspace(-6,1,1000)
 PK = get_matter_power_interpolator(pars, nonlinear=True, kmax = 2)
 #------------------------------------------------------------------------------
 
 ###############################################################################
-# Arrays
+# Distance vs redshift file (See d_angpowspec_integrand())
+# comoving distance
 ###############################################################################
-chi_s = np.zeros(11)
-L_array = np.arange(0, l_plot_upp_limit)
-z_angpowspec_without_j = np.zeros(int(l_max))
-d_angpowspec_without_j = np.zeros(int(l_max))
+red, dist_red = np.loadtxt("/home/dyskun/Documents/Utility/Academics/Cosmology_project/C2SNR/Pow_spec_test_code/Data_files/Distances/comov_dist_vs_z.txt", unpack = True)
 #------------------------------------------------------------------------------
 
 plt.subplots()
 
 ###############################################################################
-# Plot from Pourtsidou et al. 2014 (with error bars)
+# Plot from Pourtsidou et al. 2014
 ###############################################################################
 x_2 = np.zeros(50)
 y_2 = np.zeros(50)
@@ -121,29 +87,39 @@ dyl_2 = np.zeros(50)
 dyh_2 = np.zeros(50)
 x_2, y_2, dxl_2, dxh_2, dyl_2, dyh_2 = np.loadtxt("/home/dyskun/Documents/Utility/Academics/Cosmology_project/C2SNR/Pow_spec_test_code/Data_files/pourtsidou_xyscan_z_2_no_errors.txt", unpack=True)
 
-#plt.plot(x_2,y_2,color='black', label='Pourtsidou et al. 2014 (z=2)')
+plt.plot(x_2,y_2,color='black', label='Pourtsidou et al. 2014')
+#------------------------------------------------------------------------------
+
+###############################################################################
+# To store the data
+###############################################################################
+d_file = open("./Text_files/angpowspec_integration_over_distance.txt", 'w')
+z_file = open("./Text_files/angpowspec_integration_over_redshift.txt", 'w')
 #------------------------------------------------------------------------------
 
 ###############################################################################
 # Plot from this work
 ###############################################################################
 for L in tqdm(range(10, int(l_plot_upp_limit))):
-    d_angpowspec_without_j[L] = d_angpowspec_integration_without_j(L, redshift)/ (2 * 3.14)
-    z_angpowspec_without_j[L] = z_angpowspec_integration_without_j(L, redshift)/ (2 * 3.14)
+    d_file.write('{}    {}\n'.format(L, d_angpowspec_integration(L, redshift)/ (2 * 3.14)))
+    z_file.write('{}    {}\n'.format(L, z_angpowspec_integration(L, redshift)/ (2 * 3.14)))
 
-plt.plot(L_array[l_plot_low_limit:l_plot_upp_limit], d_angpowspec_without_j[l_plot_low_limit:l_plot_upp_limit], color='blue', label='This work IoD'.format(redshift))
+d_file.close()
+z_file.close()
 
-#plt.plot(L_array[l_plot_low_limit:l_plot_upp_limit], z_angpowspec_without_j[l_plot_low_limit:l_plot_upp_limit], color='red', label='This work IoR'.format(redshift))
+L , z_CL = np.loadtxt('./Text_files/angpowspec_integration_over_redshift.txt', unpack = True)
+
+plt.plot(L, z_CL, color='blue', label='This work (integ. over z)')
 
 plt.xlabel('L')
 plt.ylabel(r'$C_{L} L(L+1)/2\pi$')
-plt.suptitle("Angular Power Spectrum")
+plt.suptitle("Angular Power Spectrum (z_source = 2)")
 plt.xscale("log")
 plt.yscale("log")
 plt.xlim(l_plot_low_limit, l_plot_upp_limit)
 plt.legend()
-#plt.ylim(1E-10,1E-7)
-plt.savefig("./Plots/angpowspec_comparison_distance_redshift.pdf")
+plt.ylim(1E-10,1E-7)
+plt.savefig("./Plots/angpowspec_integration_over_distancs_vs_redshift.pdf")
 plt.show()
-
 #------------------------------------------------------------------------------
+
