@@ -27,14 +27,14 @@ def z_constantfactor(redshift):
 def a_distance(var):
     return cd.angular_diameter_distance(var, **cosmo)
 #------------------------------------------------------------------------------
-
+'''
 ###############################################################################
 ## Comoving distance between z = 0 and some redshift
 ###############################################################################
 def c_distance(var):
     return cd.comoving_distance(var, **cosmo)
 #------------------------------------------------------------------------------
-
+'''
 ###############################################################################
 ## Hubble ratio H(z)/H0
 ###############################################################################
@@ -47,11 +47,11 @@ def hubble_ratio(var):
 ###############################################################################
 def d_angpowspec_integrand(dist, ell, dist_s, constf):
     z = np.interp(dist, dist_red, red)
-    return constf * (1 - dist/dist_s)**2 * PK.P(z, ell * (1 + z)/ dist)
+    return constf * (1 - dist/dist_s)**2 * PK.P(z, ell/dist)
 
 def d_angpowspec_integration(ell, redshift):
     constf = d_constantfactor(redshift)
-    dist_s = c_distance(redshift)
+    dist_s = a_distance(redshift)
     return integrate.quad(d_angpowspec_integrand, 0.00001, dist_s, args = (ell, dist_s, constf))[0]
 #------------------------------------------------------------------------------
 
@@ -87,15 +87,15 @@ pars.DarkEnergy.set_params(w=-1.13)
 pars.set_for_lmax(lmax=20000)
 pars.InitPower.set_params(ns=0.9603, As = 2.196e-09)
 results = camb.get_background(pars)
-k = 10**np.linspace(-6,1,1000)
-PK = get_matter_power_interpolator(pars, nonlinear=True, kmax = 20, k_hunit = False, hubble_units = False)
+k = (10**np.linspace(-6,1,1000))
+PK = get_matter_power_interpolator(pars, nonlinear=True, kmax = 20)
 #------------------------------------------------------------------------------
 
 ###############################################################################
 # Distance vs redshift file (See d_angpowspec_integrand())
 # comoving distance
 ###############################################################################
-red, dist_red = np.loadtxt("/home/dyskun/Documents/Utility/Academics/Cosmology_project/C2SNR/Pow_spec_test_code/Data_files/Distances/comov_dist_vs_z.txt", unpack = True)
+red, dist_red = np.loadtxt("/home/dyskun/Documents/Utility/Academics/Cosmology_project/C2SNR/Pow_spec_test_code/Data_files/Distances/ang_dia_dist_vs_z.txt", unpack = True)
 #------------------------------------------------------------------------------
 
 plt.subplots()
@@ -117,8 +117,8 @@ plt.plot(x_2,y_2,color='black', label='Pourtsidou et al. 2014')
 ###############################################################################
 # To store the data
 ###############################################################################
-d_file = open("./Text_files/angpowspec_integration_over_distance.txt", 'w')
-z_file = open("./Text_files/angpowspec_integration_over_redshift.txt", 'w')
+d_file = open("./Text_files/test_ang_dia_dist_and_no_h3_integ_over_dist.txt", 'w')
+z_file = open("./Text_files/test_ang_dia_dist_and_no_h3_integ_over_redshift.txt", 'w')
 #------------------------------------------------------------------------------
 
 ###############################################################################
@@ -131,8 +131,8 @@ for L in tqdm(range(10, int(l_plot_upp_limit))):
 d_file.close()
 z_file.close()
 
-L , d_CL = np.loadtxt('./Text_files/angpowspec_integration_over_distance.txt', unpack = True)
-L , z_CL = np.loadtxt('./Text_files/angpowspec_integration_over_redshift.txt', unpack = True)
+L , d_CL = np.loadtxt('./Text_files/test_ang_dia_dist_and_no_h3_integ_over_dist.txt', unpack = True)
+L , z_CL = np.loadtxt('./Text_files/test_ang_dia_dist_and_no_h3_integ_over_redshift.txt', unpack = True)
 
 plt.plot(L, d_CL, color='red', label='This work (integ. over dist.)')
 plt.plot(L, z_CL, color='blue', label='This work (integ. over z)')
@@ -145,7 +145,6 @@ plt.yscale("log")
 plt.xlim(l_plot_low_limit, l_plot_upp_limit)
 plt.legend()
 plt.ylim(1E-10,1E-7)
-plt.savefig("./Plots/angpowspec_integration_over_distancs_vs_redshift.pdf")
+plt.savefig("./Plots/test_ang_dia_dist_and_no_h3.pdf")
 plt.show()
 #------------------------------------------------------------------------------
-

@@ -1,0 +1,24 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\begin{document}
+	\section{Distance and Redshift Integrals}
+			Here $ E(z) = H(z)/H_0$,  $\mathcal{D}$ is angular diameter distance. $\chi$ is comoving radial distance
+			\begin{eqnarray}
+			\int_0^{z_s} f\left(z, \frac{\ell}{\mathcal{D}}\right) \frac{1}{E(z)} dz & = & \int_0^{z_s} f\left(z, \frac{\ell}{\mathcal{D}}\right) \frac{1}{E(z)} dz \\
+			&=& \int f\left(z, \frac{\ell}{\mathcal{D}}\right) \frac{1}{E(z)}  \frac{1}{a^2 }da \\
+			&=& \int f\left(z, \frac{\ell}{\mathcal{D}}\right) \frac{1}{E(z)}  \frac{1}{a^2 } \frac{da}{dt}  dt \\
+			&=& \int f\left(z, \frac{\ell}{\mathcal{D}}\right) \frac{1}{E(z)}  \frac{1}{a } \frac{\dot{a}}{a}  dt \\
+			&=& \int f\left(z, \frac{\ell}{\mathcal{D}}\right) \frac{1}{E(z)}  \frac{1}{a }H(z)  dt \\
+			&=& \int f\left(z, \frac{\ell}{\mathcal{D}}\right) \frac{1}{E(z)}  \frac{1}{a } \frac{c H(z)}{c}  dt \\
+			&=& \int f\left(z, \frac{\ell}{\mathcal{D}}\right)  \frac{1}{a } \frac{cH_0}{c}  dt \\
+			&=& \frac{H_0}{c}\int f\left(z, \frac{\ell}{\mathcal{D}}\right)  \frac{c dt}{a } \\
+			&=& \frac{H_0}{c}\int f\left(z, \frac{\ell a}{\mathcal{D} a}\right)  \frac{c dt}{a } \\
+			&=& \frac{H_0}{c}\int_0^{\chi_s} f\left(z, \frac{\ell }{\chi a}\right)  d\chi \\
+			&=& \frac{H_0}{c}\int_0^{\chi_s} f\left(z, \frac{\ell (1 + z)}{\chi }\right)  d\chi \\
+			\end{eqnarray}
+\end{document}
