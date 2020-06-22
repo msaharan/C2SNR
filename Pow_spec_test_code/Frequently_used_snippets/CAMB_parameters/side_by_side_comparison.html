@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>diff</title>
+<meta name="Generator" content="Vim/8.2">
+<meta name="plugin-version" content="vim8.1_v2">
+<meta name="settings" content="number_lines,whole_filler,use_css,no_foldcolumn,expand_tabs,line_ids,prevent_copy=,use_input_for_pc=fallback">
+<meta name="colorscheme" content="none">
+<style>
+<!--
+pre { font-family: monospace; color: #ffffff; background-color: #000000; }
+body { font-family: monospace; color: #ffffff; background-color: #000000; }
+* { font-size: 1em; }
+.LineNr { color: #ffff00; }
+.Folded { color: #00ffff; background-color: #6c6c6c; padding-bottom: 1px; }
+.DiffChange { background-color: #c000c0; padding-bottom: 1px; }
+.DiffDelete { color: #8080ff; background-color: #008080; padding-bottom: 1px; }
+.DiffText { background-color: #ff6060; padding-bottom: 1px; font-weight: bold; }
+.DiffAdd { background-color: #0000c0; padding-bottom: 1px; }
+-->
+<!--
+table { table-layout: fixed; }
+html, body, table, tbody { width: 100%; margin: 0; padding: 0; }
+table, td, th { border: 1px solid; }
+td { vertical-align: top; }
+th, td { width: 50.0%; }
+td div { overflow: auto; }
+-->
+</style>
+<script>
+<!--
+
+/* function to open any folds containing a jumped-to line before jumping to it */
+function JumpToLine()
+{
+  var lineNum;
+  lineNum = window.location.hash;
+  lineNum = lineNum.substr(1); /* strip off '#' */
+
+  if (lineNum.indexOf('L') == -1) {
+    lineNum = 'L'+lineNum;
+  }
+  if (lineNum.indexOf('W') == -1) {
+    lineNum = 'W1'+lineNum;
+  }
+  var lineElem = document.getElementById(lineNum);
+  /* Always jump to new location even if the line was hidden inside a fold, or
+   * we corrected the raw number to a line ID.
+   */
+  if (lineElem) {
+    lineElem.scrollIntoView(true);
+  }
+  return true;
+}
+if ('onhashchange' in window) {
+  window.onhashchange = JumpToLine;
+}
+
+-->
+</script>
+</head>
+<body onload='JumpToLine();'>
+<table id='vimCodeElement'>
+<tr>
+<th>camb_parameters_pars.txt</th>
+<th>camb_parameters_results.txt</th>
+</tr><tr>
+<td><div>
+<pre>
+<span id="W1L1" class="LineNr">  1 </span><span class="DiffChange">print(</span><span class="DiffText">par</span><span class="DiffChange">s)                                                                                                                                                                              </span>
+<span id="W1L2" class="LineNr">  2 </span>
+<span id="W1L3" class="LineNr">  3 </span><span class="DiffChange">class: &lt;CAMB</span><span class="DiffText">params</span><span class="DiffChange">&gt;                                                                                                                                                                      </span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span id="W1L4" class="LineNr">  4 </span>WantCls = True
+<span id="W1L5" class="LineNr">  5 </span>WantTransfer = True
+<span id="W1L6" class="LineNr">  6 </span>WantScalars = True
+<span id="W1L7" class="LineNr">  7 </span>WantTensors = False
+<span id="W1L8" class="LineNr">  8 </span>WantVectors = False
+<span id="W1L9" class="LineNr">  9 </span>WantDerivedParameters = True
+<span id="W1L10" class="Folded"> 10 </span><span class="Folded">+-- 57 lines: Want_cl_2D_array = True--------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span id="W1L67" class="LineNr"> 67 </span>Reion: &lt;TanhReionization&gt;
+<span id="W1L68" class="LineNr"> 68 </span>Reionization = True
+<span id="W1L69" class="LineNr"> 69 </span>use_optical_depth = False
+<span id="W1L70" class="LineNr"> 70 </span>redshift = 10.0
+<span id="W1L71" class="LineNr"> 71 </span>optical_depth = 0.0
+<span id="W1L72" class="LineNr"> 72 </span>delta_redshift = 0.5
+<span id="W1L73" class="LineNr"> 73 </span><span class="DiffChange">fraction = </span><span class="DiffText">-1.0</span><span class="DiffChange">                                                                                                                                                                          </span>
+<span id="W1L74" class="LineNr"> 74 </span>include_helium_fullreion = True
+<span id="W1L75" class="LineNr"> 75 </span>helium_redshift = 3.5
+<span id="W1L76" class="LineNr"> 76 </span>helium_delta_redshift = 0.4
+<span id="W1L77" class="LineNr"> 77 </span>helium_redshiftstart = 5.5
+<span id="W1L78" class="LineNr"> 78 </span>tau_solve_accuracy_boost = 1.0
+<span id="W1L79" class="LineNr"> 79 </span>timestep_boost = 1.0
+<span id="W1L80" class="Folded"> 80 </span><span class="Folded">+-- 28 lines: max_redshift = 50.0------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span id="W1L108" class="LineNr">108 </span>BesselBoost = 1.0
+<span id="W1L109" class="LineNr">109 </span>LimberBoost = 1.0
+<span id="W1L110" class="LineNr">110 </span>SourceLimberBoost = 1.0
+<span id="W1L111" class="LineNr">111 </span>KmaxBoost = 1.0
+<span id="W1L112" class="LineNr">112 </span>neutrino_q_boost = 1.0
+<span id="W1L113" class="LineNr">113 </span>SourceTerms: &lt;SourceTermParams&gt;
+<span id="W1L114" class="LineNr">114 </span><span class="DiffChange">limber_windows = </span><span class="DiffText">Tru</span><span class="DiffChange">e                                                                                                                                                                    </span>
+<span id="W1L115" class="LineNr">115 </span>limber_phi_lmin = 100
+<span id="W1L116" class="LineNr">116 </span>counts_density = True
+<span id="W1L117" class="LineNr">117 </span>counts_redshift = True
+<span id="W1L118" class="LineNr">118 </span>counts_lensing = False
+<span id="W1L119" class="LineNr">119 </span>counts_velocity = True
+<span id="W1L120" class="LineNr">120 </span>counts_radial = False
+<span id="W1L121" class="Folded">121 </span><span class="Folded">+-- 24 lines: counts_timedelay = True--------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span id="W1L145" class="LineNr">145 </span>use_cl_spline_template = True
+<span id="W1L146" class="LineNr">146 </span>SourceWindows = []
+<span id="W1L147" class="LineNr">147 </span>CustomSources: &lt;CustomSources&gt;
+<span id="W1L148" class="LineNr">148 </span>num_custom_sources = 0
+<span id="W1L149" class="LineNr">149 </span>c_source_func = None
+<span id="W1L150" class="LineNr">150 </span>custom_source_ell_scales = []
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span class="LineNr">    </span><span class="DiffDelete">-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span id="W1L151" class="LineNr">151 </span>
+<span id="W1L152" class="LineNr">152 </span><span class="DiffAdd"> </span><span class="DiffAdd">                                                                                                                                                                                        </span>
+<span id="W1L153" class="LineNr">153 </span><span class="DiffAdd">------------------------------------------------------------------</span><span class="DiffAdd">                                                                                                                       </span>
+</pre>
+</div></td>
+<td><div>
+<pre>
+<span id="W2L1" class="LineNr">  1 </span><span class="DiffChange">print(</span><span class="DiffText">result</span><span class="DiffChange">s)                                                                                                                                                                           </span>
+<span id="W2L2" class="LineNr">  2 </span>
+<span id="W2L3" class="LineNr">  3 </span><span class="DiffChange">class: &lt;CAMB</span><span class="DiffText">data</span><span class="DiffChange">&gt;                                                                                                                                                                        </span>
+<span id="W2L4" class="LineNr">  4 </span><span class="DiffAdd">Params: &lt;CAMBparams&gt;</span><span class="DiffAdd">                                                                                                                                                                     </span>
+<span id="W2L5" class="LineNr">  5 </span>WantCls = True
+<span id="W2L6" class="LineNr">  6 </span>WantTransfer = True
+<span id="W2L7" class="LineNr">  7 </span>WantScalars = True
+<span id="W2L8" class="LineNr">  8 </span>WantTensors = False
+<span id="W2L9" class="LineNr">  9 </span>WantVectors = False
+<span id="W2L10" class="LineNr"> 10 </span>WantDerivedParameters = True
+<span id="W2L11" class="Folded"> 11 </span><span class="Folded">+-- 57 lines: Want_cl_2D_array = True--------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span id="W2L68" class="LineNr"> 68 </span>Reion: &lt;TanhReionization&gt;
+<span id="W2L69" class="LineNr"> 69 </span>Reionization = True
+<span id="W2L70" class="LineNr"> 70 </span>use_optical_depth = False
+<span id="W2L71" class="LineNr"> 71 </span>redshift = 10.0
+<span id="W2L72" class="LineNr"> 72 </span>optical_depth = 0.0
+<span id="W2L73" class="LineNr"> 73 </span>delta_redshift = 0.5
+<span id="W2L74" class="LineNr"> 74 </span><span class="DiffChange">fraction = </span><span class="DiffText">1.0829049339966108</span><span class="DiffChange">                                                                                                                                                            </span>
+<span id="W2L75" class="LineNr"> 75 </span>include_helium_fullreion = True
+<span id="W2L76" class="LineNr"> 76 </span>helium_redshift = 3.5
+<span id="W2L77" class="LineNr"> 77 </span>helium_delta_redshift = 0.4
+<span id="W2L78" class="LineNr"> 78 </span>helium_redshiftstart = 5.5
+<span id="W2L79" class="LineNr"> 79 </span>tau_solve_accuracy_boost = 1.0
+<span id="W2L80" class="LineNr"> 80 </span>timestep_boost = 1.0
+<span id="W2L81" class="Folded"> 81 </span><span class="Folded">+-- 28 lines: max_redshift = 50.0------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span id="W2L109" class="LineNr">109 </span>BesselBoost = 1.0
+<span id="W2L110" class="LineNr">110 </span>LimberBoost = 1.0
+<span id="W2L111" class="LineNr">111 </span>SourceLimberBoost = 1.0
+<span id="W2L112" class="LineNr">112 </span>KmaxBoost = 1.0
+<span id="W2L113" class="LineNr">113 </span>neutrino_q_boost = 1.0
+<span id="W2L114" class="LineNr">114 </span>SourceTerms: &lt;SourceTermParams&gt;
+<span id="W2L115" class="LineNr">115 </span><span class="DiffChange">limber_windows = </span><span class="DiffText">Fals</span><span class="DiffChange">e                                                                                                                                                                   </span>
+<span id="W2L116" class="LineNr">116 </span>limber_phi_lmin = 100
+<span id="W2L117" class="LineNr">117 </span>counts_density = True
+<span id="W2L118" class="LineNr">118 </span>counts_redshift = True
+<span id="W2L119" class="LineNr">119 </span>counts_lensing = False
+<span id="W2L120" class="LineNr">120 </span>counts_velocity = True
+<span id="W2L121" class="LineNr">121 </span>counts_radial = False
+<span id="W2L122" class="Folded">122 </span><span class="Folded">+-- 24 lines: counts_timedelay = True--------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+<span id="W2L146" class="LineNr">146 </span>use_cl_spline_template = True
+<span id="W2L147" class="LineNr">147 </span>SourceWindows = []
+<span id="W2L148" class="LineNr">148 </span>CustomSources: &lt;CustomSources&gt;
+<span id="W2L149" class="LineNr">149 </span>num_custom_sources = 0
+<span id="W2L150" class="LineNr">150 </span>c_source_func = None
+<span id="W2L151" class="LineNr">151 </span>custom_source_ell_scales = []
+<span id="W2L152" class="LineNr">152 </span><span class="DiffAdd">ThermoDerivedParams = [14.078033843725455, 1090.4107459355891, 144.70222777241182, 1.0296979140828528, 14.05288150955394, 1059.2617010774468, 147.47738930719996, 0.14010850138675543, 0.1595585204122626, 3392.165462262886, 0.010352959432424662, 0.8052660905382358, 0.4451698659533947]</span>
+<span id="W2L153" class="LineNr">153 </span><span class="DiffAdd">flat = True</span><span class="DiffAdd">                                                                                                                                                                              </span>
+<span id="W2L154" class="LineNr">154 </span><span class="DiffAdd">closed = False</span><span class="DiffAdd">                                                                                                                                                                           </span>
+<span id="W2L155" class="LineNr">155 </span><span class="DiffAdd">grhocrit = 1.5118544317149278e-07</span><span class="DiffAdd">                                                                                                                                                        </span>
+<span id="W2L156" class="LineNr">156 </span><span class="DiffAdd">grhog = 8.254089497837408e-12</span><span class="DiffAdd">                                                                                                                                                            </span>
+<span id="W2L157" class="LineNr">157 </span><span class="DiffAdd">grhor = 1.8745641255814026e-12</span><span class="DiffAdd">                                                                                                                                                           </span>
+<span id="W2L158" class="LineNr">158 </span><span class="DiffAdd">grhob = 7.360180120794687e-09</span><span class="DiffAdd">                                                                                                                                                            </span>
+<span id="W2L159" class="LineNr">159 </span><span class="DiffAdd">grhoc = 4.002202251624866e-08</span><span class="DiffAdd">                                                                                                                                                            </span>
+<span id="W2L160" class="LineNr">160 </span><span class="DiffAdd">grhov = 1.0378927652262507e-07</span><span class="DiffAdd">                                                                                                                                                           </span>
+<span id="W2L161" class="LineNr">161 </span><span class="DiffAdd">grhornomass = 5.709922326520952e-12</span><span class="DiffAdd">                                                                                                                                                      </span>
+<span id="W2L162" class="LineNr">162 </span><span class="DiffAdd">grhok = 0.0</span><span class="DiffAdd">                                                                                                                                                                              </span>
+<span id="W2L163" class="LineNr">163 </span><span class="DiffAdd">taurst = 205.5030505350841</span><span class="DiffAdd">                                                                                                                                                               </span>
+<span id="W2L164" class="LineNr">164 </span><span class="DiffAdd">dtaurec = 5.1375762633771025</span><span class="DiffAdd">                                                                                                                                                             </span>
+<span id="W2L165" class="LineNr">165 </span><span class="DiffAdd">taurend = 600.1598456780887</span><span class="DiffAdd">                                                                                                                                                              </span>
+<span id="W2L166" class="LineNr">166 </span><span class="DiffAdd">tau_maxvis = 280.8181288067061</span><span class="DiffAdd">                                                                                                                                                           </span>
+<span id="W2L167" class="LineNr">167 </span><span class="DiffAdd">adotrad = 2.1574685648044687e-06</span><span class="DiffAdd">                                                                                                                                                         </span>
+<span id="W2L168" class="LineNr">168 </span><span class="DiffAdd">omega_de = 0.6865031073454257</span><span class="DiffAdd">                                                                                                                                                            </span>
+<span id="W2L169" class="LineNr">169 </span><span class="DiffAdd">curv = 0.0</span><span class="DiffAdd">                                                                                                                                                                               </span>
+<span id="W2L170" class="LineNr">170 </span><span class="DiffAdd">curvature_radius = 1.0</span><span class="DiffAdd">                                                                                                                                                                   </span>
+<span id="W2L171" class="LineNr">171 </span><span class="DiffAdd">Ksign = 0.0</span><span class="DiffAdd">                                                                                                                                                                              </span>
+<span id="W2L172" class="LineNr">172 </span><span class="DiffAdd">tau0 = 14333.474146711578</span><span class="DiffAdd">                                                                                                                                                                </span>
+<span id="W2L173" class="LineNr">173 </span><span class="DiffAdd">chi0 = 14333.474146711578</span><span class="DiffAdd">                                                                                                                                                                </span>
+<span id="W2L174" class="LineNr">174 </span><span class="DiffAdd">scale = 1.0</span><span class="DiffAdd">                                                                                                                                                                              </span>
+<span id="W2L175" class="LineNr">175 </span><span class="DiffAdd">akthom = 3.822033203043116e-07</span><span class="DiffAdd">                                                                                                                                                           </span>
+<span id="W2L176" class="LineNr">176 </span><span class="DiffAdd">fHe = 0.08290493399661075</span><span class="DiffAdd">                                                                                                                                                                </span>
+<span id="W2L177" class="LineNr">177 </span><span class="DiffAdd">Nnow = 0.18619219640494483</span><span class="DiffAdd">                                                                                                                                                               </span>
+<span id="W2L178" class="LineNr">178 </span><span class="DiffAdd">z_eq = 3392.165462262886</span><span class="DiffAdd">                                                                                                                                                                 </span>
+<span id="W2L179" class="LineNr">179 </span><span class="DiffAdd">grhormass = [0.0, 0.0, 0.0, 0.0, 0.0]</span><span class="DiffAdd">                                                                                                                                                    </span>
+<span id="W2L180" class="LineNr">180 </span><span class="DiffAdd">nu_masses = [0.0, 0.0, 0.0, 0.0, 0.0]</span><span class="DiffAdd">                                                                                                                                                    </span>
+<span id="W2L181" class="LineNr">181 </span><span class="DiffAdd">num_transfer_redshifts = 1</span><span class="DiffAdd">                                                                                                                                                               </span>
+<span id="W2L182" class="LineNr">182 </span><span class="DiffAdd">transfer_redshifts = [0.0]</span><span class="DiffAdd">                                                                                                                                                               </span>
+<span id="W2L183" class="LineNr">183 </span><span class="DiffAdd">PK_redshifts_index = [1, 0, 0, 0, 0, 0, 0, ...]</span><span class="DiffAdd">                                                                                                                                          </span>
+<span id="W2L184" class="LineNr">184 </span><span class="DiffAdd">OnlyTransfers = False</span><span class="DiffAdd">                                                                                                                                                                    </span>
+<span id="W2L185" class="LineNr">185 </span><span class="DiffAdd">HasScalarTimeSources = False</span><span class="DiffAdd">                                                                                                                                                             </span>
+<span id="W2L186" class="LineNr">186 </span>
+</pre>
+</div></td>
+</tr>
+</table>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->
+
