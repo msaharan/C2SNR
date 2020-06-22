@@ -51,7 +51,8 @@ def d_angpowspec_integrand(dist, ell, dist_s, constf):
     # Assume D is angular diameter distance and Chi is comoving distance
     # ell/D becomes ell/(a * Chi)
     # dist is comoving distance
-    return constf * (1 - dist/dist_s)**2 * h**3 * PK.P(z, ell * (1 + z)/dist)
+    #return constf * (1 - dist/dist_s)**2 * h**3 * PK.P(z, ell * (1 + z)/dist)
+    return constf * (1 - dist/dist_s)**2 * (1 + z)**2 * PK.P(z, ell * (1 + z)/dist)
 
 def d_angpowspec_integration(ell, redshift):
     constf = d_constantfactor(redshift)
@@ -63,12 +64,16 @@ def d_angpowspec_integration(ell, redshift):
 ## Integration over redshift
 ###############################################################################
 def z_angpowspec_integrand(z, ell, dist_s, constf):
-    dist = a_distance(z)
-    return constf * (1 - dist/dist_s)**2 * h**3 * PK.P(z, ell/dist)/ hubble_ratio(z)
+    #    dist = a_distance(z)
+    dist = c_distance(z)
+    #return constf * (1 - dist/dist_s)**2 * h**3 * PK.P(z, ell/dist)/ hubble_ratio(z)
+    return constf * (1 - dist/dist_s)**2 * (1 + z)**2 * PK.P(z, ell/dist)/ hubble_ratio(z)
+#    return constf * (1 - dist/dist_s)**2 * (1 + z)**2 * PK.P(z, ell/dist)
 
 def z_angpowspec_integration(ell, redshift):
     constf = z_constantfactor(redshift)
-    dist_s = a_distance(redshift)
+#    dist_s = a_distance(redshift)
+    dist_s = c_distance(redshift)
     return integrate.quad(z_angpowspec_integrand, 0.00001, redshift, args = (ell, dist_s, constf))[0]
 #------------------------------------------------------------------------------
 
@@ -94,6 +99,15 @@ pars.InitPower.set_params(ns=0.9603, As = 2.196e-09)
 results = camb.get_background(pars)
 k = 10**np.linspace(-6,1,1000)
 PK = get_matter_power_interpolator(pars, nonlinear=True, kmax = 2)
+'''
+pars = model.CAMBparams(NonLinear = 0, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2=0.02205, YHe = 0.24770)
+pars.DarkEnergy.set_params(w=-1.13)
+pars.set_for_lmax(lmax=2500)
+pars.InitPower.set_params(ns=0.9603, As = 2.196e-09)
+results = camb.get_background(pars)
+k = 10**np.linspace(-6,1,1000)
+PK = get_matter_power_interpolator(pars, nonlinear=False, kmax = 2)
+'''
 #------------------------------------------------------------------------------
 
 ###############################################################################
@@ -122,8 +136,8 @@ plt.plot(x_2,y_2,color='black', label='Pourtsidou et al. 2014')
 ###############################################################################
 # To store the data
 ###############################################################################
-d_file = open("./Text_files/angpowspec_integration_over_distance.txt", 'w')
-z_file = open("./Text_files/angpowspec_integration_over_redshift.txt", 'w')
+d_file = open("./Text_files/test_angpowspec_integration_over_distance.txt", 'w')
+z_file = open("./Text_files/test_angpowspec_integration_over_redshift.txt", 'w')
 #------------------------------------------------------------------------------
 
 ###############################################################################
@@ -136,8 +150,8 @@ for L in tqdm(range(10, int(l_plot_upp_limit))):
 d_file.close()
 z_file.close()
 
-L , d_CL = np.loadtxt('./Text_files/angpowspec_integration_over_distance.txt', unpack = True)
-L , z_CL = np.loadtxt('./Text_files/angpowspec_integration_over_redshift.txt', unpack = True)
+L , d_CL = np.loadtxt('./Text_files/test_angpowspec_integration_over_distance.txt', unpack = True)
+L , z_CL = np.loadtxt('./Text_files/test_angpowspec_integration_over_redshift.txt', unpack = True)
 
 plt.plot(L, d_CL, color='red', label='This work (integ. over dist.)')
 plt.plot(L, z_CL, color='blue', label='This work (integ. over z)')
@@ -150,7 +164,6 @@ plt.yscale("log")
 plt.xlim(l_plot_low_limit, l_plot_upp_limit)
 plt.legend()
 plt.ylim(1E-10,1E-7)
-plt.savefig("./Plots/angpowspec_integration_over_distancs_vs_redshift.pdf")
+plt.savefig("./Plots/test_angpowspec_integration_over_distancs_vs_redshift.pdf")
 plt.show()
 #------------------------------------------------------------------------------
-
