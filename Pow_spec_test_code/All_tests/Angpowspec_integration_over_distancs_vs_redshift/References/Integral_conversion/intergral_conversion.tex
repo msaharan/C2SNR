@@ -5,6 +5,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{graphicx}
+END { system('convert -density 600 -background white -flatten output.pdf pages.png'); }
 \begin{document}
 	\section{Distance and Redshift Integrals}
 			Here $ E(z) = H(z)/H_0$,  $\mathcal{D}$ is angular diameter distance. $\chi$ is comoving radial distance
@@ -19,6 +20,6 @@
 			&=& \frac{H_0}{c}\int f\left(z, \frac{\ell}{\mathcal{D}}\right)  \frac{c dt}{a } \\
 			&=& \frac{H_0}{c}\int f\left(z, \frac{\ell a}{\mathcal{D} a}\right)  \frac{c dt}{a } \\
 			&=& \frac{H_0}{c}\int_0^{\chi_s} f\left(z, \frac{\ell }{\chi a}\right)  d\chi \\
-			&=& \frac{H_0}{c}\int_0^{\chi_s} f\left(z, \frac{\ell (1 + z)}{\chi }\right)  d\chi \\
+			&=& \frac{H_0}{c}\int_0^{\chi_s} f\left(z, \frac{\ell (1 + z)}{\chi }\right)  d\chi 
 			\end{eqnarray}
 \end{document}
