@@ -42,11 +42,11 @@ l_array = np.zeros(l_max - l_min)
 pars = model.CAMBparams(NonLinear = 1, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2=
 0.02205, YHe = 0.24770, Do21cm = True, transfer_21cm_cl = True)
 pars.DarkEnergy.set_params(w=-1.13)
-pars.set_for_lmax(lmax=2500)
+pars.set_for_lmax(lmax=20000)
 pars.InitPower.set_params(ns=0.9603, As = 2.196e-09)
 results = camb.get_background(pars)
 k = 10**np.linspace(-6,1,1000)
-PK = get_matter_power_interpolator(pars, nonlinear=True, kmax = 2)
+PK = get_matter_power_interpolator(pars, nonlinear=True, kmax = 30)
 #------------------------------------------------------------------------------
 
 ###############################################################################
