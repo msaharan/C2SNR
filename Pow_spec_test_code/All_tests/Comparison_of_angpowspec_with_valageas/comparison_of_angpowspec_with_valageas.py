@@ -126,7 +126,7 @@ plt.plot(L, 2 * 3.14 * L**2 * d_CL, color='red', label='Distance')
 plt.plot(L, 2 * 3.14 * L**2 * z_CL, color='blue', label='Redshift')
 
 plt.xlabel('L')
-plt.ylabel(r'$2 \pi C_{L}$')
+plt.ylabel(r'$2 \pi \; L^2\; C_{L}$')
 plt.suptitle("Angular Power Spectrum (z_source = 1)")
 plt.xscale("log")
 plt.yscale("log")
