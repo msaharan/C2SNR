@@ -8,7 +8,7 @@ from scipy import interpolate
 from tqdm.auto import tqdm
 import camb
 from camb import model, initialpower, get_matter_power_interpolator
-"""
+
 ###############################################################################
 # Constant factor; integration over distance
 ###############################################################################
@@ -126,12 +126,16 @@ PK_nl = get_matter_power_interpolator(pars_nl, nonlinear=True, kmax = 75, k_huni
 ###############################################################################
 # To store the data
 ###############################################################################
-d_file = open("./Text_files/linear_distance.txt", 'w')
-z_file = open("./Text_files/linear_redshift.txt", 'w')
+d_file = open("./Text_files/test_1_linear_distance.txt", 'w')
+z_file = open("./Text_files/test_1_linear_redshift.txt", 'w')
 
-d_file_nl = open("./Text_files/nonlinear_distance.txt", 'w')
-z_file_nl = open("./Text_files/nonlinear_redshift.txt", 'w')
+d_file_nl = open("./Text_files/test_1_nonlinear_distance.txt", 'w')
+z_file_nl = open("./Text_files/test_1_nonlinear_redshift.txt", 'w')
 #------------------------------------------------------------------------------
+
+# Variation of comoving distance with redshift
+red, dist_red = np.loadtxt("/home/dyskun/Documents/Utility/Academics/Cosmology_project/C2SNR/Pow_spec_test_code/Data_files/Distances/comov_dist_vs_z.txt", unpack = True)
+
 
 ###############################################################################
 # Plot from this work
@@ -149,12 +153,10 @@ z_file.close()
 
 d_file_nl.close()
 z_file_nl.close()
-"""
+
 ###############################################################################
 # Read data files
 ###############################################################################
-# Variation of comoving distance with redshift
-red, dist_red = np.loadtxt("/home/dyskun/Documents/Utility/Academics/Cosmology_project/C2SNR/Pow_spec_test_code/Data_files/Distances/comov_dist_vs_z.txt", unpack = True)
 
 # Plot from Valageas
 x, y = np.loadtxt("/home/dyskun/Documents/Utility/Academics/Cosmology_project/C2SNR/Pow_spec_test_code/Data_files/Valageas/linear_z_1.txt", unpack = True)
@@ -183,11 +185,11 @@ plt.plot(x_2, (x_2**2 * 2 * 3.14) * (2 * 3.14 *  2 * 3.14) * y_2 / (4 ) ,color='
 #------------------------------------------------------------------------------
 
 
-L , d_CL = np.loadtxt('./Text_files/linear_distance.txt', unpack = True)
-L , z_CL = np.loadtxt('./Text_files/linear_redshift.txt', unpack = True)
+L , d_CL = np.loadtxt('./Text_files/test_1_linear_distance.txt', unpack = True)
+L , z_CL = np.loadtxt('./Text_files/test_1_linear_redshift.txt', unpack = True)
 
-L_nl , d_CL_nl = np.loadtxt('./Text_files/nonlinear_distance.txt', unpack = True)
-L_nl , z_CL_nl = np.loadtxt('./Text_files/nonlinear_redshift.txt', unpack = True)
+L_nl , d_CL_nl = np.loadtxt('./Text_files/test_1_nonlinear_distance.txt', unpack = True)
+L_nl , z_CL_nl = np.loadtxt('./Text_files/test_1_nonlinear_redshift.txt', unpack = True)
 
 
 plt.plot(L, 2 * 3.14 * L**2 * d_CL, label='L Sah. Distance')
@@ -210,6 +212,6 @@ plt.xscale("log")
 plt.yscale("log")
 plt.xlim(10, x_nl.max())
 plt.legend(loc = 1)
-plt.savefig("./Plots/angpowspec_integration_over_distancs_vs_redshift.pdf")
+plt.savefig("./Plots/test_1.pdf")
 plt.show()
 #------------------------------------------------------------------------------

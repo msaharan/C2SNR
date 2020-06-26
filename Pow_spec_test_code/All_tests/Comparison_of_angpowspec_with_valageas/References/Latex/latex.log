@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex 2020.6.24)  26 JUN 2020 18:03
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/Arch Linux) (preloaded format=pdflatex 2020.6.24)  26 JUN 2020 18:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -190,7 +190,7 @@ LaTeX Font Info:    Trying to load font information for T1+cmtt on input line 5
 (/usr/share/texmf-dist/tex/latex/base/t1cmtt.fd
 File: t1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
-Overfull \hbox (5.10352pt too wide) in paragraph at lines 59--59
+Overfull \hbox (5.10352pt too wide) in paragraph at lines 60--60
 []\T1/cmtt/m/n/12 Directory: C2SNR/Pow_spec_test_code/All_tests/Comparison_of_a
 ngp[] 
  []
@@ -214,7 +214,7 @@ share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-di
 st/fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf-dist/fonts/type1/
 public/cm-super/sfrm1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super
 /sfti1200.pfb></usr/share/texmf-dist/fonts/type1/public/cm-super/sftt1200.pfb>
-Output written on latex.pdf (2 pages, 145562 bytes).
+Output written on latex.pdf (2 pages, 145889 bytes).
 PDF statistics:
  56 PDF objects out of 1000 (max. 8388607)
  40 compressed objects within 1 object stream
