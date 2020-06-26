@@ -6,7 +6,7 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \begin{document}
-\section{Equation 24 of the paper}
+\section{Equation 24 of Valageas et al.}
 \begin{eqnarray}
 P_k(\ell) &=& 2 \pi \int_0^{\chi_s} d\chi \frac{w}{\mathcal{D}} P (\ell/\mathcal{D}; z)
 \end{eqnarray}
@@ -24,8 +24,39 @@ P_k(\ell) = 2 \pi \left(\frac{9 \Omega_m^2 H_0^4 }{4 c^4 } \right)
 Integral over redshift
 \begin{eqnarray}
 P_k(\ell) = 2 \pi \left(\frac{9 \Omega_m^2 H_0^3 }{4 c^3 } \right)
-\int_0^{z_s}  \left( \frac{ \mathcal{D}(\chi_s - \chi)}{ \mathcal{D}(\chi_s)} (1 + z) \right)^2  P(\ell/\mathcal{D};z) \frac{dz}{E(z)}
+\int_0^{z_s}  \left( \frac{ \mathcal{D}(\chi_s - \chi)}{ \mathcal{D}(\chi_s)} (1 + z) \right)^2  P(\ell/\mathcal{D};z) \frac{dz}{E(z)} \label{eq:val}
 \end{eqnarray}
 where $ E(z)  = H(z)/H_0$.
+
+\section{Eq. 20 of Pourtsidou et al.}
+\begin{eqnarray}
+C_L = \frac{9\Omega_m^2}{L (L + 1)} \left(\frac{H_0}{c}\right)^3 \int_0^{z_s} (...)
+\end{eqnarray}
+P14 have plotted $ L (L + 1) C_L /2\pi $. Therefore we have 
+\begin{eqnarray}
+C_L = \frac{9\Omega_m^2}{2 \pi} \left(\frac{H_0}{c}\right)^3 \int_0^{z_s} (...)
+\end{eqnarray}
+in the plot.
+
+To compare the result with Valageas et al. we multiply the above expression with $ (2\pi)^2/4 $. Therefore, P14's expression becomes
+\begin{eqnarray}
+C_L = \frac{2\pi 9\Omega_m^2}{4} \left(\frac{H_0}{c}\right)^3 \int_0^{z_s} dz P(k, z) W(z)^2/E(z) \label{eq:P14}
+\end{eqnarray}
+Notice that $ C_L  $ is dimensionless.
+\begin{eqnarray}
+P(k, z)&:& Mpc^3 \\
+\frac{H_0}{c}&:& \frac{1}{Mpc^3}
+\end{eqnarray}
+Even if $ Mpc/h $ units are used, $ h $ cancels. 
+
+Ignore this paragraph:  But we are going to multiply $ C_L $ with $ L^2 $. There we need to take the $ h $ factors into account.	I did a \textit{Mpc} word search in P14 and saw that they have used $ Mpc/h $ everywhere. So I am going to assume that they have taken $ h/Mpc $ units in $ L $ also.  Okay. I just realized that $ L $ is dimensionless. So there is no problem. The plotted $ C_L $ is still dimensionless. The same holds for Valageas's plot. I don't have to worry about the $ h $ factors. They just cancel. Only two parts contain the $ h $  factors: $ H_0/c $ and $ P(k,z) $ and they cancel. I didn't realise this earlier. 
+\\
+
+Well, now we can directly compare \eqref{eq:P14} and \eqref{eq:val} without any issues. So, what we finally plot to compare with Valageas's plot is P14's plotted curve $ \times (L^2 \times 2\pi)  \times \left( (2\pi)^2/4 \right) $. That's what I have done in "Plot from Pourtsidou et al. 2014" section of the code located in this directory. 
+\begin{verbatim}
+Directory: C2SNR/Pow_spec_test_code/All_tests/Comparison_of_angp
+owspec_with_valageas/Compare_ang_pow_spec
+\end{verbatim}
+
 
 \end{document}
