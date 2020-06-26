@@ -4,11 +4,13 @@ import cosmolopy.distance as cd
 import cosmolopy.perturbation as cp
 import scipy.integrate as integrate
 import matplotlib.pyplot as plt
-from cosmolopy.perturbation import fgrowth  
+from cosmolopy.perturbation import fgrowth
 from scipy import interpolate
 from tqdm.auto import tqdm
 import camb
 from camb import model, initialpower, get_matter_power_interpolator
+
+import numpy as np
 
 ###############################################################################
 ## Ang dia distance between z = 0 and some redshift

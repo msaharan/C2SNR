@@ -39,7 +39,7 @@ def hubble_ratio(var):
 
 def angpowspec_integrand_without_j(z, ell, dist_s, constf):
     dist = distance(z)
-    return constf * (1 - dist/dist_s)**2 * PK.P(z, ell/dist)/ hubble_ratio(z)
+    return constf * (1 - dist/dist_s)**2 * h**3 * PK.P(z, ell/dist)/ hubble_ratio(z)
 
 def angpowspec_integration_without_j(ell, redshift):
     constf = constantfactor(redshift)
@@ -49,7 +49,7 @@ def angpowspec_integration_without_j(ell, redshift):
 def angpowspec_integrand_with_j(z, ell, dist_s, constf, j):
     dist = distance(z)
     k_var = ((ell/dist)**2 + (2 * 3.14 * j / dist_s)**2 )**0.5
-    return constf * (1 - dist/dist_s)**2 * PK.P(z, k_var)/ hubble_ratio(z)
+    return constf * (1 - dist/dist_s)**2 * h**3 * PK.P(z, k_var)/ hubble_ratio(z)
 
 def angpowspec_integration_with_j(ell, j, redshift):
     constf = constantfactor(redshift)
@@ -66,7 +66,7 @@ def N4_integrand(l1, l2, ell, redshift):
     return 2 * (angpowspec_without_j[ell] + (C_l)) * (angpowspec_without_j[abs(ell-small_l)] + (C_l)) / two_pi_squared
 
 def N4(ell):
-    return integrate.nquad(N4_integrand, [(0, l_max), (0, l_max)], args = (ell, redshift), opts = [{'limit' : 5000}, {'limit' : 5000}])[0]
+    return integrate.dblquad(N4_integrand, 0, l_max, 0, l_max, args = (ell, redshift))[0]
 
 def N3_integrand(l1, l2, ell, j, redshift):
     small_l = int(np.sqrt(l1**2 + l2**2))
@@ -74,9 +74,10 @@ def N3_integrand(l1, l2, ell, j, redshift):
 
 def N3(ell, j, redshift):
     return integrate.nquad(N3_integrand, [(0, l_max), (0, l_max)], args = (ell, j, redshift), opts = [{'limit' : 5000}, {'limit' : 5000}])[0]
-    #opts = [{'limit' : 5000, 'epsabs' : 1.49e-05, 'epsrel' : 1.49e-05}, {'limit' : 5000, 'epsabs' : 1.49e-05, 'epsrel' : 1.49e-05}]
+
 def N2(ell, j, N3_for_this_L_j, redshift):
     return Tz(redshift)**2 * mass_moment_2**2 * N3_for_this_L_j / (2 * eta_D2_L**2 * mass_moment_1**4 * Cshot(redshift))
+
 
 def N1(ell, j, N3_for_this_L_j, redshift):
     return Tz(redshift)**2 * j_max * mass_moment_3 * (integrate.dblquad(lambda l1,l2: 1 , 0, l_max, lambda l2: 0, lambda l2: l_max)[0] / two_pi_squared) * N3_for_this_L_j / (eta_D2_L**2 * mass_moment_1**3 * Cshot(redshift))
@@ -104,9 +105,11 @@ def Cshot(redshift):
 
 #------------------------------------------------------------------------------
 
+
 ###############################################################################
 # Constants
 ###############################################################################
+
 omegam0 = 0.315
 omegal = 0.685
 c = 3 * 10**8
@@ -114,10 +117,10 @@ H0 = 67.3 * 1000
 h = 0.673
 cosmo = {'omega_M_0': omegam0, 'omega_lambda_0': omegal, 'omega_k_0': 0.0, 'h': 0.673}
 C_l = 1.6*10**(-16)
-delta_l = 36
+delta_l = 300
 f_sky = 0.2
 l_plot_low_limit = 10
-l_plot_upp_limit = 600
+l_plot_upp_limit = 550
 err_stepsize = 36
 n_err_points = 1 + int((l_plot_upp_limit - l_plot_low_limit)/err_stepsize)
 mass_moment_1 = 0.3
@@ -125,38 +128,31 @@ mass_moment_2 = 0.21
 mass_moment_3 = 0.357
 mass_moment_4 = 46.64
 j_low_limit = 1
-j_upp_limit = 41
+j_upp_limit = 126
 j_max = 126
 two_pi_squared = 2 * 3.14 * 2 * 3.14
 eta = 0
 eta_D2_L = 5.94 * 10**12 / 10**eta
 redshift = 2
-l_max = 10000
-#ell_max = int(l_max * 1.414) + 1000
-ell_max = 15000
-#k_max = ell_max/distance(redshift) + 10
-k_max = 9.5
-k_lim = 1
-"""
-if k_max>=0 and k_max <10:
-    k_lim = 1
-elif k_max>=10 and k_max<100:
-    k_lim = 2
-elif k_max>=100 and k_max<1000:
-    k_lim = 3
-"""
-pars = model.CAMBparams(NonLinear = 1, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2=0.02205, YHe = 0.24770)
+l_max = 19900
+
+
+# Power spectrum
+# nz in demo.html
+nz = 1000
+pars = model.CAMBparams(NonLinear = 1, WantTransfer = True, H0=67.3, omch2=0.1199, ombh2=0.02205, YHe = 0.24770, Do21cm = True, transfer_21cm_cl = True)
 pars.DarkEnergy.set_params(w=-1.13)
-pars.set_for_lmax(lmax = ell_max)
+pars.set_for_lmax(lmax=30000)
 pars.InitPower.set_params(ns=0.9603, As = 2.196e-09)
 results = camb.get_background(pars)
-k = 10**np.linspace(-6, k_lim, 1000)
-PK = get_matter_power_interpolator(pars, nonlinear=True, kmax = k_max, k_hunit = False, hubble_units = False)
+k=np.exp(np.log(10)*np.linspace(-6,2,1000))
+PK = get_matter_power_interpolator(pars, nonlinear=True, kmax = 40)
 #------------------------------------------------------------------------------
 
 ###############################################################################
 # Arrays
 ###############################################################################
+chi_s = np.zeros(11)
 L_array = np.arange(0, l_plot_upp_limit)
 angpowspec_without_j = np.zeros(int(l_max))
 N_L = np.zeros(n_err_points)
@@ -195,17 +191,17 @@ plt.plot(x_2,y_2,color='black', label='Pourtsidou et al. 2014 (z=2)')
 ###############################################################################
 # Plot from this work
 ###############################################################################
-plot_err = open("./Text_files/plt_err_integration_over_redshift_j_upp_limit_{}_lmax_{}_eta_{}.txt".format(j_upp_limit-1, l_max, eta), "w")
-plot_curve = open("./Text_files/plt_integration_over_redshift_j_upp_limit_{}_lmax_{}_eta_{}.txt".format(j_upp_limit-1, l_max, eta), "w")
+# Comoving distance between z = 0 and z = source redshift
+
+## NOte THAT LOOP STARTS FROM 1
 
 for L in tqdm(range(1, int(l_max * 2**0.5))):                                                
     angpowspec_without_j[L] = angpowspec_integration_without_j(L, redshift) / (L * (L + 1))
 
 for L in tqdm(range(1, l_plot_upp_limit)):
     angpowspec_without_j_signal_in_final_plot[L] = (L * (L + 1) / (2 * 3.14)) * angpowspec_without_j[L]
-    plot_curve.write('{}    {}\n'.format(L, (L * (L + 1) / (2 * 3.14)) * angpowspec_without_j[L]))
-plot_curve.close()
 
+fileout = open("./Text_files/gaussian_plus_poisson_error_bar_integration_over_redshift_j_upp_limit_{}_lmax_{}_eta_{}_with_offline_camb.txt".format(j_upp_limit-1, l_max, eta), "w")
 
 for L in tqdm(range(1, int(l_max * 2**0.5))):
     for j in range(j_low_limit, j_upp_limit):
@@ -215,8 +211,13 @@ L_counter = 0
 for L in range(l_plot_low_limit + 8, l_plot_upp_limit, err_stepsize):
 
     for j in tqdm(range(j_low_limit, j_upp_limit)):
+        print("before")
         noise_denominator_sum[L_counter] = noise_denominator_sum[L_counter] + noise_denominator_integration(L, j, redshift)
+        print("after")
+
+        print("N3 before")
         N3_for_this_L_j = N3(L, j, redshift)        
+        print("N3 after")
         N1_sum[L_counter] = N1_sum[L_counter] + N1(L, j, N3_for_this_L_j, redshift)
         N2_sum[L_counter] = N2_sum[L_counter] + N2(L, j, N3_for_this_L_j, redshift)
         N3_sum[L_counter] = N3_sum[L_counter] + N3_for_this_L_j
@@ -227,23 +228,26 @@ for L in range(l_plot_low_limit + 8, l_plot_upp_limit, err_stepsize):
     # error bars: delta_C_L(L); equation 21 in Pourtsidou et al. 2014
     delta_C_L[L_counter] = (L * (L + 1) / (2 * 3.14)) * ( 2 / ((2*L + 1) * delta_l * f_sky))**0.5 * (angpowspec_without_j[L] + N_L[L_counter]) 
 
-    #plt.errorbar(L_array[L], angpowspec_without_j_signal_in_final_plot[L], yerr = delta_C_L[L_counter], capsize=3, ecolor='blue')
-    plot_err.write('{}  {}  {}  {}\n'.format(L, angpowspec_without_j_signal_in_final_plot[L], delta_C_L[L_counter], N_L[L_counter]))
-    #fileout.write("{}   {}   {}\n".format(L, delta_C_L[L_counter], N_L[L_counter]))
+    plt.errorbar(L_array[L], angpowspec_without_j_signal_in_final_plot[L], yerr = delta_C_L[L_counter], capsize=3, ecolor='blue')
+
+    fileout.write("{}   {}   {}\n".format(L, delta_C_L[L_counter], N_L[L_counter]))
+
+    print("L = {}, delta_C_L = {}, N_L = {}\n".format(L, delta_C_L[L_counter], N_L[L_counter]))
     L_counter = L_counter + 1
 
-plot_err.close()
+fileout.close()
 
-# plt.plot(L_array[l_plot_low_limit:l_plot_upp_limit], angpowspec_without_j_signal_in_final_plot[l_plot_low_limit:l_plot_upp_limit], color='blue', label='This work (Non-linear PS)'.format(redshift))
+plt.plot(L_array[l_plot_low_limit:l_plot_upp_limit], angpowspec_without_j_signal_in_final_plot[l_plot_low_limit:l_plot_upp_limit], color='blue', label='This work (Non-linear PS)'.format(redshift))
 
-# plt.xlabel('L')
-# plt.ylabel(r'$C_{L} L(L+1)/2\pi$')
-# plt.suptitle("Angular Power Spectrum")
-# plt.xscale("log")
-# plt.yscale("log")
-# plt.xlim(l_plot_low_limit, l_plot_upp_limit)
-# plt.legend()
-# #plt.ylim(1E-10,1E-7)
-# plt.savefig("./Plots/gaussian_plus_poisson_error_bar_integration_over_redshift_j_upp_limit_{}_lmax_{}_eta_{}_with_offline_camb.pdf".format(j_upp_limit-1, l_max, eta))
-# plt.show()
+plt.xlabel('L')
+plt.ylabel(r'$C_{L} L(L+1)/2\pi$')
+plt.suptitle("Angular Power Spectrum")
+plt.xscale("log")
+plt.yscale("log")
+plt.xlim(l_plot_low_limit, l_plot_upp_limit)
+plt.legend()
+#plt.ylim(1E-10,1E-7)
+plt.savefig("./Plots/gaussian_plus_poisson_error_bar_integration_over_redshift_j_upp_limit_{}_lmax_{}_eta_{}_with_offline_camb.pdf".format(j_upp_limit-1, l_max, eta))
+plt.show()
+
 #------------------------------------------------------------------------------
