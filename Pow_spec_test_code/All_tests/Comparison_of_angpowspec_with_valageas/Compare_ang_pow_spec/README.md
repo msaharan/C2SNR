@@ -2,7 +2,7 @@
 
 ## Valageas's Plot
 
-![valageas.png](valageas.png)
+![valageas.png](z_1_0.png)
 
 
 * In this paper, **k** has units: h (Mpc)^(-1).
