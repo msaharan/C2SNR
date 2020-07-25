@@ -42,3 +42,6 @@
 * Same as test 8
 * `k = 10**np.linspace(-6,1,1000) * h` -> `k = 10**np.linspace(-6,1,1000)`
 * And a bunch of other untracked stuff. 
+
+# Test 10
+* Same as test 9

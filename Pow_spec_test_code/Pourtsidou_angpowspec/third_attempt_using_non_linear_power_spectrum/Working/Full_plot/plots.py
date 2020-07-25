@@ -16,12 +16,14 @@ plt.plot(x_2,y_2,color='black', label='Pourtsidou et al. 2014 (z=2)')
 #------------------------------------------------------------------------------
 
 l_plot_low_limit = 10
-l_plot_upp_limit = 550
-err_stepsize = 300
+l_plot_upp_limit = 600
+err_stepsize = 36
 n_err_points = 1 + int((l_plot_upp_limit - l_plot_low_limit)/err_stepsize)
 
-L, CL = np.loadtxt('./Text_files/plt_integration_over_redshift_j_upp_limit_2_lmax_550_eta_0.txt', unpack=True)
-L_err, CL_err, delta_CL, junk = np.loadtxt('./Text_files/plt_err_integration_over_redshift_j_upp_limit_2_lmax_550_eta_0.txt', unpack=True)
+L, CL = np.loadtxt('./Text_files/plt_integration_over_redshift_j_upp_limit_40_lmax_10000_eta_0.txt', unpack=True)
+plt.plot(L, CL, label = 'This Work (z = 2)', color = 'blue')
+
+L_err, CL_err, delta_CL, junk = np.loadtxt('./Text_files/plt_err_integration_over_redshift_j_upp_limit_40_lmax_10000_eta_0.txt', unpack=True)
 #"""
 for i in range(n_err_points):    
     plt.errorbar(L_err[i], CL_err[i], yerr = delta_CL[i], capsize=3, ecolor='blue')
@@ -29,6 +31,5 @@ for i in range(n_err_points):
 plt.xscale('log')
 plt.yscale('log')
 plt.legend()
-plt.xlim(10, 550)
-plt.plot(L, CL, label = 'This Work (z = 2)')
+plt.xlim(l_plot_low_limit, l_plot_upp_limit)
 plt.show()
