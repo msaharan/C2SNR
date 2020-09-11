@@ -1,0 +1,15 @@
+\contentsline {section}{\numberline {1}Extending Hu's quadratic estimator to three dimensions}{2}{section.1}%
+\contentsline {paragraph}{Objective}{2}{section*.2}%
+\contentsline {subsection}{\numberline {1.1}Introduction}{2}{subsection.1.1}%
+\contentsline {subsection}{\numberline {1.2}Notation}{2}{subsection.1.2}%
+\contentsline {paragraph}{Observed volume}{2}{section*.3}%
+\contentsline {paragraph}{Intensity field}{2}{section*.4}%
+\contentsline {subsection}{\numberline {1.3}Formalism}{2}{subsection.1.3}%
+\contentsline {paragraph}{Discretize $k_\perp $}{2}{section*.5}%
+\contentsline {paragraph}{Discretize $ k_\parallel $}{3}{section*.6}%
+\contentsline {paragraph}{Final expression of Intensity with discrete \textbf {k}}{3}{section*.8}%
+\contentsline {paragraph}{Simplify}{3}{section*.9}%
+\contentsline {paragraph}{Definition of $ C_{l,j} $}{4}{section*.10}%
+\contentsline {section}{\numberline {2}Lensing reconstruction noise}{4}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Mathematical form of a quadratic estimator}{4}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Deriving the estimator}{5}{subsection.2.2}%

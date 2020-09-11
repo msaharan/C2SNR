@@ -1,0 +1,812 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+%\usepackage[margin=0.5in]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage{multirow}
+\usepackage{subcaption}
+\graphicspath{ {./images/} }
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{epstopdf}
+\usepackage{bm}
+\usepackage{mdframed}
+
+\usepackage{cite}
+
+%\usepackage[
+%backend=biber,
+%style=authoryear,
+%sorting=ynt
+%]{biblatex}
+%\addbibresource{project_log.bib}
+
+
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\urlstyle{same}
+
+\newcommand{\bma}{\begin{math}}
+\newcommand{\ema}{\end{math}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\beqa}{\begin{eqnarray}}
+\newcommand{\eeqa}{\end{eqnarray}}
+\newcommand{\beqal}{\begin{aligned}}
+\newcommand{\eeqal}{\end{aligned}}
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+\newcommand{\bit}{\begin{itemize}}
+\newcommand{\eit}{\end{itemize}}
+
+
+\def\n{{\bf  \hat n}}
+\def\k{{\bf k}}
+\def\l{{\bf l}}
+\def\L{{\bf L}}
+\def\r{{\bf r}}
+\def\x{{\bf x}}
+\def\u{{\bf u}}
+\def\F{{\bf F}}
+\def\K{{\rm K}}
+\def\mK{{\rm mK}}
+\def\arcmin{{\rm arcmin}}
+\def\ln{{\rm ln}}
+\def\max{{\rm max}}
+\def\min{{\rm min}}
+\def\tot{{\rm tot}}
+\def\iul{{\rm I}}
+\def\il{{\tilde{\rm I}}}
+\def\itot{{\tilde{\rm I}^{\rm tot}}}
+\def\pul{{\rm P}}
+\def\pl{{\tilde{\rm P}}}
+\def\ptot{{\tilde{\rm P}^{\rm tot}}}
+\def\cul{{\rm C}}
+\def\cl{{\tilde{\rm C}}}
+\def\ctot{{\tilde{\rm C}^{\rm tot}}}
+\def\km{{\rm km}}
+\def\kg{{\rm kg}}
+\def\h{{\rm h}}
+\def\erf{{\rm erf}}
+\def\erfc{{\rm erfc}}
+\def\mpch{{\rm Mpc/h}}
+\def\mhz{{\rm MHz}}
+\def\d2l{\frac{d^2l}{(2\pi)^2}}
+\def\dko{\frac{dk_1}{2\pi}}
+\def\dkt{\frac{dk_2}{2\pi}}
+\def\dtheta{\delta \theta}
+\def\dang{\mathcal{D}}
+\def\lbox{\mathcal{L}}
+
+
+
+\numberwithin{equation}{section}
+\begin{document}
+\tableofcontents
+\pagebreak
+
+\section{Extending Hu's quadratic estimator to three dimensions}
+\paragraph{Objective} To understand eq. 22 to 31 in Zahn and Zaldarriaga 2006
+
+\subsection{Introduction}
+\begin{itemize}
+	\item Unlike CMB, we can use information from multiple planes in the case of 21 cm signal.
+	\item But the different planes would be correlated. No simple way to take this correlation into account while constructing the estimator.
+	\item Instead, we divide the 3D temperature fluctuations into radial and transverse parts.
+\end{itemize}
+
+\subsection{Notation}
+\paragraph{Observed volume}
+\begin{itemize}
+	\item We divide the volume into
+		\begin{itemize}
+			\item a solid angle $ d\Omega $
+			\item a comoving radial length $ \mathcal{L} $
+		\end{itemize}
+	\item The volume is located at redshift z, at a comoving distance $ \chi $ away from us.
+	\item The transverse comoving size of the volume is $ S $. We need this temporarily. Not important.
+\end{itemize}
+
+\paragraph{Intensity field}
+Field $ I(\textbf{r}) $ at position $ \textbf{r} $ in comoving space
+\beq
+\beqal
+I(\textbf{r}) &= \int \frac{d^3\kappa}{(2\pi)^3} I(\kappa) e^{i \kappa \cdot r}
+\\
+&= \int \frac{d^2l}{(2\pi)^2} \int \frac{dk_{\parallel}}{2\pi} \frac{I(k_\perp, k_\parallel)}{\chi^2} e^{i(l\cdot \theta + k_\parallel x_\parallel)}
+\eeqal
+\eeq
+where \textbf{k} is the wave vector.
+
+\subsection{Formalism}
+We divide \textbf{k} into radial (parallel) and transverse components: $ k_\parallel $ and $ k_\perp $. Corresponding to this, we also have $ x_\parallel $ and $ x_\perp $.
+
+\paragraph{Discretize $k_\perp$} Using
+\beqa
+\theta = \frac{S}{\chi}
+\eeqa
+
+and 
+\beqa
+l = \frac{2 \pi}{\theta}
+\eeqa
+
+we get 
+
+\beq
+\beqal
+\kappa_\perp &= \frac{2 \pi}{S}
+\\
+&= \frac{2 \pi }{\theta \chi}
+\\
+&= \frac{l}{\chi}
+\eeqal
+\eeq
+
+\paragraph{Discretize $ k_\parallel $}Discretizing the radial direction taking $ \mathcal{L} $ as the comoving depth of the volume observed along the radial direction.
+
+\beqa
+k_\parallel  = j\frac{2\pi}{\lbox}; \delta(k_\parallel - k_\parallel') = \frac{\lbox}{2\pi} \delta_{j_1, j_2} 
+\eeqa
+where $ j $ represents the $ j^{th} $ element of the volume.
+
+\paragraph{Final expression of Intensity with discrete \textbf{k}}
+\beqa
+I(r) = \int\frac{d^2l}{(2\pi)^2} \sum_j \left(\frac{I(k_\perp, k_\parallel)}{\chi^2 \lbox} \right) e^{i \textbf{k} \cdot \textbf{r}}
+\eeqa
+
+\paragraph{Simplify}
+Define
+\beqa
+\hat{I} (l, k_\parallel) \equiv \frac{I(k_\perp, k_\parallel)}{\chi^2\lbox}
+\eeqa
+
+Starting with
+\beq
+\beqal
+I(\kappa_\perp,\kappa_\parallel ; \tau) &= \int dx_\parallel \int d^2\vec{x}_\perp e^{-i \kappa_\parallel \cdot x_\parallel} e^{-i \kappa_\perp \cdot x_\perp} I(\vec{x}_\perp, x_\parallel; \tau) \label{eq:foreman1}
+\eeqal
+\eeq
+
+\beq
+\beqal
+\langle I(k_\perp, k_\parallel) I^*(k_\perp', k_\parallel')   \rangle &= \delta(\textbf{k} - \textbf{k}') (2\pi)^3 P(k_\perp, k_\parallel)
+\\
+&= (2\pi)^2 \delta(l - l') \chi^2 (2\pi) \delta(k_\parallel - k'_\parallel) P(k_\perp, k_\parallel) \label{eq:3dcorr}
+\eeqal
+\eeq
+where  $ P(k_\perp, k_\parallel) $ is the 3D power spectrum of the intensity field, we get
+%Then we get the equation 2.1 of \textbf{Foreman et. al. 2018}
+%\beqa
+%\hat{I}(l, k_\parallel, \tau) = \frac{1}{\lbox \chi^2} I(k_\perp, k_\parallel; \tau) \equiv \frac{1}{\lbox \chi^2} I(l/\chi, k_\parallel; \tau)
+%\eeqa
+\beqa
+%\langle I(k_\perp, k_\parallel) I^*(k_\perp', k_\parallel')   \rangle &= (2\pi)^2 \delta(l - l') \chi^2 (2\pi) \delta(k_\parallel - k'_\parallel) P(k_\perp, k_\parallel)
+%\\
+\frac{\langle I(k_\perp, k_\parallel) I^*(k_\perp', k_\parallel')   \rangle}{(\mathcal{L} \chi^2)^2} &=& \frac{(2\pi)^2 \delta(l - l') \chi^2 (2\pi) \delta(k_\parallel - k'_\parallel) P(k_\perp, k_\parallel) }{(\mathcal{L} \chi^2)^2}
+\\
+\langle \hat{I}(l, k_\parallel) \hat{I}^*(l', k_\parallel')   \rangle &=& \frac{(2\pi)^2 \delta(l - l')  (2\pi) \delta(k_\parallel - k'_\parallel) P(k_\perp, k_\parallel) }{(\mathcal{L}^2 \chi^2)}
+\\
+&=& \frac{(2\pi)^2 \delta(l - l')  (2\pi) \delta(j - j') (\mathcal{L}/2\pi) P(k_\perp, k_\parallel) }{(\mathcal{L}^2 \chi^2)}
+\\
+\langle \hat{I}(l, j \frac{2\pi}{\mathcal{L}}) \hat{I}^*(l', j'\frac{2\pi}{\mathcal{L}})   \rangle  &=& (2\pi)^2 \delta(l - l') \delta(j - j')  \frac{P(k_\perp, j\frac{2\pi}{\mathcal{L}}) }{(\mathcal{L} \chi^2)}
+\eeqa
+This is equation 27 in ZZ2006.
+
+\paragraph{Definition of $ C_{l,j} $}
+We now define the angular power spectrum for the seperate values of j, 
+\beqa
+C_{l,j} \equiv \frac{P \left( \sqrt{\frac{l^2}{\chi^2} + (j\frac{2\pi}{\mathcal{L}})^2} \right)}{\lbox \chi^2}
+\eeqa
+where $ P $ now represents the spherically averaged power spectrum.
+
+
+Now we are going to derive Equation 31 (Equation A21) of ZZ2006.
+
+\section{Lensing reconstruction noise}
+\subsection{Mathematical form of a quadratic estimator}
+Let's start with a 3D intensity field $I(\theta, \chi)$, which is the unlensed field of the matter present at a comoving distance $\chi$ away from the observer. 
+
+Due to the matter present between the source and observer, the signal experiences weak lensing and in this case the signal can be written as
+\beqa
+\tilde{I}(\theta,\chi) = I(\theta + \delta\theta, \chi )
+\eeqa
+
+where $\tilde{I}$ is the lensed field. This equation says that the field that we observe at coordinates $(\theta,\chi)$ is actually coming from $(\theta + \delta\theta, \chi)$, where $\delta\theta = \bigtriangledown\psi$ and $\psi$ is the \textit{projected potential}. 
+
+Taylor expansion of RHS of previous equation gives
+\beqa
+\tilde{I}(\theta,\chi) = I(\theta,\chi) + \delta\theta \cdot \bigtriangledown_\theta (\theta, \chi) + \ldots
+\eeqa
+
+
+where $\il(\theta,\chi)$ is the lensed, $\iul(\theta,\chi)$ the unlensed
+field. The Fourier transform of this expression is
+\begin{eqnarray}
+\il(\l,k) &=& \iul+\int \frac{d^2l'}{(2\pi)^2}(\delta\theta
+(\l-\l')\cdot i\l')\iul(\l',k) \\
+&=& \iul(\l, k) - \int {d^2l'} \iul(\l',k) \frac{1}{(2\pi)^2}\phi(\l-\l')(\l-\l')\cdot
+\l'
+\end{eqnarray}
+where we have used that $\dtheta(\vec{\chi})=\bigtriangledown \phi(\vec{\chi})$.
+Computing the correlation function (and dropping $ \kappa $ to reduce clutter)
+\beq
+\beqal
+\langle \tilde I (l) \tilde{I}^*(m) \rangle _{\textbf{m} \neq \textbf{l}} &= - \int {d^2 l'}  \frac{1}{(2\pi)^2}\phi(\l-\l')(\l-\l')\cdot \l'  \langle I(l^\prime) I^*(m)  \rangle 
+\\
+& -  \int {d^2 l'}  \frac{1}{(2\pi)^2}\phi^*(\textbf{m}-\l')(\textbf{m}-\l')\cdot \l'  \langle I^*((l)^\prime) I(l) \rangle
+ \\
+ &= -  \phi(\l-\textbf{m})(\l-\textbf{m})\cdot \textbf{m}  C_m 
+ \\
+&  -   \phi^*(\textbf{m}-\l)(\textbf{m}-\l)\cdot \l  C_l
+\eeqal
+\eeq
+
+Now, assuming that $ \textbf{m} = \l- \L $ (and restoring $ \kappa $)
+\beq
+\beqal
+\langle \tilde I (\l, \kappa_1) \tilde{I}^*(\l - \L, \kappa_2) \rangle _{\textbf{L}  = \l - \textbf{m}} &= -  \phi(\L, \kappa_2)(\L)\cdot (\textbf{l} - \textbf{L})  C_{\l - \L, \kappa_2} +   \phi^*(-\L, \kappa_1)(\L)\cdot \l  C_{l, \kappa_1}
+\eeqal
+\eeq
+
+%Even though the field is not homogeneous, it is still assumed to be isotropic. Therefore, LHS = $ \tilde I (l) \tilde{I}^*(\l - \L) $. \textbf{make sure if it's correct}
+%
+%On RHS, the term multiplying $ \phi $ is just a number. 
+We simply invert the expression to solve for $ \phi $ and see that (for a particular $ \l $ and $ \textbf{m} $ such that $ \l  - \textbf{m} = \L$)
+\beqa
+\phi(\L) \propto I(\l) I(\l - \L)
+\eeqa
+
+Paragraph below equation 9.15 on Page 204 of "Gravitational Lensing" by Dodelson, says that
+
+The above equation is not the best way to infer the potential. First, it uses only a single small-scale model $ \l $; obviously, it makes sense to combine information from many small-scale modes, in each case taking the product of two temperatures with arguments seperated by $ \L $. Second, the estimator in the previous equation will indeed retrieve the true value of $ \phi $ on average but will be very noisy. The quadratic terms can be weighted to reduce the noise while retaining the attractive features that the expected value of the estimator is equal to the true potential.
+
+%\subsection{Deriving the estimator}
+%We therefore start with a quadratic estimator $\Phi(\L)$ for $\phi(\L)$,
+%i.e. of the form
+%\beq
+%\Phi (\L) = \int \d2l \int \dko \int \dkt F(\l,k_1,k_2,\L)
+%I(\l,k_1) I(\L-\l,k_2)
+%\label{eq:quadest}
+%\eeq
+%(notice that $F(\l,k_1,k_2,\L)=F(\l,k_2,k_1,\L)$). Because $\delta
+%\Phi(\L)=\delta \Phi^*(-\L)$ it can also be shown that
+%\beq
+%F(\l,k_1,k_2,\L) = F^*(-\l,-k_1,-k_2,-\L)
+%\eeq
+%We want to find $F$ such that it minimizes the variance of $\Phi(\L)$
+%under the condition that its ensemble average recovers the lensing field,
+%$\langle \Phi(\L)\rangle_\iul = \phi(\L)$. This becomes (to first order in $\phi$)
+%
+%\beq
+%\beqal
+%\langle \Phi(\L)\rangle_\iul &=&  \int \d2l \int \dko \int \dkt  F(\l,k_1,k_2,\L)  (2\pi)\delta(k_1+k_2) \\
+%& & \times \left[\pul_{l,k} \phi(\L)\L\cdot\l + \pul_{L-l,k}  \phi(\L)\L\cdot(\L-\l)\right] \, ,
+%\eeqal
+%\eeq
+%
+%where e.g. $\pul_{l,k}$ is the power in a mode with angular component $l$ and radial component $k$.
+%With the requirement that $\langle \Phi(\L)\rangle_\iul=\phi(\L)$ this
+%leads to the normalization condition
+%\beq
+%\int \d2l \int \dko \int \dkt F(\l,k_1,k_2,\L) (2\pi) \delta^D(k_1+k_2)
+%\left[\pul_{l,k_1}\L\cdot\l + \pul_{L-l,k_2} \L\cdot (\L-\l)\right] = 1
+%\label{eq:normcond}
+%\eeq
+%
+%The condition of minimization of the variance gives 
+%\beq
+%\beqal
+%\langle ||\Phi(\L)||^2\rangle_\il &= \int \d2l \int \dko \int \dkt (2\pi)^2 \delta(0) F(\l,k_1,k_2,\L)
+%F^*(\l',k_1',k_2',\L') \ptot_{l,k_1}\ptot_{L-l,k_2} \\
+%&  + \int \d2l \int \dko \int \dkt (2\pi)^2 \delta(0) F(\l,k_1,k_2,\L)
+%F^*(\L-\l',k_2',k_1',\L') \ptot_{l,k_1}\ptot_{L-l,k_2}
+%\eeqal
+%\eeq
+%
+%but from \ref{eq:quadest} we see with the substitution $\L-\l
+%\rightarrow \l$ that $F^*(\L-\l,k_2,k_1,\L) = F^*(\l,k_1,k_2,\L)$
+%hence
+%\beq
+%\langle ||\Phi(\L)||^2\rangle = 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
+%\dkt F(\l,k_1,k_2,\L) F^*(\l,k_1,k_2,\L) \ptot_{l,k_1}\ptot_{l,k_2} \, .  \label{eq:phisqavg}
+%\eeq
+%
+%Both real and imaginary part of $||F||^2=F_R^2+F_I^2$ contribute
+%to this variance, however the condition for the
+%minimization will only pick out the real part. (\textbf{Does this really matter?}) The solution is found
+%by minimizing the function
+%\beq
+%\langle ||\Phi(\L)||^2\rangle- A_R \times (\, {\rm Equation} \, \ref{eq:normcond})
+%\eeq
+%with respect to $F$, where $A_R$ is a Lagrangian multiplier. In steps,
+%\beq
+%\frac{\partial (\, {\rm Eq.}\, \ref{eq:normcond})}{\partial F(\l,k_1,k_2,\L)} = A_R \d2l \dko \dkt
+%(2\pi) \delta^D(k_1+k_2) [\pul_{l,k_1} \L\cdot \l + \pul_{L-l,k_2} \L\cdot (\L-\l)]
+%\eeq
+%and
+%\beq
+%\frac{\partial \langle ||\Phi(\L)||^2 \rangle}{\partial F(\l,k_1,k_2,\L)} =
+%2 (2\pi)^2 \delta(0) \d2l \dko \dkt 2 F_R(\l,k_1,k_2,\L)
+%\ptot_{l,k_1}\ptot_{L-l,k_2}
+%\eeq
+%so
+%\beq
+%\beqal
+%4 (2\pi)^2 \delta(0)  F_R(\l,k_1,k_2,\L) = A_R (2\pi) \delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+%    \pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}}
+%\label{eq:expforf}
+%\eeqal
+%\eeq
+%
+%Therefore,
+%
+%\beq
+%\beqal
+%F_R(\l,k_1,k_2,\L) = \frac{1}{4 (2\pi) \delta(0) } A_R \delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}}
+%\label{eq:expforf}
+%\eeqal
+%\eeq
+%
+%
+%and by inserting this into the normalization condition
+%\ref{eq:normcond} we get that
+%\beq
+%\beqal
+%1 &= \int \d2l \int \dko \int \dkt \frac{1}{4 \delta(0) } A_R \delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,k_2} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,k_2}} \delta^D(k_1+k_2) 
+%\\
+%& = \int \d2l \int \dko \frac{\delta(0)}{4 \delta(0) } A_R \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,k_2 = -k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,k_2 = -k_1}} 
+%%\\
+%%& = \int \frac{d^2l}{(2\pi)^2} \int dk_1 \frac{\delta(0)}{4(2\pi) \delta(0)} A_R [\frac{P_{l,k_1} \textbf{L}\cdot \textbf{l}}{\tilde{P}^{tot}_{l,k_1} \tilde{P}^{\tot}_{L-l, -k_1}} + \frac{P_{l,k_1} \textbf{L}\cdot \textbf{L} - \textbf{l}}{\tilde{P}^{tot}_{l,k_1} \tilde{P}^{\tot}_{L-l, -k_1}}]
+%\eeqal
+%\eeq
+%
+%Assuming that I can just cancel the factors of $ \delta(0) $, 
+%\beq
+%\beqal
+%1 = \int \d2l \int dk_1 \frac{1}{4\times2\pi} A_R \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} 
+%\eeqal
+%\eeq
+%
+%Discretizing the integal over $ dk_1 $. Assumming that we have dicretized the space in the radial direction in the blocks of length $ \mathcal{L} $ such that $ k = \frac{2\pi}{\lbox} $.
+%
+%Therefore, we can write 
+%\beqa
+%\int \frac{dk}{2 \pi} = \frac{1}{\lbox} \sum_k
+%\eeqa
+%
+%Therefore, we get
+%\beqa
+%1 = \int \d2l \frac{1}{\lbox} \sum_{k_1} \frac{1}{4 (2\pi)} A_R \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} 
+%\eeqa
+%
+%which gives, 
+%\beqa
+%A_R = \frac{4 (2\pi)\lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }  
+%\eeqa
+%
+%%\textbf{I don't understand how the authors (Zahn and Zaldarriaga) got the following expression}
+%%
+%%\beq
+%%A_R = \frac{1}{\sum_k \int \d2l \frac{[\pul_{l,k} \L\cdot \l +
+%%    \pul_{L-l,k} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,k_2}}} \, .
+%%\eeq
+%
+%Substituting this expression in Equation \ref{eq:expforf}, we get
+%
+%\beq
+%\beqal
+%F_R(\l,k_1,k_2,\L) &= \frac{A_R }{4 (2\pi) \delta(0) }\delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}}
+%\\
+%&=  \frac{\lbox / \delta(0)}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }   \delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}}
+%\eeqal
+%\eeq
+%
+%Now, substituting this expression in Equation \ref{eq:phisqavg}. Taking $ FF^* \equiv F^2 $
+%
+%\beq
+%\beqal
+%\langle ||\Phi(\L)||^2\rangle &= 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
+%\dkt F(\l,k_1,k_2,\L) F^*(\l,k_1,k_2,\L) \ptot_{l,k_1}\ptot_{l,k_2} 
+%\\
+%&= 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
+%\dkt F^2(\l,k_1,k_2,\L)\ptot_{l,k_1}\ptot_{l,k_2} 
+%\\
+%&= 2 (2\pi)^2 \delta(0)  \int \d2l \int \dko \int \dkt \left( \frac{\lbox / \delta(0)}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }   \right.
+%\\
+%& \left.	\delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}} \right)^2 \ptot_{l,k_1}\ptot_{l,k_2} 
+%\eeqal
+%\eeq
+%
+%Again, cancelling $ \delta(0) $,
+%
+%\beq
+%\beqal
+%\langle ||\Phi(\L)||^2\rangle 
+%&=  \frac{2 (2\pi)^2}{\delta(0)}   \int \d2l \int \dko \int \dkt \left( \frac{\lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }   \right.
+%\\
+%& \left.	\delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}} \right)^2 \ptot_{l,k_1}\ptot_{l,k_2} 
+%\\
+%&=  \frac{2 (2\pi)^2}{\delta(0)} \left( \frac{\lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l \int \dko \int \dkt 
+%\\
+%& \left(	\delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}} \right)^2 \ptot_{l,k_1}\ptot_{l,k_2} 
+%\eeqal
+%\eeq
+%
+%integrating over $ k_2 $
+%
+%\beq
+%\beqal
+%\langle ||\Phi(\L)||^2\rangle 
+%&=  \frac{2 (2\pi)^2}{\delta(0)} \left( \frac{\lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l \int \dko \frac{1}{2\pi} 
+%\\
+%&  \delta(0) \left( \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,k_2 = -k_1} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2 = -k_1}} \right)^2 \ptot_{l,k_1}\ptot_{l,k_2 = -k_1} 
+%\eeqal
+%\eeq
+%
+%cancelling $ \delta(0) $ and $ 2\pi $
+%\beq
+%\beqal
+%\langle ||\Phi(\L)||^2\rangle 
+%&=  2 (2\pi) \left( \frac{\lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l \int \dko  
+%\\
+%&  \left( \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,-k_1} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l, -k_1}} \right)^2 \ptot_{l,k_1}\ptot_{l,-k_1} 
+%\eeqal
+%\eeq
+%
+%
+%Discretizing the integral over $ k_1 $. 
+%
+%\beq
+%\beqal
+%\langle ||\Phi(\L)||^2\rangle 
+%&=  2 (2\pi) \left( \frac{\lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l   
+%\\
+%& \frac{1}{\lbox} \sum_{k_1} \left( \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,-k_1} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} \right)^2 \ptot_{l,k_1}\ptot_{l,-k_1} 
+%\\
+%&=  2 (2\pi) \left( \frac{\lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2    
+%\\
+%&  \left( \int \d2l \frac{1}{\lbox} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,-k_1} \L\cdot (\L-\l)] ^2}{\ptot_{l,k_1}\ptot_{l,-k_1} }  \right)
+%\\
+%&= 2 (2\pi) \lbox \left( \frac{1}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2    
+%\\
+%&  \left( \int \d2l \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l, -k_1} \L\cdot (\L-\l)] ^2}{\ptot_{l,k_1}\ptot_{l,-k_1} }  \right)
+%\eeqal
+%\eeq
+%
+%Therefore, we finally have
+%\beq
+%\beqal
+%\langle ||\Phi(\L)||^2\rangle 
+%& =   \frac{2 (2\pi) \lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }
+%\\
+%& = \frac{A_R}{2} 
+%\eeqal
+%\eeq
+%
+%With the definition of noise power spectrum
+%\beq
+%\beqal
+%\langle \Phi(\textbf{L})  \Phi^*(\textbf{L}')\rangle = (2\pi)^2 \delta(\textbf{L} - \textbf{L}') N_L^\Phi
+%\\
+%\mathrm{OR}
+%\\
+%\langle || \Phi(\textbf{L}) ||^2 \rangle = (2\pi)^2 \delta(0) N_L^\Phi
+%\eeqal
+%\eeq
+%
+%It follows that 
+%\beq
+%\beqal
+%N_L^\Phi = \frac{2 \lbox}{2\pi \delta(0)} \frac{1}{{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%			\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }}
+%\eeqal
+%\eeq
+
+
+\subsection{Deriving the estimator}
+We therefore start with a quadratic estimator $\Phi(\L)$ for $\phi(\L)$,
+i.e. of the form
+\beq
+\Phi (\L) = \int \d2l \int \dko \int \dkt F(\l,k_1,k_2,\L)
+I(\l,k_1) I(\L-\l,k_2)
+\label{eq:quadest}
+\eeq
+(notice that $F(\l,k_1,k_2,\L)=F(\l,k_2,k_1,\L)$). Because $\delta
+\Phi(\L)=\delta \Phi^*(-\L)$ it can also be shown that
+\beq
+F(\l,k_1,k_2,\L) = F^*(-\l,-k_1,-k_2,-\L)
+\eeq
+We want to find $F$ such that it minimizes the variance of $\Phi(\L)$
+under the condition that its ensemble average recovers the lensing field,
+$\langle \Phi(\L)\rangle_\iul = \phi(\L)$. This becomes (to first order in $\phi$)
+
+\beq
+\beqal
+\langle \Phi(\L)\rangle_\iul &=&  \int \d2l \int \dko \int \dkt  F(\l,k_1,k_2,\L)  (2\pi)\delta(k_1+k_2) \\
+& & \times \left[\pul_{l,k} \phi(\L)\L\cdot\l + \pul_{L-l,k}  \phi(\L)\L\cdot(\L-\l)\right] \, ,
+\eeqal
+\eeq
+
+where e.g. $\pul_{l,k}$ is the power in a mode with angular component $l$ and radial component $k$.
+With the requirement that $\langle \Phi(\L)\rangle_\iul=\phi(\L)$ this
+leads to the normalization condition
+\beq
+\int \d2l \int \dko \int \dkt F(\l,k_1,k_2,\L) (2\pi) \delta^D(k_1+k_2)
+\left[\pul_{l,k_1}\L\cdot\l + \pul_{L-l,k_2} \L\cdot (\L-\l)\right] = 1
+\label{eq:normcond}
+\eeq
+
+The condition of minimization of the variance gives 
+\beq
+\beqal
+\langle ||\Phi(\L)||^2\rangle_\il &= \int \d2l \int \dko \int \dkt (2\pi)^2 \delta(0) F(\l,k_1,k_2,\L)
+F^*(\l',k_1',k_2',\L') \ptot_{l,k_1}\ptot_{L-l,k_2} \\
+&  + \int \d2l \int \dko \int \dkt (2\pi)^2 \delta(0) F(\l,k_1,k_2,\L)
+F^*(\L-\l',k_2',k_1',\L') \ptot_{l,k_1}\ptot_{L-l,k_2}
+\eeqal
+\eeq
+
+but from \ref{eq:quadest} we see with the substitution $\L-\l
+\rightarrow \l$ that $F^*(\L-\l,k_2,k_1,\L) = F^*(\l,k_1,k_2,\L)$
+hence
+\beq
+\langle ||\Phi(\L)||^2\rangle = 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
+\dkt F(\l,k_1,k_2,\L) F^*(\l,k_1,k_2,\L) \ptot_{l,k_1}\ptot_{l,k_2} \, .  \label{eq:phisqavg}
+\eeq
+
+Both real and imaginary part of $||F||^2=F_R^2+F_I^2$ contribute
+to this variance, however the condition for the
+minimization will only pick out the real part. (\textbf{Does this really matter?}) The solution is found
+by minimizing the function
+\beq
+\langle ||\Phi(\L)||^2\rangle- A_R \times (\, {\rm Equation} \, \ref{eq:normcond})
+\eeq
+with respect to $F$, where $A_R$ is a Lagrangian multiplier. In steps,
+\beq
+\frac{\partial (\, {\rm Eq.}\, \ref{eq:normcond})}{\partial F(\l,k_1,k_2,\L)} = A_R \d2l \dko \dkt
+(2\pi) \delta^D(k_1+k_2) [\pul_{l,k_1} \L\cdot \l + \pul_{L-l,k_2} \L\cdot (\L-\l)]
+\eeq
+and
+\beq
+\frac{\partial \langle ||\Phi(\L)||^2 \rangle}{\partial F(\l,k_1,k_2,\L)} =
+2 (2\pi)^2 \delta(0) \d2l \dko \dkt 2 F_R(\l,k_1,k_2,\L)
+\ptot_{l,k_1}\ptot_{L-l,k_2}
+\eeq
+so
+\beq
+\beqal
+4 (2\pi)^2 \delta(0)  F_R(\l,k_1,k_2,\L) = A_R (2\pi) \delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}}
+\label{eq:expforf}
+\eeqal
+\eeq
+
+Therefore,
+
+\beq
+\beqal
+F_R(\l,k_1,k_2,\L) = \frac{1}{4 (2\pi) \delta(0) } A_R \delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}}
+\label{eq:expforf}
+\eeqal
+\eeq
+
+
+and by inserting this into the normalization condition
+\ref{eq:normcond} we get that
+\beq
+\beqal
+1 &= \int \d2l \int \dko \int \dkt \frac{1}{4 \delta(0) } A_R \delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,k_2} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,k_2}} \delta^D(k_1+k_2) 
+\\
+& = \int \d2l \int \dko \frac{\delta(0)}{4 \delta(0) } A_R \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,k_2 = -k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,k_2 = -k_1}} 
+%\\
+%& = \int \frac{d^2l}{(2\pi)^2} \int dk_1 \frac{\delta(0)}{4(2\pi) \delta(0)} A_R [\frac{P_{l,k_1} \textbf{L}\cdot \textbf{l}}{\tilde{P}^{tot}_{l,k_1} \tilde{P}^{\tot}_{L-l, -k_1}} + \frac{P_{l,k_1} \textbf{L}\cdot \textbf{L} - \textbf{l}}{\tilde{P}^{tot}_{l,k_1} \tilde{P}^{\tot}_{L-l, -k_1}}]
+\eeqal
+\eeq
+
+Assuming that I can just cancel the factors of $ \delta(0) $, 
+\beq
+\beqal
+1 = \int \d2l \int dk_1 \frac{1}{4\times2\pi} A_R \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} 
+\eeqal
+\eeq
+
+Discretizing the integal over $ dk_1 $. Assumming that we have dicretized the space in the radial direction in the blocks of length $ \mathcal{L} $ such that $ k = \frac{2\pi}{\lbox} $.
+
+Therefore, we can write 
+\beqa
+\int \frac{dk}{2 \pi} = \frac{1}{\lbox} \sum_k
+\eeqa
+
+Therefore, we get
+\beqa
+1 = \int \d2l \frac{1}{\lbox} \sum_{k_1} \frac{1}{4} A_R \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} 
+\eeqa
+
+which gives, 
+\beqa
+A_R = \frac{4 \lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }  
+\eeqa
+
+%\textbf{I don't understand how the authors (Zahn and Zaldarriaga) got the following expression}
+%
+%\beq
+%A_R = \frac{1}{\sum_k \int \d2l \frac{[\pul_{l,k} \L\cdot \l +
+%    \pul_{L-l,k} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,k_2}}} \, .
+%\eeq
+
+Substituting this expression in Equation \ref{eq:expforf}, we get
+
+\beq
+\beqal
+F_R(\l,k_1,k_2,\L) &= \frac{A_R }{4 (2\pi) \delta(0) }\delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}}
+\\
+&=  \frac{\lbox / 2\pi \delta(0)}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }   \delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}}\\
+&=  \frac{1}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }   \delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}}
+\eeqal
+\eeq
+
+Now, substituting this expression in Equation \ref{eq:phisqavg}. Taking $ FF^* \equiv F^2 $
+
+\beq
+\beqal
+\langle ||\Phi(\L)||^2\rangle &= 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
+\dkt F(\l,k_1,k_2,\L) F^*(\l,k_1,k_2,\L) \ptot_{l,k_1}\ptot_{l,k_2} 
+\\
+&= 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
+\dkt F^2(\l,k_1,k_2,\L)\ptot_{l,k_1}\ptot_{l,k_2} 
+\\
+&= 2 (2\pi)^2 \delta(0)  \int \d2l \int \dko \int \dkt \left( \frac{1}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }   \right.
+\\
+& \left.	\delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}} \right)^2 \ptot_{l,k_1}\ptot_{l,k_2} 
+\\
+&=  2 (2\pi)^2\delta(0) \int \d2l \int \dko \int \dkt \left( \frac{1}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2
+\\
+& \left(	\delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}} \right)^2 \ptot_{l,k_1}\ptot_{l,k_2} 
+\\
+&=  2 (2\pi)^2\delta(0) \int \d2l \frac{\sum_{k_1}}{\lbox} \frac{\sum_{k_2}}{\lbox} \left( \frac{1}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2
+\\
+& \left(	\delta^D(k_1+k_2) \frac{[\pul_{l,k_1} \L\cdot \l +
+	\pul_{L-l,k_2} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2}} \right)^2 \ptot_{l,k_1}\ptot_{l,k_2} 
+\\
+	&=  2 (2\pi)^2\delta(0) \frac{1}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } 
+\eeqal
+\eeq
+%
+%
+%\beq
+%\beqal
+%\langle ||\Phi(\L)||^2\rangle 
+%&=  2 (2\pi)^2\delta(0)   \int \d2l \int \dko \int \dkt \frac{1}{\int \frac{d^2 l}{(2\pi)^2} 2 (2\pi)^2\delta(0)\sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }   
+%\eeqal
+%\eeq
+%integrating over $ k_2 $
+%
+%\beq
+%\beqal
+%\langle ||\Phi(\L)||^2\rangle 
+%&=  \frac{2 (2\pi)^2}{\delta(0)} \left( \frac{\lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l \int \dko \frac{1}{2\pi} 
+%\\
+%&  \delta(0) \left( \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,k_2 = -k_1} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,k_2 = -k_1}} \right)^2 \ptot_{l,k_1}\ptot_{l,k_2 = -k_1} 
+%\eeqal
+%\eeq
+%
+%cancelling $ \delta(0) $ and $ 2\pi $
+%\beq
+%\beqal
+%\langle ||\Phi(\L)||^2\rangle 
+%&=  2 (2\pi) \left( \frac{\lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l \int \dko  
+%\\
+%&  \left( \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,-k_1} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l, -k_1}} \right)^2 \ptot_{l,k_1}\ptot_{l,-k_1} 
+%\eeqal
+%\eeq
+%
+%
+%Discretizing the integral over $ k_1 $. 
+%
+%\beq
+%\beqal
+%\langle ||\Phi(\L)||^2\rangle 
+%&=  2 (2\pi) \left( \frac{\lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l   
+%\\
+%& \frac{1}{\lbox} \sum_{k_1} \left( \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,-k_1} \L\cdot (\L-\l)]}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} \right)^2 \ptot_{l,k_1}\ptot_{l,-k_1} 
+%\\
+%&=  2 (2\pi) \left( \frac{\lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2    
+%\\
+%&  \left( \int \d2l \frac{1}{\lbox} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l,-k_1} \L\cdot (\L-\l)] ^2}{\ptot_{l,k_1}\ptot_{l,-k_1} }  \right)
+%\\
+%&= 2 (2\pi) \lbox \left( \frac{1}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2    
+%\\
+%&  \left( \int \d2l \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%	\pul_{L-l, -k_1} \L\cdot (\L-\l)] ^2}{\ptot_{l,k_1}\ptot_{l,-k_1} }  \right)
+%\eeqal
+%\eeq
+With the definition
+\begin{eqnarray}
+\langle \Phi(\textbf{L}) \Phi^*(L') \rangle  = (2\pi)^2 \delta^D(\textbf{L} - \textbf{L}') N^\Phi
+\end{eqnarray}
+
+Therefore, we finally have
+\beq
+\beqal
+\langle ||\Phi(\L)||^2\rangle 
+& =   \frac{2 (2\pi) \lbox}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }
+\\
+& = (2\pi)^2 \delta(0) N^\Phi
+\eeqal
+\eeq
+
+Which gives
+\beq
+\beqal
+N_L^\Phi = \frac{1}{{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+			\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{2\ptot_{l,k_1}\ptot_{L-l,-k_1}} }}
+\eeqal
+\eeq
+This is equation A20 in ZZ2006.
+
+\end{document}
+

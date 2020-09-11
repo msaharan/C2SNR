@@ -1,0 +1,16 @@
+\contentsline {section}{\numberline {1}Perturbed flat FLRW metric}{3}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Perturbation metric and Gauge freedom}{3}{subsection.1.1}%
+\contentsline {section}{\numberline {2}Motion of photon in the perturbed flat-FLRW spacetime}{3}{section.2}%
+\contentsline {section}{\numberline {3}Weak gravitational lensing}{4}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Reduced deflection angle and lensing potential}{7}{subsection.3.1}%
+\contentsline {section}{\numberline {4}Convergence and shear}{8}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Convergence}{9}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}Statitstics of convergence field}{10}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Errors on the convergence power spectrum}{10}{subsection.4.3}%
+\contentsline {subsection}{\numberline {4.4}Shear}{10}{subsection.4.4}%
+\contentsline {section}{\numberline {5}Cosmological weak gravitational lensing }{11}{section.5}%
+\contentsline {subsection}{\numberline {5.1}Limber's approximation}{11}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Convergence power spectrum }{11}{subsection.5.2}%
+\contentsline {section}{\numberline {6}Overdensity, power spectrum, and angular brackets}{14}{section.6}%
+\contentsline {subsection}{\numberline {6.1}A note about the angular brackets}{15}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}power spectrum}{15}{subsection.6.2}%
