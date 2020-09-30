@@ -24,7 +24,7 @@ k = 10**np.linspace(-2, 1, 1000)
 pm = cps(6.349)
 
 # CII Power Spectrum
-pk3_2pi_file, kc2 = np.loadtxt('/home/dyskun/Documents/Utility/Git/Msaharan/C2SNR/C2/data-files/ps_CII_z6.txt', unpack=True)
+pk3_2pi_file, kc2 = np.loadtxt('/mnt/storage/pdata/Utility/Git/dyskun/C2SNR/C2/data-files/ps_CII_z6.txt', unpack=True)
 pc2 = pk3_2pi_file * 2 * 3.14**2 / kc2**3
 
 # Arrays
@@ -34,8 +34,8 @@ pc2f = np.zeros(f)
 pmf = np.zeros(f)
 
 # Store the finer arrays to use later
-fout = open('/home/dyskun/Documents/Utility/Git/Msaharan/C2SNR/C2/data-files/ps_CII_z6_fine.txt', 'w')
-fouttz = open('/home/dyskun/Documents/Utility/Git/Msaharan/C2SNR/C2/data-files/tz_z6_fine.txt', 'w')
+fout = open('/mnt/storage/pdata/Utility/Git/dyskun/C2SNR/C2/data-files/ps_CII_z6_fine_tz_corrected.txt', 'w')
+fouttz = open('/mnt/storage/pdata/Utility/Git/dyskun/C2SNR/C2/data-files/tz_z6_fine_tz_corrected.txt', 'w')
 
 # Make the array finer
 c = 0
@@ -47,7 +47,8 @@ for i in kc2f:
     fouttz.write('{}  {}\n'.format(pc2f[c] / pmf[c], i))
     c = c + 1 
 
-Tz = pc2f/pmf
+#Tz = pc2f/pmf
+Tz = (pc2f/pmf)**0.5
 
 fout.close()
 fouttz.close()

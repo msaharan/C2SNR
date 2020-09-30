@@ -57,6 +57,8 @@
 \def\x{{\bf x}}
 \def\u{{\bf u}}
 \def\F{{\bf F}}
+\def\bth{{\mathbf{\theta}}}
+
 \def\K{{\rm K}}
 \def\mK{{\rm mK}}
 \def\arcmin{{\rm arcmin}}
@@ -118,71 +120,50 @@ We use the terminology and notation as described in \href{http://arxiv.org/abs/a
 \end{itemize}
 
 \paragraph{Intensity field}
-Field $ I(\textbf{x}) $ at position $ \textbf{x} $ in comoving space
+We define the position coordinates as: $ \x = (\bth, z) $ and the corresponding wave vector as $ \k = (\l, k_\parallel) $. The source field $ I_s(\x) $ at position $ \x $ in comoving space $\mathbf{\theta}$
 \beq
 \beqal
-I(\textbf{r}) &= \int \frac{d^3\k}{(2\pi)^3} \il(\k) e^{i \k \cdot \x}
+I_s(\textbf{r}) &= \int \frac{d^3\k}{(2\pi)^3} \il_s (\k) e^{i \k \cdot \x}
 \\
-&= \int \frac{d^2\l}{(2\pi)^2} \int \frac{dk_{\parallel}}{2\pi} \frac{\il(k_\perp, k_\parallel)}{D_M^2} e^{i(\l\cdot \theta + k_\parallel x_\parallel)}
+&= \int \frac{d^2\l}{(2\pi)^2} \int \frac{dk_{\parallel}}{2\pi} \il_s(\l, k_\parallel) e^{i(\l \cdot \bth + k_\parallel z)}.
 \eeqal
 \eeq
-where \textbf{k} is the wave vector.
-
-\subsection{Formalism}
-We divide \textbf{k} into radial (parallel) and transverse components: $ k_\parallel $ and $ k_\perp $. Corresponding to this, we also have $ x_\parallel $ and $ x_\perp $.
-
-\paragraph{Discretize $k_\perp$} Using
+Here we have
 \beqa
-\theta = \frac{S}{D_M}
+l = \frac{2 \pi}{\theta},
 \eeqa
-
-and 
+where $ \theta  = \frac{S}{D_M}$.  We divide $ D_C $ into multiple slices and define $ k_\parallel $ as 
+\begin{eqnarray}
+	k_\parallel = \frac{2\pi}{D_C} j,
+\end{eqnarray}
+where $ j $ represents $ j^{th} $ slice starting from the slice facing the observer. Therefore
 \beqa
-\l = \frac{2 \pi}{\vec{\theta}}
+\delta(k_\parallel - k_\parallel') = \frac{D_C}{2\pi} \delta_{j_1, j_2} .
 \eeqa
-
-we get 
-
-\beq
-\beqal
-\k_\perp &= \frac{2 \pi}{\textbf{S}}
-\\
-&= \frac{2 \pi }{\vec{\theta} D_M}
-\\
-&= \frac{\l}{D_M}
-\eeqal
-\eeq
-
-\paragraph{Discretize $ k_\parallel $}Discretizing $ D_C $ into many slices along the line of sight. $ j $ is the discretizing factor.
-
-\beqa
-k_\parallel  = j\frac{2\pi}{D_C}; \delta(k_\parallel - k_\parallel') = \frac{D_C}{2\pi} \delta_{j_1, j_2} 
-\eeqa
-where $ j $ represents the $ j^{th} $ element of the volume.
 
 \paragraph{Final expression of Intensity with discrete \textbf{k}}
 \beqa
-I(\r) = \int\frac{d^2\l}{(2\pi)^2} \sum_j \left(\frac{\il(k_\perp, k_\parallel)}{D_M^2 D_C} \right) e^{i \textbf{k} \cdot \textbf{r}}
+I(r) = \int\frac{d^2l}{(2\pi)^2} \sum_j \left(\frac{I(k_\perp, k_\parallel)}{D_M^2 D_C} \right) e^{i \textbf{k} \cdot \textbf{r}}
 \eeqa
 
 \paragraph{Simplify}
 Define
 \beqa
-\hat{I} (\l, k_\parallel) \equiv \frac{\il(\k_\perp, k_\parallel)}{D_M^2D_C}
+\hat{I} (l, k_\parallel) \equiv \frac{I(k_\perp, k_\parallel)}{D_M^2D_C}
 \eeqa
 
 Starting with
 \beq
 \beqal
-\il(\k_\perp,\kappa_\parallel ; \tau) &= \int dx_\parallel \int d^2\vec{x}_\perp e^{-i \k_\parallel \cdot x_\parallel} e^{-i \k_\perp \cdot x_\perp} I(\vec{x}_\perp, x_\parallel; \tau) \label{eq:foreman1}
+I(\kappa_\perp,\kappa_\parallel ; \tau) &= \int dx_\parallel \int d^2\vec{x}_\perp e^{-i \kappa_\parallel \cdot x_\parallel} e^{-i \kappa_\perp \cdot x_\perp} I(\vec{x}_\perp, x_\parallel; \tau) \label{eq:foreman1}
 \eeqal
 \eeq
 
 \beq
 \beqal
-\langle I(\k_\perp, k_\parallel) I^*(\k_\perp', k_\parallel')   \rangle &= \delta(\textbf{k} - \textbf{k}') (2\pi)^3 P(\k_\perp, k_\parallel)
+\langle I(k_\perp, k_\parallel) I^*(k_\perp', k_\parallel')   \rangle &= \delta(\textbf{k} - \textbf{k}') (2\pi)^3 P(k_\perp, k_\parallel)
 \\
-&= (2\pi)^2 \delta(\l - \l') D_M^2 (2\pi) \delta(k_\parallel - k'_\parallel) P(\k_\perp, k_\parallel) \label{eq:3dcorr}
+&= (2\pi)^2 \delta(l - l') D_M^2 (2\pi) \delta(k_\parallel - k'_\parallel) P(k_\perp, k_\parallel) \label{eq:3dcorr}
 \eeqal
 \eeq
 where  $ P(k_\perp, k_\parallel) $ is the 3D power spectrum of the intensity field, we get
@@ -193,20 +174,20 @@ where  $ P(k_\perp, k_\parallel) $ is the 3D power spectrum of the intensity fie
 \beqa
 %\langle I(k_\perp, k_\parallel) I^*(k_\perp', k_\parallel')   \rangle &= (2\pi)^2 \delta(l - l') D_M^2 (2\pi) \delta(k_\parallel - k'_\parallel) P(k_\perp, k_\parallel)
 %\\
-\frac{\langle I(\k_\perp, k_\parallel) I^*(\k_\perp', k_\parallel')   \rangle}{(D_C D_M^2)^2} &=& \frac{(2\pi)^2 \delta(l - l') D_M^2 (2\pi) \delta(k_\parallel - k'_\parallel) P(\k_\perp, k_\parallel) }{(D_C D_M^2)^2}
+\frac{\langle I(k_\perp, k_\parallel) I^*(k_\perp', k_\parallel')   \rangle}{(D_C D_M^2)^2} &=& \frac{(2\pi)^2 \delta(l - l') D_M^2 (2\pi) \delta(k_\parallel - k'_\parallel) P(k_\perp, k_\parallel) }{(D_C D_M^2)^2}
 \\
-\langle \hat{I}(l, k_\parallel) \hat{I}^*(l', k_\parallel')   \rangle &=& \frac{(2\pi)^2 \delta(\l - \l')  (2\pi) \delta(k_\parallel - k'_\parallel) P(\k_\perp, k_\parallel) }{(D_C^2 D_M^2)}
+\langle \hat{I}(l, k_\parallel) \hat{I}^*(l', k_\parallel')   \rangle &=& \frac{(2\pi)^2 \delta(l - l')  (2\pi) \delta(k_\parallel - k'_\parallel) P(k_\perp, k_\parallel) }{(D_C^2 D_M^2)}
 \\
-&=& \frac{(2\pi)^2 \delta(l - l')  (2\pi) \delta(j - j') (D_C/2\pi) P(\k_\perp, k_\parallel) }{(D_C^2 D_M^2)}
+&=& \frac{(2\pi)^2 \delta(l - l')  (2\pi) \delta(j - j') (D_C/2\pi) P(k_\perp, k_\parallel) }{(D_C^2 D_M^2)}
 \\
-\langle \hat{I}(\l, j \frac{2\pi}{D_C}) \hat{I}^*(\l', j'\frac{2\pi}{D_C})   \rangle  &=& (2\pi)^2 \delta(\l - \l') \delta(j - j')  \frac{P(\k_\perp, j\frac{2\pi}{D_C}) }{(D_C D_M^2)}
+\langle \hat{I}(l, j \frac{2\pi}{D_C}) \hat{I}^*(l', j'\frac{2\pi}{D_C})   \rangle  &=& (2\pi)^2 \delta(l - l') \delta(j - j')  \frac{P(k_\perp, j\frac{2\pi}{D_C}) }{(D_C D_M^2)}
 \eeqa
 This is equation 27 in ZZ2006.
 
-\paragraph{Definition of $ C_{\l,j} $}
+\paragraph{Definition of $ C_{l,j} $}
 We now define the angular power spectrum for the seperate values of j, 
 \beqa
-C_{\l,j} \equiv \frac{P \left( \sqrt{\frac{\l^2}{D_M^2} + (j\frac{2\pi}{D_C})^2} \right)}{D_C D_M^2}
+C_{l,j} \equiv \frac{P \left( \sqrt{\frac{l^2}{D_M^2} + (j\frac{2\pi}{D_C})^2} \right)}{D_C D_M^2}
 \eeqa
 where $ P $ now represents the spherically averaged power spectrum.
 
@@ -222,94 +203,94 @@ Due to the matter present between the source and observer, the signal experience
 I_o(\theta,D_M) = I_s(\theta + \delta\theta, D_M )
 \eeqa
 
-where $I_o$ is the observed lensed field. This equation says that the field that we observe at coordinates $(\theta,D_M)$ is actually coming from $(\theta + \delta\theta, D_M)$, where $\delta\theta = \bigtriangledown\hat{\Psi}$ and $\hat{\Psi}$ is the \textit{projected potential}. 
+where $I_o$ is the observed lensed field. This equation says that the field that we observe at coordinates $(\theta,D_M)$ is actually coming from $(\theta + \delta\theta, D_M)$, where $\delta\theta = \bigtriangledown\psi$ and $\psi$ is the \textit{projected potential}. 
 
 Taylor expansion of RHS of previous equation gives
 \beqa
-I_o(\theta,D_M) = I_s(\theta,D_M) + \delta\theta \cdot \vec{\bigtriangledown_\theta} I_s(\theta,D_M) + \ldots
+I_o(\theta,D_M) = I_s(\theta,D_M) + \delta\theta \cdot \bigtriangledown_\theta I_s(\theta,D_M) + \ldots
 \eeqa
 %where $\il(\theta,D_M)$ is the lensed, $\iul(\theta,D_M)$ the unlensed field. 
 The Fourier transform of this expression is
 \begin{eqnarray}
-\int d^2 \theta \; e^{-i \l \cdot \theta} \; I_o(\theta,D_M) &=& \int d^2 \theta I_s(\theta,D_M) e^{-i \l \cdot \theta} + \int d^2 \theta \; e^{-i\l \cdot \theta} \delta\theta \cdot \vec{\bigtriangledown_\theta} I_s(\theta,D_M)\nonumber\\
-\il_o(\l,D_M) &=& \il_s(\l,D_M) + \underbrace{\int d^2 \theta \; e^{-i\l \cdot \theta} \; \delta\theta \cdot \vec{\bigtriangledown_\theta} I_s(\theta,D_M)}_{A}
+\int d^2 \theta \; e^{-i \l \cdot \theta} \; I_o(\theta,D_M) &=& \int d^2 \theta I_s(\theta,D_M) e^{-i \l \cdot \theta} + \int d^2 \theta \; e^{-i\l \cdot \theta} \delta\theta \cdot \bigtriangledown_\theta I_s(\theta,D_M)\nonumber\\
+\il_o(\l,D_M) &=& \il_s(\l,D_M) + \underbrace{\int d^2 \theta \; e^{-i\l \cdot \theta} \; \delta\theta \cdot \bigtriangledown_\theta I_s(\theta,D_M)}_{A}
 \end{eqnarray}
-Using $\dtheta(\vec{D_M})=\bigtriangledown \hat{\Psi}(\vec{D_M})$
+Using $\dtheta(\vec{D_M})=\bigtriangledown \psi(\vec{D_M})$
 \begin{eqnarray}
-A &= & \int d^2 \theta \; e^{-i\l \cdot \theta} \; \vec{\bigtriangledown_\theta} \Psi \cdot \vec{\bigtriangledown_\theta} I_s(\theta,D_M) \\
-&= & \int d^2 \theta \; e^{-i\l \cdot \theta} \; \frac{1}{(2\pi)^4}  \vec{\bigtriangledown_\theta} \int d^2 l'  e^{i\l' \cdot \theta} \tilde{\Psi}(\l', D_M) \cdot \vec{\bigtriangledown_\theta} \int d^2 l''  e^{i\l'' \cdot \theta} \il_s(\l'',D_M)  \\
-&= & \int d^2 \theta \; e^{-i\l \cdot \theta} \; \frac{1}{(2\pi)^4}  \int d^2 l' \int d^2 l''  \tilde{\Psi}(\l', D_M) \il_s(\l'',D_M) \vec{\bigtriangledown_\theta} e^{i\l' \cdot \theta}  \cdot  \vec{\bigtriangledown_\theta}  e^{i\l'' \cdot \theta}   \\
-&= & - \int d^2 \theta \; e^{-i\l \cdot \theta} \;  \frac{1}{(2\pi)^4}  \int d^2 l' \int d^2 l''  \tilde{\Psi}(\l', D_M) \il_s(\l'',D_M) e^{i(\l' + \l'') \cdot \theta} \l' \cdot \l''\\
-&= & -\int d^2 \theta \; \frac{1}{(2\pi)^4}  \int d^2 l' \int d^2 l''  e^{i(-\l + \l' + \l'') \cdot \theta} \l' \cdot \l'' \; ](\l', D_M) \il_s(\l'',D_M)
+A &= & \int d^2 \theta \; e^{-i\l \cdot \theta} \; \bigtriangledown_\theta \psi \cdot \bigtriangledown_\theta I_s(\theta,D_M) \\
+&= & \int d^2 \theta \; e^{-i\l \cdot \theta} \; \frac{1}{(2\pi)^4}  \bigtriangledown_\theta \int d^2 l'  e^{i\l' \cdot \theta} \tilde{\psi}(\l', D_M) \cdot \bigtriangledown_\theta \int d^2 l''  e^{i\l'' \cdot \theta} \il_s(\l'',D_M)  \\
+&= & \int d^2 \theta \; e^{-i\l \cdot \theta} \; \frac{1}{(2\pi)^4}  \int d^2 l' \int d^2 l''  \tilde{\psi}(\l', D_M) \il_s(\l'',D_M) \bigtriangledown_\theta e^{i\l' \cdot \theta}  \cdot  \bigtriangledown_\theta  e^{i\l'' \cdot \theta}   \\
+&= & - \int d^2 \theta \; e^{-i\l \cdot \theta} \;  \frac{1}{(2\pi)^4}  \int d^2 l' \int d^2 l''  \tilde{\psi}(\l', D_M) \il_s(\l'',D_M) e^{i(\l' + \l'') \cdot \theta} \l' \cdot \l''\\
+&= & -\int d^2 \theta \; \frac{1}{(2\pi)^4}  \int d^2 l' \int d^2 l''  e^{i(-\l + \l' + \l'') \cdot \theta} \l' \cdot \l'' \; \tilde{\psi}(\l', D_M) \il_s(\l'',D_M)
 \end{eqnarray}
 Integrating over $ \theta $
 \begin{eqnarray}
-A &= &- \int d^2 l' \; \frac{1}{(2\pi)^2}  \int d^2 l'' \delta(-\l + \l' + \l'') \l' \cdot \l'' \; \tilde{\Psi}(\l', D_M) \il_s(\l'',D_M)
+A &= &- \int d^2 l' \; \frac{1}{(2\pi)^2}  \int d^2 l'' \delta(-\l + \l' + \l'') \l' \cdot \l'' \; \tilde{\psi}(\l', D_M) \il_s(\l'',D_M)
 \end{eqnarray}
 Integrating over $ \l' $
 \begin{eqnarray}
-A &= &- \frac{1}{(2\pi)^2} \int d^2 l'' \;  \l'' \cdot (\l - \l'') \; \tilde{\Psi}(\l - \l'', D_M) I_s(\l'',D_M)
+A &= &- \frac{1}{(2\pi)^2} \int d^2 l'' \;  \l'' \cdot (\l - \l'') \; \psi(\l - \l'', D_M) I_s(\l'',D_M)
 \end{eqnarray}
 Therefore, we get
 \begin{eqnarray}
-\il_o(\l,k) &=& \il_s(\l, k) - \int {d^2l'} \frac{1}{(2\pi)^2}\il_s(\l',k)\tilde{\Psi}(\l-\l')(\l-\l')\cdot
+\il_o(\l,k) &=& \il_s(\l, k) - \int {d^2l'} \frac{1}{(2\pi)^2}\il_s(\l',k)\psi(\l-\l')(\l-\l')\cdot
 \l'
 \end{eqnarray}
 Computing the correlation function (and dropping $ k $)
 \beq
 \beqal
-\langle \tilde I_o (\l) \tilde{I_o}^*(\textbf{m}) \rangle _{\textbf{m} \neq \textbf{l}} &= - \int {d^2 l'}  \frac{1}{(2\pi)^2}\tilde{\Psi}(\l-\l')(\l-\l')\cdot \l'  \langle \il_s(\l^\prime) \il_s^*(\textbf{m})  \rangle 
+\langle \tilde I_o (\l) \tilde{I_o}^*(\textbf{m}) \rangle _{\textbf{m} \neq \textbf{l}} &= - \int {d^2 l'}  \frac{1}{(2\pi)^2}\psi(\l-\l')(\l-\l')\cdot \l'  \langle \il_s(\l^\prime) \il_s^*(\textbf{m})  \rangle 
 \\
-& -  \int {d^2 l'}  \frac{1}{(2\pi)^2}\tilde{\Psi}^*(\textbf{m}-\l')(\textbf{m}-\l')\cdot \l'  \langle \il_s^*(\l^\prime) \il_s(\textbf{m}) \rangle
+& -  \int {d^2 l'}  \frac{1}{(2\pi)^2}\psi^*(\textbf{m}-\l')(\textbf{m}-\l')\cdot \l'  \langle \il_s^*(\l^\prime) \il_s(\textbf{m}) \rangle
  \\
- &= -  \tilde{\Psi}(\l-\textbf{m})(\l-\textbf{m})\cdot \textbf{m}  P_m 
+ &= -  \psi(\l-\textbf{m})(\l-\textbf{m})\cdot \textbf{m}  C_m 
  \\
-&  -   \tilde{\Psi}^*(\textbf{m}-\l)(\textbf{m}-\l)\cdot \l  P_l
+&  -   \psi^*(\textbf{m}-\l)(\textbf{m}-\l)\cdot \l  C_l
 \eeqal
 \eeq
 
 Now, assuming that $ \textbf{m} = \l- \L $ (and restoring $ k $)
 \begin{eqnarray}
-\langle \tilde I_o (\l,k) \tilde{I}_o^*(\l - \L, k) \rangle _{\textbf{L}  = \l - \textbf{m}} &=& -  \tilde{\Psi}(\L, k)\L\cdot (\textbf{l} - \textbf{L})  P_{l - L, k} +   \tilde{\Psi}^*(-\L, k)\L\cdot \l  P_{l, k} \\
-&=& -  \tilde{\Psi}(\L, k)\L \cdot \left[(\textbf{l} - \textbf{L})  P_{l - L, k} +  \cdot \l  P_{l, k}\right] \label{eq: dodelson_correlation}
+\langle \tilde I (\l,k) \tilde{I}^*(\l - \L, k) \rangle _{\textbf{L}  = \l - \textbf{m}} &=& -  \psi(\L, k)\L\cdot (\textbf{l} - \textbf{L})  C_{l - L, k} +   \psi^*(-\L, k)\L\cdot \l  C_{l, k} \\
+&=& -  \psi(\L, k)\L \cdot \left[(\textbf{l} - \textbf{L})  C_{l - L, k} +  \cdot \l  C_{l, k}\right]
 \end{eqnarray}
 %Even though the field is not homogeneous, it is still assumed to be isotropic. Therefore, LHS = $ \tilde I (l) \tilde{I}^*(\l - \L) $. \textbf{make sure if it's correct}
 %
-%On RHS, the term multiplying $ \hat{\Psi} $ is just a number. 
-Therefore we can define the quadratic estimator as
+%On RHS, the term multiplying $ \phi $ is just a number. 
+We simply invert the expression to solve for $ \phi $ and see that (for a particular $ \l $ and $ \textbf{m} $ such that $ \l  - \textbf{m} = \L$) \textbf{?}
 \beqa
-\hat{\tilde{\Psi}}(\L) \propto \il_o(\l) \il_o(\l - \L)
+\psi(\L) \propto I(\l) I(\l - \L)
 \eeqa
-%Paragraph below equation 9.15 on Page 204 of "Gravitational Lensing" by Dodelson, says that	
-%
-%The above equation is not the best way to infer the potential. First, it uses only a single small-scale model $ \l $; obviously, it makes sense to combine information from many small-scale modes, in each case taking the product of two temperatures with arguments seperated by $ \L $. Second, the estimator in the previous equation will indeed retrieve the true value of $ \hat{\Psi} $ on average but will be very noisy. The quadratic terms can be weighted to reduce the noise while retaining the attractive features that the expected value of the estimator is equal to the true potential.
+Paragraph below equation 9.15 on Page 204 of "Gravitational Lensing" by Dodelson, says that	
+
+The above equation is not the best way to infer the potential. First, it uses only a single small-scale model $ \l $; obviously, it makes sense to combine information from many small-scale modes, in each case taking the product of two temperatures with arguments seperated by $ \L $. Second, the estimator in the previous equation will indeed retrieve the true value of $ \phi $ on average but will be very noisy. The quadratic terms can be weighted to reduce the noise while retaining the attractive features that the expected value of the estimator is equal to the true potential.
 
 %\subsection{Deriving the estimator}
-%We therefore start with a quadratic estimator $\hat{\Psi}(\L)$ for $\hat{\Psi}(\L)$,
+%We therefore start with a quadratic estimator $\Phi(\L)$ for $\phi(\L)$,
 %i.e. of the form
 %\beq
-%\hat{\Psi} (\L) = \int \d2l \int \dko \int \dkt F(\l,k_1,k_2,\L)
+%\Phi (\L) = \int \d2l \int \dko \int \dkt F(\l,k_1,k_2,\L)
 %I(\l,k_1) I(\L-\l,k_2)
 %\label{eq:quadest}
 %\eeq
 %(notice that $F(\l,k_1,k_2,\L)=F(\l,k_2,k_1,\L)$). Because $\delta
-%\hat{\Psi}(\L)=\delta \hat{\Psi}^*(-\L)$ it can also be shown that
+%\Phi(\L)=\delta \Phi^*(-\L)$ it can also be shown that
 %\beq
 %F(\l,k_1,k_2,\L) = F^*(-\l,-k_1,-k_2,-\L)
 %\eeq
-%We want to find $F$ such that it minimizes the variance of $\hat{\Psi}(\L)$
+%We want to find $F$ such that it minimizes the variance of $\Phi(\L)$
 %under the condition that its ensemble average recovers the lensing field,
-%$\langle \hat{\Psi}(\L)\rangle_\iul = \hat{\Psi}(\L)$. This becomes (to first order in $\hat{\Psi}$)
+%$\langle \Phi(\L)\rangle_\iul = \phi(\L)$. This becomes (to first order in $\phi$)
 %
 %\beq
 %\beqal
-%\langle \hat{\Psi}(\L)\rangle_\iul &=&  \int \d2l \int \dko \int \dkt  F(\l,k_1,k_2,\L)  (2\pi)\delta(k_1+k_2) \\
-%& & \times \left[\pul_{l,k} \hat{\Psi}(\L)\L\cdot\l + \pul_{L-l,k}  \hat{\Psi}(\L)\L\cdot(\L-\l)\right] \, ,
+%\langle \Phi(\L)\rangle_\iul &=&  \int \d2l \int \dko \int \dkt  F(\l,k_1,k_2,\L)  (2\pi)\delta(k_1+k_2) \\
+%& & \times \left[\pul_{l,k} \phi(\L)\L\cdot\l + \pul_{L-l,k}  \phi(\L)\L\cdot(\L-\l)\right] \, ,
 %\eeqal
 %\eeq
 %
 %where e.g. $\pul_{l,k}$ is the power in a mode with angular component $l$ and radial component $k$.
-%With the requirement that $\langle \hat{\Psi}(\L)\rangle_\iul=\hat{\Psi}(\L)$ this
+%With the requirement that $\langle \Phi(\L)\rangle_\iul=\phi(\L)$ this
 %leads to the normalization condition
 %\beq
 %\int \d2l \int \dko \int \dkt F(\l,k_1,k_2,\L) (2\pi) \delta^D(k_1+k_2)
@@ -320,7 +301,7 @@ Therefore we can define the quadratic estimator as
 %The condition of minimization of the variance gives 
 %\beq
 %\beqal
-%\langle ||\hat{\Psi}(\L)||^2\rangle_\il &= \int \d2l \int \dko \int \dkt (2\pi)^2 \delta(0) F(\l,k_1,k_2,\L)
+%\langle ||\Phi(\L)||^2\rangle_\il &= \int \d2l \int \dko \int \dkt (2\pi)^2 \delta(0) F(\l,k_1,k_2,\L)
 %F^*(\l',k_1',k_2',\L') \ptot_{l,k_1}\ptot_{L-l,k_2} \\
 %&  + \int \d2l \int \dko \int \dkt (2\pi)^2 \delta(0) F(\l,k_1,k_2,\L)
 %F^*(\L-\l',k_2',k_1',\L') \ptot_{l,k_1}\ptot_{L-l,k_2}
@@ -331,7 +312,7 @@ Therefore we can define the quadratic estimator as
 %\rightarrow \l$ that $F^*(\L-\l,k_2,k_1,\L) = F^*(\l,k_1,k_2,\L)$
 %hence
 %\beq
-%\langle ||\hat{\Psi}(\L)||^2\rangle = 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
+%\langle ||\Phi(\L)||^2\rangle = 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
 %\dkt F(\l,k_1,k_2,\L) F^*(\l,k_1,k_2,\L) \ptot_{l,k_1}\ptot_{l,k_2} \, .  \label{eq:phisqavg}
 %\eeq
 %
@@ -340,7 +321,7 @@ Therefore we can define the quadratic estimator as
 %minimization will only pick out the real part. (\textbf{Does this really matter?}) The solution is found
 %by minimizing the function
 %\beq
-%\langle ||\hat{\Psi}(\L)||^2\rangle- A_R \times (\, {\rm Equation} \, \ref{eq:normcond})
+%\langle ||\Phi(\L)||^2\rangle- A_R \times (\, {\rm Equation} \, \ref{eq:normcond})
 %\eeq
 %with respect to $F$, where $A_R$ is a Lagrangian multiplier. In steps,
 %\beq
@@ -349,7 +330,7 @@ Therefore we can define the quadratic estimator as
 %\eeq
 %and
 %\beq
-%\frac{\partial \langle ||\hat{\Psi}(\L)||^2 \rangle}{\partial F(\l,k_1,k_2,\L)} =
+%\frac{\partial \langle ||\Phi(\L)||^2 \rangle}{\partial F(\l,k_1,k_2,\L)} =
 %2 (2\pi)^2 \delta(0) \d2l \dko \dkt 2 F_R(\l,k_1,k_2,\L)
 %\ptot_{l,k_1}\ptot_{L-l,k_2}
 %\eeq
@@ -438,7 +419,7 @@ Therefore we can define the quadratic estimator as
 %
 %\beq
 %\beqal
-%\langle ||\hat{\Psi}(\L)||^2\rangle &= 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
+%\langle ||\Phi(\L)||^2\rangle &= 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
 %\dkt F(\l,k_1,k_2,\L) F^*(\l,k_1,k_2,\L) \ptot_{l,k_1}\ptot_{l,k_2} 
 %\\
 %&= 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
@@ -456,7 +437,7 @@ Therefore we can define the quadratic estimator as
 %
 %\beq
 %\beqal
-%\langle ||\hat{\Psi}(\L)||^2\rangle 
+%\langle ||\Phi(\L)||^2\rangle 
 %&=  \frac{2 (2\pi)^2}{\delta(0)}   \int \d2l \int \dko \int \dkt \left( \frac{D_C}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 %		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }   \right.
 %\\
@@ -475,7 +456,7 @@ Therefore we can define the quadratic estimator as
 %
 %\beq
 %\beqal
-%\langle ||\hat{\Psi}(\L)||^2\rangle 
+%\langle ||\Phi(\L)||^2\rangle 
 %&=  \frac{2 (2\pi)^2}{\delta(0)} \left( \frac{D_C}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 %		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l \int \dko \frac{1}{2\pi} 
 %\\
@@ -487,7 +468,7 @@ Therefore we can define the quadratic estimator as
 %cancelling $ \delta(0) $ and $ 2\pi $
 %\beq
 %\beqal
-%\langle ||\hat{\Psi}(\L)||^2\rangle 
+%\langle ||\Phi(\L)||^2\rangle 
 %&=  2 (2\pi) \left( \frac{D_C}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 %		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l \int \dko  
 %\\
@@ -501,7 +482,7 @@ Therefore we can define the quadratic estimator as
 %
 %\beq
 %\beqal
-%\langle ||\hat{\Psi}(\L)||^2\rangle 
+%\langle ||\Phi(\L)||^2\rangle 
 %&=  2 (2\pi) \left( \frac{D_C}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 %		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l   
 %\\
@@ -525,7 +506,7 @@ Therefore we can define the quadratic estimator as
 %Therefore, we finally have
 %\beq
 %\beqal
-%\langle ||\hat{\Psi}(\L)||^2\rangle 
+%\langle ||\Phi(\L)||^2\rangle 
 %& =   \frac{2 (2\pi) D_C}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 %		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }
 %\\
@@ -536,49 +517,49 @@ Therefore we can define the quadratic estimator as
 %With the definition of noise power spectrum
 %\beq
 %\beqal
-%\langle \hat{\Psi}(\textbf{L})  \hat{\Psi}^*(\textbf{L}')\rangle = (2\pi)^2 \delta(\textbf{L} - \textbf{L}') N_L^{\hat{\Psi}}
+%\langle \Phi(\textbf{L})  \Phi^*(\textbf{L}')\rangle = (2\pi)^2 \delta(\textbf{L} - \textbf{L}') N_L^\Phi
 %\\
 %\mathrm{OR}
 %\\
-%\langle || \hat{\Psi}(\textbf{L}) ||^2 \rangle = (2\pi)^2 \delta(0) N_L^{\hat{\Psi}}
+%\langle || \Phi(\textbf{L}) ||^2 \rangle = (2\pi)^2 \delta(0) N_L^\Phi
 %\eeqal
 %\eeq
 %
 %It follows that 
 %\beq
 %\beqal
-%N_L^{\hat{\Psi}} = \frac{2 D_C}{2\pi \delta(0)} \frac{1}{{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+%N_L^\Phi = \frac{2 D_C}{2\pi \delta(0)} \frac{1}{{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 %			\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }}
 %\eeqal
 %\eeq
 
 
 \subsection{Deriving the estimator}
-We therefore start with a quadratic estimator $\hat{\Psi}(\L)$ for $\tilde{\psi}(\L)$,
+We therefore start with a quadratic estimator $\Phi(\L)$ for $\phi(\L)$,
 i.e. of the form
 \beq
-\hat{\Psi} (\L) = \int \d2l \int \dko \int \dkt F(\l,k_1,k_2,\L)
-\il_o(\l,k_1) \il(\L-\l,k_2)
+\Phi (\L) = \int \d2l \int \dko \int \dkt F(\l,k_1,k_2,\L)
+I(\l,k_1) I(\L-\l,k_2)
 \label{eq:quadest}
 \eeq
 (notice that $F(\l,k_1,k_2,\L)=F(\l,k_2,k_1,\L)$). Because $\delta
-\hat{\Psi}(\L)=\delta \hat{\Psi}^*(-\L)$ it can also be shown that
+\Phi(\L)=\delta \Phi^*(-\L)$ it can also be shown that
 \beq
 F(\l,k_1,k_2,\L) = F^*(-\l,-k_1,-k_2,-\L)
 \eeq
-We want to find $F$ such that it minimizes the variance of $\tilde{\Psi}(\L)$
+We want to find $F$ such that it minimizes the variance of $\Phi(\L)$
 under the condition that its ensemble average recovers the lensing field,
-$\langle \hat{\Psi}(\L)\rangle_\iul = \tilde{\psi}(\L)$. This becomes (to first order in $\tilde{\psi}$)
+$\langle \Phi(\L)\rangle_\iul = \phi(\L)$. This becomes (to first order in $\phi$)
 
 \beq
 \beqal
-\langle \hat{\Psi}(\L)\rangle_\iul &=&  \int \d2l \int \dko \int \dkt  F(\l,k_1,k_2,\L)  (2\pi)\delta(k_1+k_2) \\
-& & \times \left[\pul_{l,k} \tilde{\psi}(\L)\L\cdot\l + \pul_{L-l,k}  \tilde{\psi}(\L)\L\cdot(\L-\l)\right] \, ,
+\langle \Phi(\L)\rangle_\iul &=&  \int \d2l \int \dko \int \dkt  F(\l,k_1,k_2,\L)  (2\pi)\delta(k_1+k_2) \\
+& & \times \left[\pul_{l,k} \phi(\L)\L\cdot\l + \pul_{L-l,k}  \phi(\L)\L\cdot(\L-\l)\right] \, ,
 \eeqal
 \eeq
 
 where e.g. $\pul_{l,k}$ is the power in a mode with angular component $l$ and radial component $k$.
-With the requirement that $\langle \hat{\Psi}(\L)\rangle_\iul=\tilde{\psi}(\L)$ this
+With the requirement that $\langle \Phi(\L)\rangle_\iul=\phi(\L)$ this
 leads to the normalization condition
 \beq
 \int \d2l \int \dko \int \dkt F(\l,k_1,k_2,\L) (2\pi) \delta^D(k_1+k_2)
@@ -589,7 +570,7 @@ leads to the normalization condition
 The condition of minimization of the variance gives 
 \beq
 \beqal
-\langle ||\hat{\Psi}(\L)||^2\rangle_\il &= \int \d2l \int \dko \int \dkt (2\pi)^2 \delta(0) F(\l,k_1,k_2,\L)
+\langle ||\Phi(\L)||^2\rangle_\il &= \int \d2l \int \dko \int \dkt (2\pi)^2 \delta(0) F(\l,k_1,k_2,\L)
 F^*(\l',k_1',k_2',\L') \ptot_{l,k_1}\ptot_{L-l,k_2} \\
 &  + \int \d2l \int \dko \int \dkt (2\pi)^2 \delta(0) F(\l,k_1,k_2,\L)
 F^*(\L-\l',k_2',k_1',\L') \ptot_{l,k_1}\ptot_{L-l,k_2}
@@ -600,7 +581,7 @@ but from \ref{eq:quadest} we see with the substitution $\L-\l
 \rightarrow \l$ that $F^*(\L-\l,k_2,k_1,\L) = F^*(\l,k_1,k_2,\L)$
 hence
 \beq
-\langle ||\hat{\Psi}(\L)||^2\rangle = 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
+\langle ||\Phi(\L)||^2\rangle = 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
 \dkt F(\l,k_1,k_2,\L) F^*(\l,k_1,k_2,\L) \ptot_{l,k_1}\ptot_{l,k_2} \, .  \label{eq:phisqavg}
 \eeq
 
@@ -609,7 +590,7 @@ to this variance, however the condition for the
 minimization will only pick out the real part. (\textbf{Does this really matter?}) The solution is found
 by minimizing the function
 \beq
-\langle ||\hat{\Psi}(\L)||^2\rangle- A_R \times (\, {\rm Equation} \, \ref{eq:normcond})
+\langle ||\Phi(\L)||^2\rangle- A_R \times (\, {\rm Equation} \, \ref{eq:normcond})
 \eeq
 with respect to $F$, where $A_R$ is a Lagrangian multiplier. In steps,
 \beq
@@ -618,7 +599,7 @@ with respect to $F$, where $A_R$ is a Lagrangian multiplier. In steps,
 \eeq
 and
 \beq
-\frac{\partial \langle ||\hat{\Psi}(\L)||^2 \rangle}{\partial F(\l,k_1,k_2,\L)} =
+\frac{\partial \langle ||\Phi(\L)||^2 \rangle}{\partial F(\l,k_1,k_2,\L)} =
 2 (2\pi)^2 \delta(0) \d2l \dko \dkt 2 F_R(\l,k_1,k_2,\L)
 \ptot_{l,k_1}\ptot_{L-l,k_2}
 \eeq
@@ -710,7 +691,7 @@ Now, substituting this expression in Equation \ref{eq:phisqavg}. Taking $ FF^* \
 
 \beq
 \beqal
-\langle ||\hat{\Psi}(\L)||^2\rangle &= 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
+\langle ||\Phi(\L)||^2\rangle &= 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
 \dkt F(\l,k_1,k_2,\L) F^*(\l,k_1,k_2,\L) \ptot_{l,k_1}\ptot_{l,k_2} 
 \\
 &= 2 (2\pi)^2 \delta(0) \int \d2l \int \dko \int
@@ -742,7 +723,7 @@ Now, substituting this expression in Equation \ref{eq:phisqavg}. Taking $ FF^* \
 %
 %\beq
 %\beqal
-%\langle ||\hat{\Psi}(\L)||^2\rangle 
+%\langle ||\Phi(\L)||^2\rangle 
 %&=  2 (2\pi)^2\delta(0)   \int \d2l \int \dko \int \dkt \frac{1}{\int \frac{d^2 l}{(2\pi)^2} 2 (2\pi)^2\delta(0)\sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 %		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }   
 %\eeqal
@@ -751,7 +732,7 @@ Now, substituting this expression in Equation \ref{eq:phisqavg}. Taking $ FF^* \
 %
 %\beq
 %\beqal
-%\langle ||\hat{\Psi}(\L)||^2\rangle 
+%\langle ||\Phi(\L)||^2\rangle 
 %&=  \frac{2 (2\pi)^2}{\delta(0)} \left( \frac{D_C}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 %		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l \int \dko \frac{1}{2\pi} 
 %\\
@@ -763,7 +744,7 @@ Now, substituting this expression in Equation \ref{eq:phisqavg}. Taking $ FF^* \
 %cancelling $ \delta(0) $ and $ 2\pi $
 %\beq
 %\beqal
-%\langle ||\hat{\Psi}(\L)||^2\rangle 
+%\langle ||\Phi(\L)||^2\rangle 
 %&=  2 (2\pi) \left( \frac{D_C}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 %		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l \int \dko  
 %\\
@@ -777,7 +758,7 @@ Now, substituting this expression in Equation \ref{eq:phisqavg}. Taking $ FF^* \
 %
 %\beq
 %\beqal
-%\langle ||\hat{\Psi}(\L)||^2\rangle 
+%\langle ||\Phi(\L)||^2\rangle 
 %&=  2 (2\pi) \left( \frac{D_C}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 %		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} } \right)^2 \int \d2l   
 %\\
@@ -799,24 +780,24 @@ Now, substituting this expression in Equation \ref{eq:phisqavg}. Taking $ FF^* \
 %\eeq
 With the definition
 \begin{eqnarray}
-\langle \hat{\Psi}(\textbf{L}) \hat{\Psi}^*(L') \rangle  = (2\pi)^2 \delta^D(\textbf{L} - \textbf{L}') N^{\hat{\Psi}}
+\langle \Phi(\textbf{L}) \Phi^*(L') \rangle  = (2\pi)^2 \delta^D(\textbf{L} - \textbf{L}') N^\Phi
 \end{eqnarray}
 
 Therefore, we finally have
 \beq
 \beqal
-\langle ||\hat{\Psi}(\L)||^2\rangle 
+\langle ||\Phi(\L)||^2\rangle 
 & =   \frac{2 (2\pi) D_C}{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 		\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{\ptot_{l,k_1}\ptot_{L-l,-k_1}} }
 \\
-& = (2\pi)^2 \delta(0) N^{\hat{\Psi}}
+& = (2\pi)^2 \delta(0) N^\Phi
 \eeqal
 \eeq
 
 Which gives
 \beq
 \beqal
-N_L^{\hat{\Psi}} = \frac{1}{{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
+N_L^\Phi = \frac{1}{{\int \frac{d^2 l}{(2\pi)^2} \sum_{k_1} \frac{[\pul_{l,k_1} \L\cdot \l +
 			\pul_{L-l,-k_1} \L\cdot (\L-\l)]^2}{2\ptot_{l,k_1}\ptot_{L-l,-k_1}} }}
 \eeqal
 \eeq
@@ -828,13 +809,11 @@ This is equation A20 in ZZ2006.
 \subsubsection{Discrete and Continuous FT}
 For a 3D signal, we have 
 \begin{eqnarray}
-	\il_s(\textbf{k}) = \int d^3\textbf{x} e^{-i \textbf{k} \cdot  \textbf{x}} I_s(\textbf{x})
+	\il(\textbf{k}) = \int d^3\textbf{x} e^{-i \textbf{k} \cdot  \textbf{x}} I(\textbf{x})
 \end{eqnarray}
-We are probing a volume of dimensions ($ \theta D_M \times \theta D_M \times D_C $), where $ D_C $ is the length of the volume along the line of sight between $ z = z_1$ and $z = z_2 $.  We divide the it into $ N_\perp $ parts along the transverse direction and $ N_\parallel $ parts along the radial direction. 
-
-Discretizing $ \il_s(k) $ 
+We are probing a volume of dimensions ($ \theta D_M \times \theta D_M \times D_C $), where $ D_C $ is the length of the volume along the line of sight between $ z = z_1$ and $z = z_2 $.  We divide the it into $ N_\perp $ parts along the transverse direction and $ N_\parallel $ parts along the radial direction. We discretize $ \il(k) $ 
 \begin{eqnarray}
-	\il_s(\textbf {k}) &=& \sum_{t_1} \frac{\Theta_s D_M}{N_\perp} \sum_{t_2} \frac{\Theta_s D_M }{N_\perp} \sum_{p} \frac{D_C}{N_\parallel} e^{-i \textbf {k} \cdot ( \frac{D_C}{N_\parallel}p + \frac{\Theta_s}{N_\perp} t_1 + \frac{\Theta_s}{N_\perp} t_2)} I_s(\textbf {x}) 
+	\il(\textbf {k}) &=& \sum_{t_1} \frac{\Theta_s D_M}{N_\perp} \sum_{t_2} \frac{\Theta_s D_M }{N_\perp} \sum_{p} \frac{D_C}{N_\parallel} e^{-i \textbf {k} \cdot ( \frac{D_C}{N_\parallel}p + \frac{\Theta_s}{N_\perp} t_1 + \frac{\Theta_s}{N_\perp} t_2)} I(\textbf {x}) 
 \end{eqnarray}
 Using
 \begin{eqnarray}
@@ -843,27 +822,27 @@ Using
 \end{eqnarray}
 we get,
 \begin{eqnarray}
-	\il_s(\textbf{k}) =  \sum_{\textbf {x}} \frac{\Omega_s D_M^2}{N_\perp^2} \frac{ D_C }{N_\parallel} e^{-i \textbf {k} \cdot \textbf {x}} I_s(\textbf {x})
+	\il(\textbf{k}) =  \sum_{\textbf {x}} \frac{\Omega_s D_M^2}{N_\perp^2} \frac{ D_C }{N_\parallel} e^{-i \textbf {k} \cdot \textbf {x}} I(\textbf {x})
 \end{eqnarray}
 Upon normalizing this result with a factor of $ D_M^2 D_C $, we get
 \begin{eqnarray}
-	\tilde{I}_s(\textbf{k}) =  \sum_{\textbf {x}} \frac{\Omega_s}{N_\perp N_\parallel} e^{-i \textbf {k} \cdot \textbf {x}} I_s(\textbf {x})
+	\tilde{I}(\textbf{k}) =  \sum_{\textbf {x}} \frac{\Omega_s}{N_\perp N_\parallel} e^{-i \textbf {k} \cdot \textbf {x}} I(\textbf {x})
 \end{eqnarray}
 
 
 \subsection{Equation 2}
 Writing the inverse FT, we get
 \begin{eqnarray}
-	I_s(\textbf{x}) = \frac{1}{(2\pi)^3}  \int d^3 \textbf{k} e^{i \textbf{k} \cdot \textbf{x}} \il_s(\textbf{k})
+	I(\textbf{x}) = \frac{1}{(2\pi)^3}  \int d^3 \textbf{k} e^{i \textbf{k} \cdot \textbf{x}} \il(\textbf{k})
 \end{eqnarray}
 %We have divided the block of space into ($ N_\perp \times N_\perp \times N_\parallel $) parts. Therefore, now the smallest lengths are equal to $\frac{dz}{N_\parallel} $ and $ \frac{\Theta_s}{N_\perp} $. Corresponding to these lengths, the $ k $ modes are $ \frac{2\pi}{dz} N_\parallel $ and $ \frac{2\pi}{\Theta_s} N_\perp  $. Using this, we get
 Upon discretization, we get
 \begin{eqnarray}
-	I_s(\textbf{x}) &=& \frac{1}{(2 \pi)^3} \sum_{\textbf{k}} \frac{2\pi}{D_C} \frac{(2\pi)^2}{\Omega_s D_M^2} e^{i \textbf{k} \cdot \textbf{x}} \il_s(\textbf{k}) 
+	I(\textbf{x}) &=& \frac{1}{(2 \pi)^3} \sum_{\textbf{k}} \frac{2\pi}{D_C} \frac{(2\pi)^2}{\Omega_s D_M^2} e^{i \textbf{k} \cdot \textbf{x}} \il(\textbf{k}) 
 \end{eqnarray}
 Absorbing the factor of $ D_M^2 D_C $ into $ \il(\textbf{k}) $.
 \begin{eqnarray}
-	I_s(\textbf{x}) & = & \sum_\textbf{k} \frac{1}{\Omega_s} e^{i \textbf{k} \cdot \textbf{x}} \il_s(\textbf{k})
+	I(\textbf{x}) & = & \sum_\textbf{k} \frac{1}{\Omega_s} e^{i \textbf{k} \cdot \textbf{x}} \il(\textbf{k})
 \end{eqnarray}
 
 
@@ -876,19 +855,14 @@ Absorbing the factor of $ D_M^2 D_C $ into $ \il(\textbf{k}) $.
 %& = & \Omega_s \frac{P}{D^2 \mathcal{L}}  \delta(\textbf{k} - \textbf{k}') \\
 %& = & \Omega_s \frac{P}{D^2 \mathcal{L}}  \delta_{ll'} \delta_{kk'}
 %\end{eqnarray}
-starting with 
+starting with equation 3:
 \begin{eqnarray}
-		\il_s(\textbf{k}) = \int d^3\textbf{x} e^{-i \textbf{k} \cdot  \textbf{x}} I_s(\textbf{x})
-\end{eqnarray}
-we get
-\begin{eqnarray}
-	\langle \il_s(k) \il^*(k')\rangle  &=& \int d^3x \int d^3 x'  \langle I_s(\textbf{x}) I_s'(\textbf{x}') \rangle e^{- i \textbf{k} \textbf{x}} e^{i \textbf{k}' \textbf{x}'}  \\
-	&=& \int d^3x \int d^3 x' \int \frac{d^3 k''}{(2\pi)^3} P(\textbf{k}'') e^{i\textbf{k}'' (\textbf{x} - \textbf{x}')} e^{- i \textbf{k} \textbf{x}} e^{i \textbf{k}' \textbf{x}'} 
-	 \\
-	\langle \tilde{I}_s(k) \tilde{I}_s^*(k')\rangle &=&  \sum_\textbf{x} \frac{\Omega_s}{N_\parallel N_\perp} \sum_{\textbf{x}'} \frac{\Omega_s}{N_\parallel N_\perp} \sum_{\textbf{k}''} \frac{P(\textbf{k}'')}{\Omega_s D^2 \mathcal{L}}  e^{i \textbf{k}''(\textbf{x} - \textbf{x}')} e^{- i \textbf{k} \textbf{x}} e^{i \textbf{k}' \textbf{x}'} \\
+	\langle I(k) I^*(k')\rangle  &=& \int d^3x \int d^3 x'  \langle I(\textbf{x}) I'(\textbf{x}') \rangle e^{- i \textbf{k} \textbf{x}} e^{i \textbf{k}' \textbf{x}'}  \\
+	&=& \int d^3x \int d^3 x' \int \frac{d^3 k''}{(2\pi)^3} P(\textbf{k}'') e^{i\textbf{k}'' (\textbf{x} - \textbf{x}')} e^{- i \textbf{k} \textbf{x}} e^{i \textbf{k}' \textbf{x}'}  \\
+	\langle \tilde{I}(k) \tilde{I}^*(k')\rangle &=&  \sum_\textbf{x} \frac{\Omega_s}{N_\parallel N_\perp} \sum_{\textbf{x}'} \frac{\Omega_s}{N_\parallel N_\perp} \sum_{\textbf{k}''} \frac{P(\textbf{k}'')}{\Omega_s D^2 \mathcal{L}}  e^{i \textbf{k}''(\textbf{x} - \textbf{x}')} e^{- i \textbf{k} \textbf{x}} e^{i \textbf{k}' \textbf{x}'} \\
 	&=& \sum_\textbf{x} \frac{\Omega_s}{N_\parallel N_\perp} \sum_{\textbf{x}'} \frac{\Omega_s}{N_\parallel N_\perp} \sum_{\textbf{k}''} \frac{P(\textbf{k}'')}{\Omega_s D^2 \mathcal{L}}  e^{ -i (\textbf{k} - \textbf{k}'')\textbf{x}} e^{-i (\textbf{k}'' - \textbf{k}') \textbf{x}'} \\
 	&=&  \Omega_s \frac{P(\textbf{k}'')}{D^2 \mathcal{L}}  \delta^k(\l,\l') \delta^k(j,j')\\
-	&=&  \Omega_s C_{\l, j}  \delta^k(\l,\l') \delta^k(j,j')
+	&=&  \Omega_s C_{\l, j}{D^2 \mathcal{L}}  \delta^k(\l,\l') \delta^k(j,j')
 \end{eqnarray}
 where $ C_{lj} \equiv \frac{P(\textbf{k}'')}{D^2 \mathcal{L}}$ is the discrete angular power spectrum.
 
