@@ -8,7 +8,7 @@ dxl_2 = np.zeros(50)
 dxh_2 = np.zeros(50)
 dyl_2 = np.zeros(50)
 dyh_2 = np.zeros(50)
-x_2, y_2, dxl_2, dxh_2, dyl_2, dyh_2 = np.loadtxt("pourtsidou_xyscan_curve_z_2.txt", unpack=True)
+x_2, y_2, dxl_2, dxh_2, dyl_2, dyh_2 = np.loadtxt("../../Data_files/pourtsidou_xyscan_curve_z_2.txt", unpack=True)
 
 xn_2 = np.zeros(50)
 yn_2 = np.zeros(50)
@@ -16,7 +16,7 @@ dxln_2 = np.zeros(50)
 dxhn_2 = np.zeros(50)
 dyln_2 = np.zeros(50)
 dyhn_2 = np.zeros(50)
-xn_2, yn_2, dxln_2, dxhn_2, dyln_2, dyhn_2 = np.loadtxt("pourtsidou_xyscan_noise_z_2.txt", unpack=True)
+xn_2, yn_2, dxln_2, dxhn_2, dyln_2, dyhn_2 = np.loadtxt("../../Data_files/pourtsidou_xyscan_noise_z_2.txt", unpack=True)
 
 
 x_3 = np.zeros(50)
@@ -25,7 +25,7 @@ dxl_3 = np.zeros(50)
 dxh_3 = np.zeros(50)
 dyl_3 = np.zeros(50)
 dyh_3 = np.zeros(50)
-x_3, y_3, dxl_3, dxh_3, dyl_3, dyh_3 = np.loadtxt("pourtsidou_xyscan_curve_z_3.txt", unpack=True)
+x_3, y_3, dxl_3, dxh_3, dyl_3, dyh_3 = np.loadtxt("../../Data_files/pourtsidou_xyscan_curve_z_3.txt", unpack=True)
 
 xn_3 = np.zeros(50)
 yn_3 = np.zeros(50)
@@ -33,7 +33,7 @@ dxln_3 = np.zeros(50)
 dxhn_3 = np.zeros(50)
 dyln_3 = np.zeros(50)
 dyhn_3 = np.zeros(50)
-xn_3, yn_3, dxln_3, dxhn_3, dyln_3, dyhn_3 = np.loadtxt("pourtsidou_xyscan_noise_z_3.txt", unpack=True)
+xn_3, yn_3, dxln_3, dxhn_3, dyln_3, dyhn_3 = np.loadtxt("../../Data_files/pourtsidou_xyscan_noise_z_3.txt", unpack=True)
 
 
 
