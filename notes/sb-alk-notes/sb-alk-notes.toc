@@ -13,7 +13,7 @@
 \contentsline {section}{\numberline {2}Lensing reconstruction noise}{4}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Mathematical form of a quadratic estimator}{4}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Deriving the estimator}{5}{subsection.2.2}%
-\contentsline {section}{\numberline {3}Notes by Metcalf and Alkistis}{9}{section.3}%
+\contentsline {section}{\numberline {3}Notes on lensing a Poisson distributed surface brightness by Metcalf and Alkistis}{9}{section.3}%
 \contentsline {subsection}{\numberline {3.1}Equation 1}{9}{subsection.3.1}%
 \contentsline {subsubsection}{\numberline {3.1.1}Discrete and Continuous FT}{9}{subsubsection.3.1.1}%
 \contentsline {subsection}{\numberline {3.2}Equation 2}{9}{subsection.3.2}%
