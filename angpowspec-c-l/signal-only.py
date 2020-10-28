@@ -9,8 +9,8 @@ from tqdm.auto import tqdm
 import camb
 from camb import model, initialpower, get_matter_power_interpolator
 import time
-import $pda/Utility/Git/dyskun/C2SNR/experiment-parameters/p_2014_parameters as exp
-import $pda/Utility/Git/dyskun/C2SNR/cosmological-parameters/p_2014_cosmology as cos 
+import p_2014_parameters as exp
+import p_2014_cosmology as cos 
 
 ########################################################################
 ## Job specific parameters
@@ -32,7 +32,7 @@ z_s = 2
 ### plot params
 l_plot_ll = l_ll
 l_plot_ul = 600
-err_stepsize = 200
+err_stepsize = exp.delta_l
 
 #------------------------------------------------------------------------
 
@@ -47,7 +47,7 @@ def distance(var):
 ## hubble ratio H(z)/H0
 ########################################################################
 def hubble_ratio(var):
-    return (omegam0 * (1 + var)**3 + omegal)**0.5
+    return (omegam * (1 + var)**3 + omegal)**0.5
 #------------------------------------------------------------------------
 
 ########################################################################
@@ -81,6 +81,7 @@ c = 3 * 10**8
 ### cosmology
 h = cos.h
 H0 = h * 100
+omegal = cos.omegal
 omegam = cos.omegam
 omegab = cos.omegab
 omegac = cos.omegac
@@ -90,6 +91,8 @@ omegach2 = omegac * h**2
 YHe = cos.YHe
 As = cos.As
 ns = cos.ns
+cosmo = {'omega_M_0': omegam, 'omega_lambda_0': omegal, 'omega_k_0': 0.0, 'h': h}
+
 
 ### experiment parameters
 bandwidth = exp.bandwidth   #-- MHz
@@ -114,7 +117,7 @@ mass_moment_3 = 0.357
 mass_moment_4 = 46.64
 
 #### cshot
-Cshot = Tz(z)**2 * mass_moment_2 / (eta_bar * D2xLen * mass_moment_1**2)
+Cshot = Tz(z_s)**2 * mass_moment_2 / (eta_bar * D2xLen * mass_moment_1**2)
 
 #### thermal/instrumental noise 
 #-- C_l^N in eq. 14 of P_2014
@@ -125,7 +128,7 @@ C_l_N = (2 * 3.14)**3 * T_sys**2 / (bandwidth * t_obs * f_cover**2 * l_max**2)
 n_err_points = 1 + int((l_plot_max - l_plot_min)/err_stepsize)
 
 ### constant factor ouside the integral in equation 20 of P_2014
-constfac = (9/4) * (H0/c)**3 * omegam0**2 
+constfac = (9/4) * (H0/c)**3 * omegam**2 
 #-----------------------------------------------------------------------
 
 ########################################################################

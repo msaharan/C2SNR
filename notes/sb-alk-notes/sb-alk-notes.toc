@@ -13,8 +13,24 @@
 \contentsline {section}{\numberline {2}Lensing reconstruction noise}{4}{section.2}%
 \contentsline {subsection}{\numberline {2.1}Mathematical form of a quadratic estimator}{4}{subsection.2.1}%
 \contentsline {subsection}{\numberline {2.2}Deriving the estimator}{5}{subsection.2.2}%
-\contentsline {section}{\numberline {3}Notes on lensing a Poisson distributed surface brightness by Metcalf and Alkistis}{9}{section.3}%
-\contentsline {subsection}{\numberline {3.1}Equation 1}{9}{subsection.3.1}%
-\contentsline {subsubsection}{\numberline {3.1.1}Discrete and Continuous FT}{9}{subsubsection.3.1.1}%
-\contentsline {subsection}{\numberline {3.2}Equation 2}{9}{subsection.3.2}%
-\contentsline {subsection}{\numberline {3.3}Equation 5}{10}{subsection.3.3}%
+\contentsline {section}{\numberline {3}Pourtsidou et al. 2014}{9}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Cosmology and parameters}{9}{subsection.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.1}Cosmology}{9}{subsubsection.3.1.1}%
+\contentsline {subsubsection}{\numberline {3.1.2}Experimental parameters}{9}{subsubsection.3.1.2}%
+\contentsline {paragraph}{Other parameters}{9}{section*.11}%
+\contentsline {subsection}{\numberline {3.2}$ T_{HI} $}{10}{subsection.3.2}%
+\contentsline {subsection}{\numberline {3.3}Matter power spectrum}{11}{subsection.3.3}%
+\contentsline {subsection}{\numberline {3.4}Power spectrum of 21-cm line}{12}{subsection.3.4}%
+\contentsline {subsection}{\numberline {3.5}Signam-to-noise ratio}{12}{subsection.3.5}%
+\contentsline {subsubsection}{\numberline {3.5.1}Signal}{12}{subsubsection.3.5.1}%
+\contentsline {paragraph}{Question}{14}{section*.16}%
+\contentsline {paragraph}{Error in thesis}{15}{section*.18}%
+\contentsline {subsubsection}{\numberline {3.5.2}Noise}{15}{subsubsection.3.5.2}%
+\contentsline {subsubsection}{\numberline {3.5.3}Error bars}{16}{subsubsection.3.5.3}%
+\contentsline {paragraph}{Error in thesis}{16}{section*.20}%
+\contentsline {subsubsection}{\numberline {3.5.4}Gaussian noise}{16}{subsubsection.3.5.4}%
+\contentsline {subsubsection}{\numberline {3.5.5}Instrumental Noise}{17}{subsubsection.3.5.5}%
+\contentsline {subsubsection}{\numberline {3.5.6}Gaussian + Poisson noise}{17}{subsubsection.3.5.6}%
+\contentsline {paragraph}{Mass moments and number density of galaxies}{17}{section*.21}%
+\contentsline {paragraph}{Average number density of galaxies}{17}{section*.22}%
+\contentsline {paragraph}{Mass moments}{18}{section*.23}%
