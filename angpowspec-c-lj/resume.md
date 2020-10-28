@@ -1,0 +1,12 @@
+# Where I stopped
+-   Was trying to find the mean density of the universe for \alpha = -1.3. 
+-   Links
+    -   [https://www.spacetelescope.org/static/archives/releases/science_papers/heic1620/heic1620a.pdf](https://www.spacetelescope.org/static/archives/releases/science_papers/heic1620/heic1620a.pdf)
+    -   [https://www.aanda.org/articles/aa/pdf/2012/03/aa17535-11.pdf](https://www.aanda.org/articles/aa/pdf/2012/03/aa17535-11.pdf)
+    -   [http://adsabs.harvard.edu/full/1946MNRAS.106..121F](http://adsabs.harvard.edu/full/1946MNRAS.106..121F)
+    -   [https://www.astro.umd.edu/~richard/ASTRO620/LumFunction-pp.pdf](https://www.astro.umd.edu/~richard/ASTRO620/LumFunction-pp.pdf)
+    -   [http://www-star.st-and.ac.uk/~spd3/Teaching/AS3011/AS3011_11.pdf](http://www-star.st-and.ac.uk/~spd3/Teaching/AS3011/AS3011_11.pdf)
+    -   [https://ned.ipac.caltech.edu/level5/March02/Efstathiou/Efst2_3.html](https://ned.ipac.caltech.edu/level5/March02/Efstathiou/Efst2_3.html)
+    -   [https://jekyll.math.byuh.edu/courses/m321/handouts/gammaproperties.pdf](https://jekyll.math.byuh.edu/courses/m321/handouts/gammaproperties.pdf)
+    -   [https://math.stackexchange.com/questions/2204020/definition-of-the-gamma-function-for-non-integer-negative-values](https://math.stackexchange.com/questions/2204020/definition-of-the-gamma-function-for-non-integer-negative-values)
+    -   [https://en.wikipedia.org/wiki/Luminosity_function_(astronomy)](https://en.wikipedia.org/wiki/Luminosity_function_(astronomy))
