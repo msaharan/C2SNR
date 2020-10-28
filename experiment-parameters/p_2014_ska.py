@@ -1,5 +1,7 @@
 #-- parameters stated below equation in Pourtsidou et al. 2014
 
+from scipy.special import gamma
+
 T_sys = 50 #-- kelvin 
 t_obs = 2 * 365 * 24 * 3600 #-- seconds
 bandwidth = 40 #-- MHz
