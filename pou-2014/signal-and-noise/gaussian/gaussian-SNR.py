@@ -35,7 +35,8 @@ z_s = 2
 ### plot params
 l_plot_min = 10
 l_plot_max = 1000
-err_stepsize = exp.delta_l
+#err_stepsize = exp.delta_l
+err_stepsize = 200
 #------------------------------------------------------------------------
 
 ########################################################################
@@ -202,7 +203,7 @@ for L in range(l_plot_min, l_plot_max, err_stepsize):
         d_square_l_sum = 0
         for l1 in range(1, l_ul, int(l_ul/100)):
             for l2 in range(1, l_ul, int(l_ul/100)):
-                d_square_l_sum = d_square_l_sum + (noise_denominator_integrand(l1, l2, L, j)) #-- * (l_ul/100)**1 )
+                d_square_l_sum = d_square_l_sum + (noise_denominator_integrand(l1, l2, L, j) * (l_ul/100)**2)
         j_sum = j_sum + d_square_l_sum
 
     N_l = 1/j_sum
@@ -246,15 +247,15 @@ plt.plot(iLc, iC_L * iLc * (iLc + 1) / (2 * 3.14), label = 'This work', color='b
 for i in range(n_err_points):
     plt.errorbar(iLd[i],  iC_Ld[i] * iLd[i] * (iLd[i] + 1) / (2 * 3.14), yerr = idelta_C_L[i], capsize=3, ecolor='black')
 
-##plt.plot(iL, iL * (iL + 1) * iN_L / (2 * 3.14), label = '$N_{L}$', linestyle = 'dashed') #-- N_l * l(l+1)/2pi
+plt.plot(iLn, iLn * (iLn + 1) * iN_L / (2 * 3.14), label = '$N_{L}$', linestyle = 'dashed') #-- N_l * l(l+1)/2pi
 
-plt.plot(iLn, iN_L, label = '$N_{L}$') #-- N_l only
+#plt.plot(iLn, iN_L, label = '$N_{L}$') #-- N_l only
 
 plt.xscale('log')
 plt.yscale('log')
 plt.xlabel('$L$', fontsize = fs)
 
-plt.ylim(1E-9, 1E-7)
+#plt.ylim(1E-9, 1E-7)
 
 #plt.ylabel(r'$N_{l} \times l(l+1)/2\pi$', fontsize = fs)
 plt.ylabel(r'$C_{L} \times L (L+1) / 2\pi$', fontsize = fs)
