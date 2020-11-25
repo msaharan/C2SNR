@@ -242,13 +242,13 @@ iLn, iN_L = np.loadtxt('./text-files/n_l_data_z_{}_lmax_{}_jmax_{}.txt'.format(z
 
 p_l = np.zeros(2 * l_ul)
 p_c_l = np.zeros(2 * l_ul)
-p_l, p_c_l, junk, junk, junk, junk = np.loadtxt("/mnt/storage/pdata/Utility/Git/dyskun/C2SNR/data-files/21alk-fig3-xyscan-z-8-signal.txt", unpack=True)
+p_l, p_c_l, junk, junk, junk, junk = np.loadtxt("/mnt/exports/data/saharan/C2SNR/data-files/21alk-fig3-xyscan-z-8-signal.txt", unpack=True)
 plt.plot(p_l,p_c_l, label='Figure 3 - Signal (z=8)')
 
 
 n_l = np.zeros(2 * l_ul)
 n_c_l = np.zeros(2 * l_ul)
-n_l, n_c_l, junk, junk, junk, junk = np.loadtxt("/mnt/storage/pdata/Utility/Git/dyskun/C2SNR/data-files/21alk-fig3-xyscan-z-8-noise.txt", unpack=True)
+n_l, n_c_l, junk, junk, junk, junk = np.loadtxt("/mnt/exports/data/saharan/C2SNR/data-files/21alk-fig3-xyscan-z-8-noise.txt", unpack=True)
 plt.loglog(n_l,n_c_l, color='black', label='Figure 3 - Noise (z=8)')
 
 
@@ -277,7 +277,7 @@ plt.xlim(l_plot_min, l_plot_max)
 
 #plt.savefig('./plots/n_l_z_{}_lmax_{}_j_{}.pdf'.format(z_s, l_ul, j_max), bbox_inches='tight')
 plt.savefig('./plots/gaussian_z_{}_lmax_{}_j_{}.pdf'.format(z_s, l_ul, j_max), bbox_inches='tight')
-plt.show()
+#plt.show()
 
 #-----------------------------------------------------------------------
 
