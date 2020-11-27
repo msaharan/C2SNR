@@ -5,7 +5,7 @@ import cosmolopy.perturbation as cp
 import scipy.integrate as integrate
 import matplotlib.pyplot as plt
 from scipy import interpolate
-from tqdm.auto import tqdm
+#from tqdm.auto import tqdm
 import camb
 from camb import model, initialpower, get_matter_power_interpolator
 import time
@@ -191,7 +191,7 @@ N_l_data = open('./text-files/n_l_data_z_{}_lmax_{}_jmax_{}.txt'.format(z_s, l_u
 #delta_C_l_data = open('./text-files/delta_c_l_data_z_{}_lmax_{}_jmax_{}.txt'.format(z_s, l_ul, j_max-1), 'w')
 
 ### C_l
-for L in tqdm(range(l_plot_min, l_plot_max)):
+for L in range(l_plot_min, l_plot_max):
     C_l_data.write('{}    {}\n'.format(L, C_l(L)))
 C_l_data.close()
 
@@ -205,7 +205,7 @@ for L in range (l_plot_min, 2 * l_plot_max):
 ### N_l
 for L in range(l_plot_min, l_plot_max, err_stepsize):
     noise_denominator_sum = 0
-    for j in tqdm(range(j_min, j_max)):
+    for j in range(j_min, j_max):
         noise_denominator_sum = noise_denominator_sum + noise_denominator(L, j)
 
     N_l = 1/noise_denominator_sum
