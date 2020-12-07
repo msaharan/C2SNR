@@ -1235,6 +1235,7 @@ We have derived the expression of $ N^\psi(L) $ for Gaussian matter distribution
 \begin{align}
 N^{\delta\theta} &= \frac{L^2}{\int \frac{d^2 l}{(2\pi)^2} \sum_{j} \frac{[C_{l,j} \L\cdot \l +
 		C_{L-l,j} \L\cdot (\L-\l)]^2}{2C^{tot}_{l,j}C^{tot}_{L-l,j}} }
+	\label{eq:gauss_len_reco_noise}
 \end{align}
 where $ C_{l, j} $ is the discretized 21-cm power spectrum defined as 
 \begin{align}
@@ -1325,6 +1326,69 @@ n_s &= 1\\
 \end{align}
 Here $\sigma_8$ is mentioned just for reference. It is not used to calculate the signal.
 
+
+\section{Testing the summand in Gaussian lensing reconstruction noise}
+\subsection{Figure 1: $ f_j $ and $ F $ vs $ l $}
+From Eq. \eqref{eq:gauss_len_reco_noise} we have
+\begin{align}
+N^{\delta\theta} &= \frac{1}{\sum_{j}\int d^2 l  \underbrace{\frac{[C_{l,j} \L\cdot \l +
+		C_{L-l,j} \L\cdot (\L-\l)]^2}{(2\pi)^2L^2  \times 2C^{tot}_{l,j}C^{tot}_{L-l,j}} }}_{f_j}
+\end{align}
+and we define $ F $ as 
+\begin{align}
+F = \sum_{j = 1}^{j_{max}} f_j
+\end{align}
+
+\begin{figure}[h]
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{L_20}
+		\caption{}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{L_400}
+		\caption{}
+	\end{subfigure}
+	\caption{$ F $ and $ f_j $ for $ L = 20 $ and $ L = 400$ }
+\end{figure}
+\pagebreak
+
+\subsection{Figure 2; $ f_j $ and $ F $ as functions of $ l_x $ and $ l_y $}
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{lx_10_L_400}
+		\caption{}
+		\label{fig:21cm-powspec}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{ly_10_L_400}
+		\caption{}
+		\label{fig:21cm-matter-powspec}
+	\end{subfigure}
+	\caption{$ l_x $ and $ l_y $ $ = 10 $}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{lx_20000_L_400}
+		\caption{}
+		\label{fig:21cm-powspec}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{ly_20000_L_400}
+		\caption{}
+		\label{fig:21cm-matter-powspec}
+	\end{subfigure}
+	\caption{$ l_x $ and $ l_y $ $ = 20,000 $}
+\end{figure}
 
 
 
