@@ -78,13 +78,14 @@ def C_lj(ell, j):
 #-- Equation 4 in Pourtsidou et al 2014 or Eq. 30 in Zahn and Zald. 2006
 
 def noise_denominator_integrand(l1, phi_1, ell, j):
-    l2 = int((ell**2 + l1**2 - (2*ell*l1*np.cos(phi_1)))**0.5)
-    phi_2 = math.atan(ell * np.sin(phi_1) / (l1 - ell*np.cos(phi_1)))
-    return l1 * (C_lj(l1, j) * ell * l1 + C_lj(abs(ell - l1), j) * l2 * ell * np.cos(phi_2))**2 / (ell**2 * (2 * 3.14)**2 * 2 * (C_lj(l1, j) + C_l_N)  * (C_lj(abs(ell - l1), j) + C_l_N))
+    l2 = (ell**2 + l1**2 - (2*ell*l1*np.cos(phi_1)))**0.5
+    phi_2 = phi_1 + math.atan(ell * np.sin(phi_1) / (l1 - ell*np.cos(phi_1)))
+    return l1 * (C_lj(l1, j) * ell * l1 + C_lj(abs(l2), j) * l2 * ell * np.cos(phi_2))**2 / (ell**2 * (2 * 3.14)**2 * 2 * (C_lj(l1, j) + C_l_N)  * (C_lj(abs(l2), j) + C_l_N))
 
+"""
 def noise_denominator(ell, j):
     return 2 * integrate.nquad(noise_denominator_integrand, [(1, l_ul), (0, np.pi)], args = (ell, j), opts = [{'limit': 2000}, {'limit': 2000}])[0]
-
+"""
 #-----------------------------------------------------------------------
 
 ########################################################################
